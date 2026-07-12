@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --forest: #2D5A27;
+  --forest-deep: #1A3A16;
+  --forest-light: #4A8C42;
+  --forest-mist: rgba(45, 90, 39, 0.08);
+  --ivory: #F8F5EE;
+  --cream: #EDE8DC;
+  --parchment: rgba(45, 90, 39, 0.15);
+  --obsidian: #0D0D0D;
+  --charcoal: #2A2A2A;
+  --stone: #6B6B6B;
+  --gold: #C9A84C;
+  --ease-elegant: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #F8F5EE;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: #0D0D0D;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes inst-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.inst-track {
+  display: flex;
+  width: max-content;
+  animation: inst-marquee 32s linear infinite;
+}
+
+@keyframes cred-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.cred-track {
+  display: flex;
+  width: max-content;
+  animation: cred-marquee 28s linear infinite;
+}
+
+.nav-scrolled {
+  background: rgba(248, 245, 238, 0.95) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(45, 90, 39, 0.1);
+}
+
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(2rem); opacity: 0; }
+}
+.scroll-dot {
+  animation: scroll-dot 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .stats-grid > div {
+    border-left: none !important;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .stats-grid > div:first-child {
+    border-top: none;
+  }
+}
