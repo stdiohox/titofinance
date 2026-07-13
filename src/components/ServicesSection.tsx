@@ -1,3 +1,5 @@
+import { Wallet, Sprout, Network, Compass, Zap, Sunrise } from 'lucide-react'
+
 export default function ServicesSection() {
   return (
     <section id="services" style={{ background: '#EDE8DC', padding: 'clamp(4rem, 8vw, 7rem) 1.5rem' }}>
@@ -96,7 +98,10 @@ export default function ServicesSection() {
               FREE · Monthly
             </span>
             <div className="relative z-10 p-7 flex flex-col justify-between min-h-[320px]">
-              <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>01</span>
+              <div>
+                <Wallet className="w-6 h-6 mb-4" style={{ color: '#FFFFFF' }} />
+                <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>01</span>
+              </div>
               <div>
                 <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'white', lineHeight: 1.15, marginBottom: '0.6rem' }}>
                   Personal Financial Management 101
@@ -114,7 +119,10 @@ export default function ServicesSection() {
             className="rounded-2xl p-7 flex flex-col justify-between min-h-[320px]"
             style={{ background: '#1A3A16' }}
           >
-            <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>02</span>
+            <div>
+              <Sprout className="w-6 h-6 mb-4" style={{ color: '#C9A84C' }} />
+              <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>02</span>
+            </div>
             <div>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'white', lineHeight: 1.15, marginBottom: '0.6rem' }}>
                 Beginner's Portfolio
@@ -131,7 +139,10 @@ export default function ServicesSection() {
             className="rounded-2xl p-7 flex flex-col justify-between min-h-[320px]"
             style={{ background: '#1A3A16' }}
           >
-            <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>03</span>
+            <div>
+              <Network className="w-6 h-6 mb-4" style={{ color: '#C9A84C' }} />
+              <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>03</span>
+            </div>
             <div>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'white', lineHeight: 1.15, marginBottom: '0.6rem' }}>
                 Closed Circuit Group
@@ -148,7 +159,10 @@ export default function ServicesSection() {
             className="rounded-2xl p-7 flex flex-col justify-between min-h-[320px]"
             style={{ background: '#2D5A27' }}
           >
-            <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>04</span>
+            <div>
+              <Compass className="w-6 h-6 mb-4" style={{ color: '#C9A84C' }} />
+              <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>04</span>
+            </div>
             <div>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'white', lineHeight: 1.15, marginBottom: '0.6rem' }}>
                 Mentorship
@@ -179,7 +193,10 @@ export default function ServicesSection() {
             className="rounded-2xl p-7 flex flex-col justify-between min-h-[320px]"
             style={{ background: '#F8F5EE' }}
           >
-            <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(13,13,13,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>05</span>
+            <div>
+              <Zap className="w-6 h-6 mb-4" style={{ color: '#2D5A27' }} />
+              <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(13,13,13,0.25)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>05</span>
+            </div>
             <div>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 500, letterSpacing: '-0.02em', color: '#0D0D0D', lineHeight: 1.15, marginBottom: '0.6rem' }}>
                 Quick Fire One-on-One
@@ -201,6 +218,19 @@ export default function ServicesSection() {
               }}>
                 Book a Call →
               </a>
+            </div>
+          </div>
+
+          {/* Card 6 — full-width closing card */}
+          <div data-card className="lg:col-span-3 rounded-2xl p-8 flex flex-col justify-between" style={{ background: '#1A3A16' }}>
+            <div>
+              <Sunrise className="w-6 h-6 mb-4" style={{ color: '#C9A84C' }} />
+              <span className="text-xs mb-4 block" style={{ fontFamily: 'DM Mono, monospace', color: '#6B6B6B' }}>06</span>
+              <h3 className="text-2xl text-white mb-3" style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500, letterSpacing: '-0.02em' }}>Retirement Portfolio</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: '560px' }}>
+                Long-term wealth structuring designed for the life you want after work.
+                We build positions today that compound into lasting freedom.
+              </p>
             </div>
           </div>
 

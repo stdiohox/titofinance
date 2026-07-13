@@ -66,7 +66,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {/* CTA */}
           <button
-            className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"
+            className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 md:mr-6"
             style={{
               background: scrolled ? '#2D5A27' : 'white',
               color: scrolled ? 'white' : '#0D0D0D',

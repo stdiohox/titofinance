@@ -7,16 +7,24 @@ export default function HeroSection() {
           style={{ height: 'calc(100vh - 88px)' }}
         >
           {/* Background image */}
-          <img
-            src="/images/titobi-hero.jpg"
-            srcSet="/images/titobi-hero-xs.webp 640w, /images/titobi-hero-sm.webp 1024w, /images/titobi-hero-md.webp 1920w, /images/titobi-hero.webp 2560w"
-            sizes="100vw"
-            alt="Titobi Oreolorun"
-            className="absolute inset-0 w-full h-full object-cover object-top"
-            fetchPriority="high"
-            loading="eager"
-            draggable={false}
-          />
+          <picture>
+            <source
+              srcSet="/images/titobi-hero-new-xs.webp 640w, /images/titobi-hero-new-sm.webp 1024w, /images/titobi-hero-new-md.webp 1920w, /images/titobi-hero-new.webp 2560w"
+              sizes="100vw"
+              type="image/webp"
+            />
+            <img
+              src="/images/titobi-hero-new.jpeg"
+              alt="Titobi Oreolorun"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                objectPosition: 'center 20%'
+              }}
+              fetchPriority="high"
+              loading="eager"
+              draggable={false}
+            />
+          </picture>
 
           {/* Gradient overlay — dark studio bg means lighter overlay needed */}
           <div
