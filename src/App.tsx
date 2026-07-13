@@ -20,8 +20,8 @@ export default function App() {
     <main className="flex flex-col">
       <Navbar />
       <HeroSection />
-      <StorySection />
       <ServicesSection />
+      <StorySection />
       <DifferentiatorsSection />
       <GDRSection />
       <InstitutionsRow />

@@ -14,7 +14,8 @@ export const useAnimations = () => {
 
       // Heading char reveals
       document.querySelectorAll('h1, h2').forEach((el) => {
-        const split = new SplitType(el as HTMLElement, { types: 'chars' })
+        // words wrapper keeps chars from wrapping mid-word on narrow screens
+        const split = new SplitType(el as HTMLElement, { types: 'words,chars' })
         gsap.from(split.chars, {
           y: '110%',
           opacity: 0,

@@ -50,9 +50,8 @@ export default function HeroSection() {
             </p>
 
             {/* H1 */}
-            <h1 style={{
+            <h1 className="text-4xl sm:text-5xl md:text-[clamp(3.2rem,6vw,7rem)]" style={{
               fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(3.2rem, 6vw, 7rem)',
               fontWeight: 500,
               letterSpacing: '-0.04em',
               lineHeight: 1.0,
@@ -78,12 +77,11 @@ export default function HeroSection() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-4">
               <button
-                className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"
+                className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
                 style={{
                   background: '#2D5A27',
                   color: 'white',
                   fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '1rem',
                   fontWeight: 500,
                   paddingLeft: '2rem',
                   paddingRight: '0.5rem',
