@@ -77,7 +77,7 @@ export default function HeroSection() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-4">
               <button
-                className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
+                className="hidden md:inline-flex items-center gap-3 rounded-full transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
                 style={{
                   background: '#2D5A27',
                   color: 'white',
@@ -126,15 +126,26 @@ export default function HeroSection() {
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M22 2L11 13" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" />
                   </svg>
                 </span>
               </a>
             </div>
 
             {/* Stats — pinned to bottom */}
-            <div className="mt-auto flex flex-wrap gap-10 pb-2">
+            <div className="mt-auto hidden md:flex flex-wrap gap-10 pb-2">
               {[
                 { number: '15+', label: 'Countries' },
                 { number: '$300K+', label: 'Education Invested' },
