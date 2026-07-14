@@ -64,6 +64,32 @@ body {
   animation: scroll-dot 1.5s ease-in-out infinite;
 }
 
+.service-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(45, 90, 39, 0.25);
+}
+
+.service-icon {
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.1);
+}
+
+.service-border {
+  border-top: 2px solid rgba(201, 168, 76, 0.5);
+  transition: border-top-color 0.3s ease;
+}
+
+.service-card.service-border:hover {
+  border-top-color: rgba(201, 168, 76, 0.9);
+}
+
 @media (max-width: 640px) {
   .stats-grid {
     grid-template-columns: 1fr !important;

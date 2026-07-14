@@ -54,6 +54,9 @@ export const useAnimations = () => {
           stagger: 0.09,
           duration: 0.7,
           ease: 'power2.out',
+          // release inline styles when done — cards also have CSS hover
+          // transitions on transform, which fight GSAP-held transforms
+          clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: group as Element,
             start: 'top 85%',

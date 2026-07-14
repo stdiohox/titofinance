@@ -107,61 +107,78 @@ export default function HeroSection() {
               </button>
 
               <a
-                href="#"
-                className="flex items-center gap-3 cursor-pointer"
+                href="#story"
+                className="flex items-center gap-4 cursor-pointer"
                 style={{ textDecoration: 'none' }}
               >
-                {/* Text */}
-                <span className="text-white text-sm tracking-wide" style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 500 }}>
+                <span
+                  style={{
+                    color: '#FFFFFF',
+                    fontFamily: 'DM Sans, sans-serif',
+                    fontSize: '16px',
+                    fontWeight: 400,
+                    letterSpacing: '0.02em'
+                  }}
+                >
                   Watch My Story
                 </span>
 
-                {/* Container: gold circle anchor + plane flying out with trail */}
-                <div className="relative flex items-center" style={{ width: '80px', height: '48px' }}>
+                <div style={{ position: 'relative', width: '100px', height: '60px' }}>
 
-                  {/* Gold circle (left side of container) */}
-                  <div
-                    className="rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      background: '#C9A84C',
-                      position: 'absolute',
-                      left: 0,
-                      top: '50%',
-                      transform: 'translateY(-50%)'
-                    }}
-                  />
+                  {/* Gold circle */}
+                  <div style={{
+                    position: 'absolute',
+                    left: '0px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '50%',
+                    background: '#C9A84C',
+                    zIndex: 1
+                  }} />
 
-                  {/* Paper plane + dashed trail SVG flying out of the circle */}
+                  {/* Paper plane + trail flying out to the right */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="80"
-                    height="48"
-                    viewBox="0 0 80 48"
+                    width="100"
+                    height="60"
+                    viewBox="0 0 100 60"
                     fill="none"
-                    stroke="white"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{ position: 'absolute', left: 0, top: 0 }}
+                    style={{ position: 'absolute', left: 0, top: 0, zIndex: 2 }}
                   >
-                    {/* Dashed looping trail starting from circle center */}
+                    {/* Dashed trail: starts from circle center, loops, goes up-right */}
                     <path
-                      d="M20 24 C 28 32, 36 36, 38 28 C 40 20, 34 16, 42 10 C 50 4, 62 8, 70 4"
+                      d="M22 30 C 30 42, 44 46, 48 36 C 52 26, 42 18, 52 12 C 60 7, 75 14, 85 6"
+                      stroke="white"
                       strokeWidth="1.8"
                       strokeDasharray="4,3"
-                      stroke="white"
-                      opacity="0.6"
-                    />
-                    {/* Paper plane at the end of the trail (top right) */}
-                    <polygon
-                      points="70,4 58,14 61,20 74,8"
-                      strokeWidth="1.8"
-                      stroke="white"
+                      strokeLinecap="round"
                       fill="none"
+                      opacity="0.7"
                     />
-                    <line x1="61" y1="20" x2="70" y2="4" strokeWidth="1.5" stroke="white" />
-                    <line x1="58" y1="14" x2="66" y2="16" strokeWidth="1.2" stroke="white" />
+                    {/* Paper plane at end of trail pointing up-right */}
+                    <g transform="translate(78, 0) rotate(20)">
+                      <polygon
+                        points="0,14 14,0 16,10"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        fill="none"
+                        strokeLinejoin="round"
+                      />
+                      <line
+                        x1="14" y1="0"
+                        x2="8" y2="8"
+                        stroke="white"
+                        strokeWidth="1.2"
+                      />
+                      <line
+                        x1="0" y1="14"
+                        x2="14" y2="0"
+                        stroke="white"
+                        strokeWidth="1.5"
+                      />
+                    </g>
                   </svg>
                 </div>
               </a>
