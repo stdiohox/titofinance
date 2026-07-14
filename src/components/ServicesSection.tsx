@@ -121,21 +121,23 @@ export default function ServicesSection() {
                   A free monthly session covering the fundamentals of money management — budgeting, saving, and building healthy financial habits from the ground up.
                 </p>
                 <a
-                  href="https://chat.whatsapp.com/Dya2CxUltpD6ZfUJFd90Ye?mode=gi_t"
+                  href="https://wa.me/2348184750870"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
                     fontFamily: 'DM Mono, monospace',
                     fontSize: '11px',
-                    letterSpacing: '0.08em',
                     color: '#C9A84C',
-                    textDecoration: 'none',
                     textTransform: 'uppercase',
-                    marginTop: '1rem',
-                    display: 'inline-block'
+                    letterSpacing: '0.15em',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    marginTop: '1rem'
                   }}
                 >
-                  Join the Group →
+                  Chat on WhatsApp →
                 </a>
               </div>
             </div>
@@ -169,6 +171,20 @@ export default function ServicesSection() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', lineHeight: 1.6 }}>
                 Your first step into investing. I'll guide you through building a starter portfolio that matches your risk tolerance and long-term goals.
               </p>
+              <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '11px',
+                color: '#C9A84C',
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                marginTop: '1rem'
+              }}>
+                Chat on WhatsApp →
+              </a>
             </div>
           </div>
 
@@ -200,6 +216,20 @@ export default function ServicesSection() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', lineHeight: 1.6 }}>
                 An exclusive community of growth-minded individuals sharing strategies, accountability, and direct access to Titobi's insights.
               </p>
+              <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '11px',
+                color: '#C9A84C',
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                marginTop: '1rem'
+              }}>
+                Chat on WhatsApp →
+              </a>
             </div>
           </div>
 
@@ -318,6 +348,20 @@ export default function ServicesSection() {
                 Long-term wealth structuring designed for the life you want after work.
                 We build positions today that compound into lasting freedom.
               </p>
+              <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '11px',
+                color: '#C9A84C',
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                marginTop: '1rem'
+              }}>
+                Chat on WhatsApp →
+              </a>
             </div>
           </div>
 

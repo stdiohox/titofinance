@@ -154,12 +154,21 @@ export default function Footer() {
             />
           </div>
           <div className="flex gap-8 flex-wrap">
-            {['About', 'Services', 'Approach', 'Book a Call'].map((link) => (
-              <a key={link} href="#" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.875rem', color: 'rgba(255,255,255,0.45)', textDecoration: 'none', transition: 'color 0.2s' }}
+            {[
+              { label: 'About', href: '#story' },
+              { label: 'Services', href: '#services' },
+              { label: 'Approach', href: '#gdr' },
+              { label: 'Book a Call', href: 'https://wa.me/2348184750870', external: true },
+            ].map(({ label, href, external }) => (
+              <a
+                key={label}
+                href={href}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.875rem', color: 'rgba(255,255,255,0.45)', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.8)')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
               >
-                {link}
+                {label}
               </a>
             ))}
           </div>
