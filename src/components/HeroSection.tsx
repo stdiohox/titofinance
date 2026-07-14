@@ -75,7 +75,7 @@ export default function HeroSection() {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 mt-auto md:mt-0">
               <button
                 className="hidden md:inline-flex items-center gap-3 rounded-full transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
                 style={{
@@ -108,39 +108,62 @@ export default function HeroSection() {
 
               <a
                 href="#"
-                className="inline-flex items-center gap-3"
-                style={{
-                  fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '1rem',
-                  fontWeight: 500,
-                  color: 'white',
-                  textDecoration: 'none'
-                }}
+                className="flex items-center gap-3 cursor-pointer"
+                style={{ textDecoration: 'none' }}
               >
-                Watch My Story
-                <span style={{
-                  background: '#C9A84C',
-                  borderRadius: '9999px',
-                  padding: '0.5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
+                {/* Text */}
+                <span className="text-white text-sm tracking-wide" style={{ fontFamily: 'DM Sans, sans-serif', fontWeight: 500 }}>
+                  Watch My Story
+                </span>
+
+                {/* Container: gold circle anchor + plane flying out with trail */}
+                <div className="relative flex items-center" style={{ width: '80px', height: '48px' }}>
+
+                  {/* Gold circle (left side of container) */}
+                  <div
+                    className="rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      background: '#C9A84C',
+                      position: 'absolute',
+                      left: 0,
+                      top: '50%',
+                      transform: 'translateY(-50%)'
+                    }}
+                  />
+
+                  {/* Paper plane + dashed trail SVG flying out of the circle */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
+                    width="80"
+                    height="48"
+                    viewBox="0 0 80 48"
                     fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
+                    stroke="white"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    style={{ position: 'absolute', left: 0, top: 0 }}
                   >
-                    <path d="M22 2L11 13" />
-                    <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+                    {/* Dashed looping trail starting from circle center */}
+                    <path
+                      d="M20 24 C 28 32, 36 36, 38 28 C 40 20, 34 16, 42 10 C 50 4, 62 8, 70 4"
+                      strokeWidth="1.8"
+                      strokeDasharray="4,3"
+                      stroke="white"
+                      opacity="0.6"
+                    />
+                    {/* Paper plane at the end of the trail (top right) */}
+                    <polygon
+                      points="70,4 58,14 61,20 74,8"
+                      strokeWidth="1.8"
+                      stroke="white"
+                      fill="none"
+                    />
+                    <line x1="61" y1="20" x2="70" y2="4" strokeWidth="1.5" stroke="white" />
+                    <line x1="58" y1="14" x2="66" y2="16" strokeWidth="1.2" stroke="white" />
                   </svg>
-                </span>
+                </div>
               </a>
             </div>
 

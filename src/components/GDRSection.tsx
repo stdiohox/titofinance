@@ -1,18 +1,45 @@
-const letters = [
+const portfolios = [
   {
     letter: 'G',
-    heading: 'Global',
-    body: 'Access shares in top international companies — US, UK, Europe, Asia — all from your local brokerage account.'
+    title: 'Growth Portfolio',
+    objective: 'Aggressive long-term capital appreciation',
+    coreAssets: 'Stocks, equity funds, ETFs, small business equity',
+    bestFor: 'Longer time horizons that can ride out market swings',
+    bg: '#1A3A16',
+    letterColor: '#C9A84C',
+    titleColor: 'white',
+    labelColor: 'rgba(255,255,255,0.4)',
+    bodyColor: 'rgba(255,255,255,0.7)',
+    dividerColor: 'rgba(255,255,255,0.12)',
+    bestForColor: 'rgba(248,245,238,0.8)',
   },
   {
     letter: 'D',
-    heading: 'Depositary',
-    body: 'A trusted financial structure that holds foreign shares on your behalf, making global investing safe, regulated, and accessible.'
+    title: 'Dividend Portfolio',
+    objective: 'Steady, recurring passive income',
+    coreAssets: 'Dividend-paying stocks, REITs, income-focused funds',
+    bestFor: 'Investors who want regular cash flow alongside growth',
+    bg: '#C9A84C',
+    letterColor: '#1A3A16',
+    titleColor: '#1A3A16',
+    labelColor: 'rgba(26,58,22,0.55)',
+    bodyColor: 'rgba(26,58,22,0.85)',
+    dividerColor: 'rgba(26,58,22,0.2)',
+    bestForColor: '#1A3A16',
   },
   {
     letter: 'R',
-    heading: 'Receipt',
-    body: 'Your proof of ownership. A GDR gives you real equity in world-class companies — with dividends, capital gains, and portfolio growth that crosses borders.'
+    title: 'Retirement Portfolio',
+    objective: 'Capital preservation & predictable income',
+    coreAssets: 'Bonds, T-bills, balanced / retirement-focused funds',
+    bestFor: 'Those nearing or planning for retirement',
+    bg: '#1A3A16',
+    letterColor: '#C9A84C',
+    titleColor: 'white',
+    labelColor: 'rgba(255,255,255,0.4)',
+    bodyColor: 'rgba(255,255,255,0.7)',
+    dividerColor: 'rgba(255,255,255,0.12)',
+    bestForColor: 'rgba(248,245,238,0.8)',
   },
 ]
 
@@ -32,7 +59,7 @@ export default function GDRSection() {
             display: 'block',
             marginBottom: '1rem'
           }}>
-            The Method
+            The Framework
           </span>
 
           <h2 data-reveal style={{
@@ -42,19 +69,21 @@ export default function GDRSection() {
             letterSpacing: '-0.03em',
             color: '#0D0D0D',
             lineHeight: 1.05,
-            marginBottom: '1.5rem'
+            marginBottom: '1.25rem'
           }}>
             Tito's GDR Strategy
           </h2>
 
-          <p data-reveal className="text-base" style={{
-            fontFamily: 'DM Sans, sans-serif',
-            color: '#6B6B6B',
-            lineHeight: 1.75,
-            maxWidth: '420px',
+          <p data-reveal style={{
+            fontFamily: 'Cormorant Garamond, serif',
+            fontStyle: 'italic',
+            fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)',
+            color: '#2D5A27',
+            lineHeight: 1.4,
+            maxWidth: '460px',
             marginBottom: '1.5rem'
           }}>
-            A Global Depositary Receipt (GDR) is one of the most powerful — and least talked about — tools for building an international investment portfolio. It allows everyday investors to own shares in world-class foreign companies without leaving their home market.
+            A portfolio strategy that splits your money across three purpose-built buckets — each with a different job to do.
           </p>
 
           <p data-reveal className="text-base" style={{
@@ -64,7 +93,7 @@ export default function GDRSection() {
             maxWidth: '420px',
             marginBottom: '2rem'
           }}>
-            Titobi's GDR Strategy is built around this instrument — giving his clients access to global wealth-building opportunities that most people never knew existed.
+            GDR is not just an acronym — it's a complete wealth system. Every naira or dollar you earn gets assigned a job: grow it aggressively, collect income from it steadily, or protect it for the future. Three portfolios. One plan. Built to last.
           </p>
 
           <button
@@ -103,46 +132,93 @@ export default function GDRSection() {
           </button>
         </div>
 
-        {/* Right — G / D / R cards */}
+        {/* Right — portfolio cards */}
         <div data-cards className="flex flex-col gap-4">
-          {letters.map(({ letter, heading, body }) => (
+          {portfolios.map((p) => (
             <div
-              key={letter}
+              key={p.letter}
               data-card
-              className="bg-[#1A3A16] rounded-2xl p-7 flex items-start gap-6"
+              className="rounded-2xl p-7"
+              style={{ background: p.bg }}
             >
               <span style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: '4.5rem',
+                fontSize: '3.5rem',
                 fontWeight: 500,
-                color: '#C9A84C',
+                color: p.letterColor,
                 lineHeight: 1,
-                flexShrink: 0,
-                width: '3rem',
-                textAlign: 'center'
+                display: 'block',
+                marginBottom: '0.5rem'
               }}>
-                {letter}
+                {p.letter}
               </span>
-              <div>
-                <h3 style={{
-                  fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: '1.4rem',
-                  fontWeight: 500,
-                  color: 'white',
-                  marginBottom: '0.25rem',
-                  letterSpacing: '-0.01em'
+
+              <h3 style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: '1.5rem',
+                fontWeight: 600,
+                color: p.titleColor,
+                letterSpacing: '-0.01em',
+                marginBottom: '1.25rem'
+              }}>
+                {p.title}
+              </h3>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <span style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: '10px',
+                  color: p.labelColor,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.18em',
+                  display: 'block',
+                  marginBottom: '0.3rem'
                 }}>
-                  {heading}
-                </h3>
+                  Objective
+                </span>
                 <p style={{
                   fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '0.875rem',
-                  color: 'rgba(255,255,255,0.55)',
-                  lineHeight: 1.65
+                  fontSize: '0.9rem',
+                  color: p.bodyColor,
+                  lineHeight: 1.6
                 }}>
-                  {body}
+                  {p.objective}
                 </p>
               </div>
+
+              <div style={{ marginBottom: '1.25rem' }}>
+                <span style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: '10px',
+                  color: p.labelColor,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.18em',
+                  display: 'block',
+                  marginBottom: '0.3rem'
+                }}>
+                  Core Assets
+                </span>
+                <p style={{
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '0.9rem',
+                  color: p.bodyColor,
+                  lineHeight: 1.6
+                }}>
+                  {p.coreAssets}
+                </p>
+              </div>
+
+              <div style={{ height: '1px', background: p.dividerColor, marginBottom: '1rem' }} />
+
+              <p style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontStyle: 'italic',
+                fontSize: '1.05rem',
+                color: p.bestForColor,
+                lineHeight: 1.45
+              }}>
+                Best for: {p.bestFor}
+              </p>
             </div>
           ))}
         </div>
