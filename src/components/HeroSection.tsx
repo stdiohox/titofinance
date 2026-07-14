@@ -1,3 +1,5 @@
+import { ArrowRight } from 'lucide-react'
+
 export default function HeroSection() {
   return (
     <div className="h-screen flex flex-col overflow-hidden">
@@ -76,7 +78,10 @@ export default function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-4 mt-auto md:mt-0">
-              <button
+              <a
+                href="https://wa.me/2348184750870"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hidden md:inline-flex items-center gap-3 rounded-full transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
                 style={{
                   background: '#2D5A27',
@@ -87,6 +92,7 @@ export default function HeroSection() {
                   paddingRight: '0.5rem',
                   paddingTop: '0.625rem',
                   paddingBottom: '0.625rem',
+                  textDecoration: 'none',
                 }}
                 onMouseEnter={e => (e.currentTarget.style.background = '#1A3A16')}
                 onMouseLeave={e => (e.currentTarget.style.background = '#2D5A27')}
@@ -104,7 +110,7 @@ export default function HeroSection() {
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </span>
-              </button>
+              </a>
 
               <a href="#story" className="flex items-center gap-3 cursor-pointer"
                 style={{ textDecoration: 'none' }}>
@@ -119,54 +125,17 @@ export default function HeroSection() {
                   Watch My Story
                 </span>
 
-                <div style={{ position: 'relative', width: '110px', height: '50px' }}>
-
-                  {/* Gold circle on the left */}
-                  <div style={{
-                    position: 'absolute',
-                    left: '0px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: '#C9A84C'
-                  }} />
-
-                  {/* SVG trail + plane only — no overlap with circle */}
-                  <svg
-                    width="110"
-                    height="50"
-                    viewBox="0 0 110 50"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style={{ position: 'absolute', left: 0, top: 0 }}
-                  >
-                    {/* Trail starts at right edge of circle (x=44)
-                        curves up then right toward the plane */}
-                    <path
-                      d="M44 25 C 55 35, 62 38, 65 28 C 68 18, 60 12, 70 7 C 78 3, 90 8, 100 4"
-                      stroke="white"
-                      strokeWidth="1.8"
-                      strokeDasharray="4,3"
-                      strokeLinecap="round"
-                      fill="none"
-                      opacity="0.75"
-                    />
-                    {/* Small paper plane at trail end, pointing up-right */}
-                    <g transform="translate(94, -2) rotate(-35)">
-                      <polygon
-                        points="0,12 10,0 12,8"
-                        stroke="white"
-                        strokeWidth="1.4"
-                        fill="none"
-                        strokeLinejoin="round"
-                      />
-                      <line x1="10" y1="0" x2="5" y2="7"
-                        stroke="white" strokeWidth="1.2" />
-                    </g>
-                  </svg>
-
+                <div style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  background: '#C9A84C',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <ArrowRight size={18} color="#1A3A16" strokeWidth={2} />
                 </div>
               </a>
             </div>

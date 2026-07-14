@@ -120,6 +120,23 @@ export default function ServicesSection() {
                 <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem', maxWidth: '320px', lineHeight: 1.6 }}>
                   A free monthly session covering the fundamentals of money management — budgeting, saving, and building healthy financial habits from the ground up.
                 </p>
+                <a
+                  href="https://chat.whatsapp.com/Dya2CxUltpD6ZfUJFd90Ye?mode=gi_t"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: 'DM Mono, monospace',
+                    fontSize: '11px',
+                    letterSpacing: '0.08em',
+                    color: '#C9A84C',
+                    textDecoration: 'none',
+                    textTransform: 'uppercase',
+                    marginTop: '1rem',
+                    display: 'inline-block'
+                  }}
+                >
+                  Join the Group →
+                </a>
               </div>
             </div>
           </div>
@@ -213,7 +230,7 @@ export default function ServicesSection() {
                 Ongoing one-on-one guidance tailored to your financial journey. Strategy sessions, goal tracking, and direct accountability.
               </p>
             </div>
-            <a href="#final-cta" className="mt-auto" style={{
+            <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#C9A84C',
@@ -256,7 +273,7 @@ export default function ServicesSection() {
                 A focused 30-minute session to tackle one specific financial question or decision. Fast, direct, actionable.
               </p>
             </div>
-            <a href="#final-cta" className="mt-auto" style={{
+            <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#2D5A27',
