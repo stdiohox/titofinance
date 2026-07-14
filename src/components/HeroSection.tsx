@@ -106,26 +106,22 @@ export default function HeroSection() {
                 </span>
               </button>
 
-              <a
-                href="#story"
-                className="flex items-center gap-4 cursor-pointer"
-                style={{ textDecoration: 'none' }}
-              >
-                <span
-                  style={{
-                    color: '#FFFFFF',
-                    fontFamily: 'DM Sans, sans-serif',
-                    fontSize: '16px',
-                    fontWeight: 400,
-                    letterSpacing: '0.02em'
-                  }}
-                >
+              <a href="#story" className="flex items-center gap-3 cursor-pointer"
+                style={{ textDecoration: 'none' }}>
+
+                <span style={{
+                  color: '#FFFFFF',
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '16px',
+                  fontWeight: 400,
+                  letterSpacing: '0.02em'
+                }}>
                   Watch My Story
                 </span>
 
-                <div style={{ position: 'relative', width: '100px', height: '60px' }}>
+                <div style={{ position: 'relative', width: '110px', height: '50px' }}>
 
-                  {/* Gold circle */}
+                  {/* Gold circle on the left */}
                   <div style={{
                     position: 'absolute',
                     left: '0px',
@@ -134,52 +130,43 @@ export default function HeroSection() {
                     width: '44px',
                     height: '44px',
                     borderRadius: '50%',
-                    background: '#C9A84C',
-                    zIndex: 1
+                    background: '#C9A84C'
                   }} />
 
-                  {/* Paper plane + trail flying out to the right */}
+                  {/* SVG trail + plane only — no overlap with circle */}
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="100"
-                    height="60"
-                    viewBox="0 0 100 60"
+                    width="110"
+                    height="50"
+                    viewBox="0 0 110 50"
                     fill="none"
-                    style={{ position: 'absolute', left: 0, top: 0, zIndex: 2 }}
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ position: 'absolute', left: 0, top: 0 }}
                   >
-                    {/* Dashed trail: starts from circle center, loops, goes up-right */}
+                    {/* Trail starts at right edge of circle (x=44)
+                        curves up then right toward the plane */}
                     <path
-                      d="M22 30 C 30 42, 44 46, 48 36 C 52 26, 42 18, 52 12 C 60 7, 75 14, 85 6"
+                      d="M44 25 C 55 35, 62 38, 65 28 C 68 18, 60 12, 70 7 C 78 3, 90 8, 100 4"
                       stroke="white"
                       strokeWidth="1.8"
                       strokeDasharray="4,3"
                       strokeLinecap="round"
                       fill="none"
-                      opacity="0.7"
+                      opacity="0.75"
                     />
-                    {/* Paper plane at end of trail pointing up-right */}
-                    <g transform="translate(78, 0) rotate(20)">
+                    {/* Small paper plane at trail end, pointing up-right */}
+                    <g transform="translate(94, -2) rotate(-35)">
                       <polygon
-                        points="0,14 14,0 16,10"
+                        points="0,12 10,0 12,8"
                         stroke="white"
-                        strokeWidth="1.5"
+                        strokeWidth="1.4"
                         fill="none"
                         strokeLinejoin="round"
                       />
-                      <line
-                        x1="14" y1="0"
-                        x2="8" y2="8"
-                        stroke="white"
-                        strokeWidth="1.2"
-                      />
-                      <line
-                        x1="0" y1="14"
-                        x2="14" y2="0"
-                        stroke="white"
-                        strokeWidth="1.5"
-                      />
+                      <line x1="10" y1="0" x2="5" y2="7"
+                        stroke="white" strokeWidth="1.2" />
                     </g>
                   </svg>
+
                 </div>
               </a>
             </div>
@@ -218,8 +205,8 @@ export default function HeroSection() {
 
           </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1">
+          {/* Scroll indicator — hidden on mobile where it collides with the bottom-pinned CTA */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-1">
             <div style={{ width: '1px', height: '2.5rem', background: 'rgba(255,255,255,0.25)' }} />
             <div className="scroll-dot" style={{ width: '4px', height: '4px', borderRadius: '9999px', background: '#C9A84C' }} />
           </div>
