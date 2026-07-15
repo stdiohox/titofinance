@@ -64,6 +64,14 @@ body {
   animation: scroll-dot 1.5s ease-in-out infinite;
 }
 
+.testimonial-video-row {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.testimonial-video-row::-webkit-scrollbar {
+  display: none;
+}
+
 .service-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
