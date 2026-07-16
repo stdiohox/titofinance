@@ -179,6 +179,7 @@ export default function TestimonialsSection() {
             <video
               key={t.src}
               src={t.src}
+              poster="/images/video-poster.svg"
               className="testimonial-image"
               style={videoStyle(index)}
               playsInline
