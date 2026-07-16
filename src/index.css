@@ -98,6 +98,21 @@ body {
   border-top-color: rgba(201, 168, 76, 0.9);
 }
 
+.testimonial-video-container {
+  height: 260px;
+}
+@media (min-width: 768px) {
+  .testimonial-video-container {
+    height: 380px;
+  }
+}
+
+.testimonial-image {
+  object-fit: cover;
+  object-position: center;
+  background-color: #EDE8DC;
+}
+
 @media (max-width: 640px) {
   .stats-grid {
     grid-template-columns: 1fr !important;

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const dmCards = [
   {
@@ -26,17 +26,27 @@ const testimonials = [
 
 export default function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const len = testimonials.length
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
   const videoStyle = (index: number): React.CSSProperties => {
+    const offset = isMobile ? 45 : 80
+    const scaleBack = isMobile ? 0.78 : 0.85
+    const liftUp = isMobile ? 30 : 60
+
     const base: React.CSSProperties = {
       position: 'absolute',
       inset: 0,
       width: '100%',
       height: '100%',
-      objectFit: 'cover',
       borderRadius: '20px',
-      background: '#0D0D0D',
       border: '1px solid rgba(45,90,39,0.12)',
       boxShadow: '0 8px 40px rgba(0,0,0,0.15)',
       transition: 'all 0.8s cubic-bezier(.4,2,.3,1)',
@@ -46,10 +56,10 @@ export default function TestimonialsSection() {
       return { ...base, transform: 'translateX(0) translateY(0) scale(1) rotateY(0deg)', zIndex: 3, opacity: 1 }
     }
     if (index === (activeIndex - 1 + len) % len) {
-      return { ...base, transform: 'translateX(-80px) translateY(-60px) scale(0.85) rotateY(15deg)', zIndex: 2, opacity: 1 }
+      return { ...base, transform: `translateX(-${offset}px) translateY(-${liftUp}px) scale(${scaleBack}) rotateY(15deg)`, zIndex: 2, opacity: 1 }
     }
     if (index === (activeIndex + 1) % len) {
-      return { ...base, transform: 'translateX(80px) translateY(-60px) scale(0.85) rotateY(-15deg)', zIndex: 2, opacity: 1 }
+      return { ...base, transform: `translateX(${offset}px) translateY(-${liftUp}px) scale(${scaleBack}) rotateY(-15deg)`, zIndex: 2, opacity: 1 }
     }
     return { ...base, transform: 'scale(0.8)', zIndex: 1, opacity: 0 }
   }
@@ -171,8 +181,9 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Video carousel — full width, centered */}
+        <div className="px-4 md:px-0">
         <div
-          className="relative w-full h-[280px] md:h-[380px] mx-auto"
+          className="testimonial-video-container relative w-full mx-auto"
           style={{ perspective: '1000px', maxWidth: '700px', marginTop: '80px' }}
         >
           {testimonials.map((t, index) => (
@@ -188,6 +199,7 @@ export default function TestimonialsSection() {
               onClick={() => setActiveIndex(index)}
             />
           ))}
+        </div>
         </div>
 
       </div>
