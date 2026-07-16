@@ -18,10 +18,36 @@ const dmCards = [
   },
 ]
 
-const testimonials = [
-  { src: '/videos/testimonial-1.mp4' },
-  { src: '/videos/testimonial-2.mp4' },
-  { src: '/videos/testimonial-3.mp4' },
+interface Testimonial {
+  name: string
+  designation: string
+  quote: string
+  src: string
+  poster: string
+}
+
+const testimonials: Testimonial[] = [
+  {
+    name: 'Recently Relocated',
+    designation: 'Couple · Moved to the United States',
+    quote: 'Thank you for the stock 101 session — the fact that you make that power packed session free is such a blessing. My husband and I just moved to the US and we are really confused where and how to invest. Pls help us.',
+    src: '/videos/testimonial-3.mp4',
+    poster: '/images/testimonial-preview.jpg',
+  },
+  {
+    name: 'Civil Servant',
+    designation: 'Minimum Wage Earner · Wants to Retire Well',
+    quote: 'Thank you so much for the session yesterday. I am a civil servant and earn minimum wage. I want to start investing for retirement. Please help me, I need to get my finances right.',
+    src: '/videos/testimonial-1.mp4',
+    poster: '/images/video-poster.svg',
+  },
+  {
+    name: 'Lagos State Worker',
+    designation: 'Mother of Two · Government Employee',
+    quote: "I am a mother of two and I work with Lagos state government. I want to start saving and investing for my two children and also want to start investing for retirement. I don't know what to do, pls help a sister. Thank you for all you do.",
+    src: '/videos/testimonial-2.mp4',
+    poster: '/images/video-poster.svg',
+  },
 ]
 
 export default function TestimonialsSection() {
@@ -190,7 +216,7 @@ export default function TestimonialsSection() {
             <video
               key={t.src}
               src={t.src}
-              poster="/images/video-poster.svg"
+              poster={t.poster}
               className="testimonial-image"
               style={{ ...videoStyle(index), backgroundColor: '#EDE8DC' }}
               playsInline
