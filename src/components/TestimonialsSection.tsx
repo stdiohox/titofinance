@@ -192,7 +192,7 @@ export default function TestimonialsSection() {
               src={t.src}
               poster="/images/video-poster.svg"
               className="testimonial-image"
-              style={videoStyle(index)}
+              style={{ ...videoStyle(index), backgroundColor: '#EDE8DC' }}
               playsInline
               controls
               preload="metadata"
