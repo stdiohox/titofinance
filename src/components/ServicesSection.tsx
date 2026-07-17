@@ -30,8 +30,11 @@ export default function ServicesSection() {
               Built for Every Stage<br />of Your Journey
             </h2>
           </div>
-          <button
+          <a
             data-reveal
+            href="https://wa.me/2348184750870"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 shrink-0"
             style={{
               background: '#2D5A27',
@@ -43,6 +46,7 @@ export default function ServicesSection() {
               paddingRight: '0.375rem',
               paddingTop: '0.5rem',
               paddingBottom: '0.5rem',
+              textDecoration: 'none',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#1A3A16')}
             onMouseLeave={e => (e.currentTarget.style.background = '#2D5A27')}
@@ -60,7 +64,7 @@ export default function ServicesSection() {
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </span>
-          </button>
+          </a>
         </div>
 
         {/* Card grid */}

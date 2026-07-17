@@ -65,7 +65,10 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4">
           {/* CTA — hidden on mobile; the hamburger overlay carries the booking CTA there */}
-          <button
+          <a
+            href="https://wa.me/2348184750870"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden md:inline-flex items-center gap-3 rounded-full transition-colors duration-200 md:mr-6"
             style={{
               background: scrolled ? '#2D5A27' : 'white',
@@ -77,6 +80,7 @@ export default function Navbar() {
               paddingRight: '0.375rem',
               paddingTop: '0.5rem',
               paddingBottom: '0.5rem',
+              textDecoration: 'none',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = scrolled ? '#1A3A16' : '#F8F5EE')}
             onMouseLeave={e => (e.currentTarget.style.background = scrolled ? '#2D5A27' : 'white')}
@@ -94,7 +98,7 @@ export default function Navbar() {
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </span>
-          </button>
+          </a>
 
           {/* Hamburger — mobile only */}
           <button
@@ -158,7 +162,11 @@ export default function Navbar() {
           </a>
         ))}
 
-        <button
+        <a
+          href="https://wa.me/2348184750870"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMenuOpen(false)}
           className="inline-flex items-center justify-center gap-3 rounded-full transition-colors duration-200 w-full max-w-xs"
           style={{
             background: '#2D5A27',
@@ -170,6 +178,7 @@ export default function Navbar() {
             paddingRight: '0.5rem',
             paddingTop: '0.625rem',
             paddingBottom: '0.625rem',
+            textDecoration: 'none',
           }}
           onMouseEnter={e => (e.currentTarget.style.background = '#1A3A16')}
           onMouseLeave={e => (e.currentTarget.style.background = '#2D5A27')}
@@ -187,7 +196,7 @@ export default function Navbar() {
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </span>
-        </button>
+        </a>
       </div>
     </nav>
   )

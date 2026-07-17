@@ -147,8 +147,11 @@ export default function DarkQuoteSection() {
           ))}
         </div>
 
-        <button
+        <a
           data-reveal
+          href="https://wa.me/2348184750870"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"
           style={{
             background: '#F8F5EE',
@@ -160,6 +163,7 @@ export default function DarkQuoteSection() {
             paddingRight: '0.5rem',
             paddingTop: '0.625rem',
             paddingBottom: '0.625rem',
+            textDecoration: 'none',
           }}
           onMouseEnter={e => (e.currentTarget.style.background = 'white')}
           onMouseLeave={e => (e.currentTarget.style.background = '#F8F5EE')}
@@ -175,7 +179,7 @@ export default function DarkQuoteSection() {
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </span>
-        </button>
+        </a>
 
       </div>
     </section>
