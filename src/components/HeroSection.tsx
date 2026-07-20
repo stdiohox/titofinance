@@ -140,38 +140,6 @@ export default function HeroSection() {
               </a>
             </div>
 
-            {/* Stats — pinned to bottom */}
-            <div className="mt-auto hidden md:flex flex-wrap gap-10 pb-2">
-              {[
-                { number: '15+', label: 'Countries' },
-                { number: '$300K+', label: 'Education Invested' },
-                { number: '2', label: 'Major Banks' },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div style={{
-                    fontFamily: 'Cormorant Garamond, serif',
-                    fontSize: 'clamp(2rem, 3vw, 2.8rem)',
-                    fontWeight: 500,
-                    color: '#C9A84C',
-                    letterSpacing: '-0.03em',
-                    lineHeight: 1
-                  }}>
-                    {stat.number}
-                  </div>
-                  <div style={{
-                    fontFamily: 'DM Mono, monospace',
-                    fontSize: '10px',
-                    color: 'rgba(255,255,255,0.45)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.15em',
-                    marginTop: '0.25rem'
-                  }}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
           </div>
 
           {/* Scroll indicator — hidden on mobile where it collides with the bottom-pinned CTA */}
