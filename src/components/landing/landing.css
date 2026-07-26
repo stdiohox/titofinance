@@ -1,0 +1,72 @@
+/* Responsive helpers for the standalone landing pages.
+   Scoped to landing-only class names so nothing on the main site is touched. */
+
+@keyframes scrollLine {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes scrollArrow {
+  0%, 100% { opacity: 0.3; transform: translateY(-4px); }
+  50% { opacity: 1; transform: translateY(4px); }
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-visual {
+  display: none;
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.reality-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.hover-underline:hover {
+  text-decoration: underline !important;
+}
+
+@media (min-width: 768px) {
+  .pain-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+
+  .hero-visual {
+    display: block;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .reality-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: stretch;
+  }
+}
