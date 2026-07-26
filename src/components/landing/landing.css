@@ -11,6 +11,12 @@
   50% { opacity: 1; transform: translateY(4px); }
 }
 
+@media (max-width: 640px) {
+  .stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr;
