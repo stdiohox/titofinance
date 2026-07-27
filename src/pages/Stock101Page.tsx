@@ -4,7 +4,7 @@ import '../components/landing/landing.css'
 import PullText from '../components/landing/PullText'
 import { useReveal } from '../components/landing/useReveal'
 import { WorldMap } from '@/components/ui/WorldMap'
-import ScrollFAQAccordion from '@/components/ui/ScrollFaqAccordion'
+import LandingFaq from '@/components/landing/LandingFaq'
 
 // ── Design tokens ──────────────────────────────────────────────
 const BG_PRIMARY = '#F8F5EE'
@@ -756,42 +756,60 @@ export default function Stock101Page() {
         </div>
       </section>
 
-      {/* ============ FAQ — scroll-driven accordion ============ */}
-      <section style={{ background: '#F8F5EE', paddingTop: '96px', overflow: 'hidden' }}>
-        <ScrollFAQAccordion
-          data={[
-            {
-              id: 1,
-              question: 'Is this really free?',
-              answer:
-                "Yes. Stock 101 is Tito's way of making financial education accessible to everyone — regardless of where you're starting from. No hidden fees, no credit card required.",
-            },
-            {
-              id: 2,
-              question: 'Do I need any experience?',
-              answer:
-                'None at all. This session is designed specifically for beginners. If you can use a smartphone, you can attend. Tito starts from the very basics.',
-            },
-            {
-              id: 3,
-              question: "I'm in the US/UK — is this relevant to me?",
-              answer:
-                "Absolutely. Whether you're investing in Nigerian stocks, US markets, or both, the fundamentals are the same. Tito covers both landscapes in every session.",
-            },
-            {
-              id: 4,
-              question: 'What happens after I register?',
-              answer:
-                "You'll receive a WhatsApp message with the session details, date, and link to join. The confirmation usually arrives within a few hours.",
-            },
-            {
-              id: 5,
-              question: 'I missed a previous session. Can I still join?',
-              answer:
-                "Yes — register and you'll be added to the next available date. Sessions run regularly so you won't have to wait long.",
-            },
-          ]}
-        />
+      {/* ============ FAQ — static accordion ============ */}
+      <section style={{ background: '#FFFFFF', padding: '96px 24px' }}>
+        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <p
+              style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '11px',
+                letterSpacing: '0.12em',
+                color: '#C9A84C',
+                textTransform: 'uppercase',
+                marginBottom: '12px',
+              }}
+            >
+              FAQ
+            </p>
+            <h2
+              style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: '48px',
+                fontWeight: 400,
+                color: '#0D0B08',
+                lineHeight: 1.2,
+              }}
+            >
+              Quick Answers
+            </h2>
+          </div>
+
+          <LandingFaq
+            items={[
+              {
+                q: 'Is this really free?',
+                a: "Yes. Stock 101 is Tito's way of making financial education accessible to everyone — regardless of where you're starting from. No hidden fees, no credit card required.",
+              },
+              {
+                q: 'Do I need any experience?',
+                a: 'None at all. This session is designed specifically for beginners. If you can use a smartphone, you can attend. Tito starts from the very basics.',
+              },
+              {
+                q: "I'm in the US/UK — is this relevant to me?",
+                a: "Absolutely. Whether you're investing in Nigerian stocks, US markets, or both, the fundamentals are the same. Tito covers both landscapes in every session.",
+              },
+              {
+                q: 'What happens after I register?',
+                a: "You'll receive a WhatsApp message with the session details, date, and link to join. The confirmation usually arrives within a few hours.",
+              },
+              {
+                q: 'I missed a previous session. Can I still join?',
+                a: "Yes — register and you'll be added to the next available date. Sessions run regularly so you won't have to wait long.",
+              },
+            ]}
+          />
+        </div>
       </section>
 
       {/* ============ FINAL CTA ============ */}
