@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import { TrendingUp, BarChart2, DollarSign, PieChart, ShieldOff, ArrowRight, Menu, X } from 'lucide-react'
 import '../components/landing/landing.css'
-import LandingFaq from '../components/landing/LandingFaq'
 import PullText from '../components/landing/PullText'
 import { useReveal } from '../components/landing/useReveal'
 import { WorldMap } from '@/components/ui/WorldMap'
+import ScrollFAQAccordion from '@/components/ui/ScrollFaqAccordion'
 
 // ── Design tokens ──────────────────────────────────────────────
 const BG_PRIMARY = '#F8F5EE'
@@ -43,14 +43,6 @@ const whoFor = [
   'You\'re Nigerian in the diaspora and don\'t know how to invest in US or UK markets',
   'You\'ve tried to learn investing before but gave up because it felt too technical',
   'You\'re starting from zero — no portfolio, no broker, no prior knowledge',
-]
-
-const faqItems = [
-  { q: 'Is this really free?', a: 'Yes. Stock 101 is Tito\'s way of making financial education accessible to everyone — regardless of where you\'re starting from.' },
-  { q: 'Do I need any experience?', a: 'None at all. This session is designed specifically for beginners. If you can use a smartphone, you can attend.' },
-  { q: 'I\'m in the US/UK — is this relevant to me?', a: 'Absolutely. Whether you\'re investing in Nigerian stocks, US markets, or both, the fundamentals are the same. Tito covers both landscapes.' },
-  { q: 'What happens after I register?', a: 'You\'ll receive a WhatsApp message with the session details, date, and link to join.' },
-  { q: 'I missed a previous session. Can I still join?', a: 'Yes — register and you\'ll be added to the next available date.' },
 ]
 
 const navLinks = [
@@ -299,51 +291,170 @@ const sectionHeading = (size = 'clamp(34px, 5vw, 52px)'): CSSProperties => ({
   lineHeight: 1.15,
 })
 
+// ── Circular progress-ring stat ────────────────────────────────
+const CircularStat = ({
+  value,
+  suffix = '',
+  prefix = '',
+  label,
+  percentage,
+  color = '#C9A84C',
+  trackColor = 'rgba(26,58,22,0.08)',
+  size = 160,
+  strokeWidth = 8,
+  duration = 2000,
+}: {
+  value: number
+  suffix?: string
+  prefix?: string
+  label: string
+  percentage: number
+  color?: string
+  trackColor?: string
+  size?: number
+  strokeWidth?: number
+  duration?: number
+}) => {
+  const [progress, setProgress] = useState(0)
+  const [count, setCount] = useState(0)
+  const [started, setStarted] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  const radius = (size - strokeWidth * 2) / 2
+  const circumference = 2 * Math.PI * radius
+  const strokeDashoffset = circumference - (progress / 100) * circumference
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true)
+        }
+      },
+      { threshold: 0.4 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [started])
+
+  useEffect(() => {
+    if (!started) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setProgress(percentage)
+      setCount(value)
+      return
+    }
+    let startTime: number
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp
+      const elapsed = timestamp - startTime
+      const t = Math.min(elapsed / duration, 1)
+      // Cubic ease out
+      const eased = 1 - Math.pow(1 - t, 3)
+      setProgress(eased * percentage)
+      setCount(Math.round(eased * value))
+      if (t < 1) requestAnimationFrame(animate)
+    }
+    requestAnimationFrame(animate)
+  }, [started, percentage, value, duration])
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '16px',
+      }}
+    >
+      {/* Ring */}
+      <div style={{ position: 'relative', width: '100%', maxWidth: size, aspectRatio: '1', margin: '0 auto' }}>
+        <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} style={{ transform: 'rotate(-90deg)' }}>
+          {/* Track (background ring) — dashed segments like reference */}
+          {Array.from({ length: 32 }).map((_, i) => {
+            const angle = (i / 32) * 2 * Math.PI
+            const gap = 0.08
+            const segStart = angle + gap
+            const segEnd = angle + (2 * Math.PI) / 32 - gap
+            const x1 = size / 2 + radius * Math.cos(segStart)
+            const y1 = size / 2 + radius * Math.sin(segStart)
+            const x2 = size / 2 + radius * Math.cos(segEnd)
+            const y2 = size / 2 + radius * Math.sin(segEnd)
+            const largeArc = segEnd - segStart > Math.PI ? 1 : 0
+            return (
+              <path
+                key={i}
+                d={`M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}`}
+                fill="none"
+                stroke={trackColor}
+                strokeWidth={strokeWidth}
+                strokeLinecap="round"
+              />
+            )
+          })}
+
+          {/* Progress arc — solid, smooth */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke={color}
+            strokeWidth={strokeWidth + 1}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            style={{ transition: 'stroke-dashoffset 0.05s linear' }}
+          />
+        </svg>
+
+        {/* Center content */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '2px',
+          }}
+        >
+          <span
+            style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: size === 160 ? '36px' : '28px',
+              fontWeight: 500,
+              color: '#0D0B08',
+              lineHeight: 1,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            {prefix}
+            {count}
+            {suffix}
+          </span>
+          <span
+            style={{
+              fontFamily: 'DM Mono, monospace',
+              fontSize: '9px',
+              letterSpacing: '0.1em',
+              color: '#9A9A9A',
+              textTransform: 'uppercase',
+            }}
+          >
+            {label}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Page ───────────────────────────────────────────────────────
 export default function Stock101Page() {
   useReveal()
-
-  const useCountUp = (
-    end: number,
-    duration: number = 2000,
-    startOnView: boolean = true
-  ) => {
-    const [count, setCount] = useState(0)
-    const [hasStarted, setHasStarted] = useState(false)
-    const ref = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-      if (!startOnView) {
-        setHasStarted(true)
-        return
-      }
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !hasStarted) {
-            setHasStarted(true)
-          }
-        },
-        { threshold: 0.5 }
-      )
-      if (ref.current) observer.observe(ref.current)
-      return () => observer.disconnect()
-    }, [hasStarted, startOnView])
-
-    useEffect(() => {
-      if (!hasStarted) return
-      let startTime: number
-      const step = (timestamp: number) => {
-        if (!startTime) startTime = timestamp
-        const progress = Math.min((timestamp - startTime) / duration, 1)
-        const eased = 1 - Math.pow(1 - progress, 3)
-        setCount(Math.floor(eased * end))
-        if (progress < 1) requestAnimationFrame(step)
-      }
-      requestAnimationFrame(step)
-    }, [hasStarted, end, duration])
-
-    return { count, ref }
-  }
 
   return (
     <div id="top" style={{ background: BG_PRIMARY, color: INK, overflowX: 'hidden' }}>
@@ -593,76 +704,30 @@ export default function Stock101Page() {
             <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', color: '#4A4A4A', lineHeight: 1.8, marginBottom: '2rem' }}>
               He holds an MBA from Washington University's Olin Business School and has visited 15+ countries studying how people in different economies build wealth. Today he teaches everyday Nigerians to invest with structure, discipline, and confidence.
             </p>
-            {/* Stats row */}
-            {(() => {
-              const stat1 = useCountUp(15, 2000)
-              const stat2 = useCountUp(2, 1500)
-              const stat3 = useCountUp(300, 2500)
-              const stat4 = useCountUp(100, 2000)
-
-              return (
-                <div
-                  ref={stat1.ref}
-                  className="stats-grid-4"
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
-                    gap: '0',
-                    marginTop: '40px',
-                    border: '1px solid rgba(26,58,22,0.1)',
-                    borderRadius: '16px',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {/* Stat 1 */}
-                  <div style={{ padding: '28px 20px', textAlign: 'center', borderRight: '1px solid rgba(26,58,22,0.1)', background: 'rgba(26,58,22,0.02)', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '40px', fontWeight: 500, color: '#1A3A16', lineHeight: 1, marginBottom: '4px' }}>
-                      {stat1.count}<span style={{ color: '#C9A84C' }}>+</span>
-                    </div>
-                    <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '9px', letterSpacing: '0.12em', color: '#6B6B6B', textTransform: 'uppercase' }}>
-                      Countries
-                    </div>
-                    <div style={{ position: 'absolute', bottom: '-8px', right: '-8px', fontSize: '48px', opacity: 0.04, lineHeight: 1 }}>🌍</div>
-                  </div>
-
-                  {/* Stat 2 */}
-                  <div ref={stat2.ref} style={{ padding: '28px 20px', textAlign: 'center', borderRight: '1px solid rgba(26,58,22,0.1)', background: '#1A3A16', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '40px', fontWeight: 500, color: '#C9A84C', lineHeight: 1, marginBottom: '4px' }}>
-                      {stat2.count}
-                    </div>
-                    <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '9px', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
-                      Major Banks
-                    </div>
-                    <div style={{ position: 'absolute', bottom: '-8px', right: '-8px', fontSize: '48px', opacity: 0.06, lineHeight: 1 }}>🏦</div>
-                  </div>
-
-                  {/* Stat 3 */}
-                  <div ref={stat3.ref} style={{ padding: '28px 20px', textAlign: 'center', borderRight: '1px solid rgba(26,58,22,0.1)', background: 'rgba(26,58,22,0.02)', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '40px', fontWeight: 500, color: '#1A3A16', lineHeight: 1, marginBottom: '4px' }}>
-                      ${stat3.count}
-                      <span style={{ color: '#C9A84C' }}>K+</span>
-                    </div>
-                    <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '9px', letterSpacing: '0.12em', color: '#6B6B6B', textTransform: 'uppercase' }}>
-                      Education
-                    </div>
-                    <div style={{ position: 'absolute', bottom: '-8px', right: '-8px', fontSize: '48px', opacity: 0.04, lineHeight: 1 }}>🎓</div>
-                  </div>
-
-                  {/* Stat 4 */}
-                  <div ref={stat4.ref} style={{ padding: '28px 20px', textAlign: 'center', background: '#1A3A16', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '40px', fontWeight: 500, color: '#C9A84C', lineHeight: 1, marginBottom: '4px' }}>
-                      {stat4.count}
-                      <span style={{ fontSize: '36px', color: 'rgba(201,168,76,0.7)' }}>K+</span>
-                    </div>
-                    <div style={{ fontFamily: 'DM Mono, monospace', fontSize: '9px', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
-                      Followers
-                    </div>
-                    <div style={{ position: 'absolute', bottom: '-8px', right: '-8px', fontSize: '48px', opacity: 0.06, lineHeight: 1 }}>📱</div>
-                  </div>
-                </div>
-              )
-            })()}
           </div>
+        </div>
+
+        {/* Stats — circular progress-ring gauges (full-width row) */}
+        <div
+          className="stats-grid-4"
+          data-reveal
+          style={{
+            maxWidth: '1024px',
+            margin: '48px auto 0',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '8px',
+            padding: '40px 32px',
+            background: '#FFFFFF',
+            border: '1px solid rgba(26,58,22,0.08)',
+            borderRadius: '24px',
+            boxShadow: '0 4px 32px rgba(0,0,0,0.04)',
+          }}
+        >
+          <CircularStat value={15} suffix="+" label="Countries" percentage={75} color="#C9A84C" trackColor="rgba(201,168,76,0.12)" size={160} duration={2200} />
+          <CircularStat value={2} label="Major Banks" percentage={40} color="#1A3A16" trackColor="rgba(26,58,22,0.08)" size={160} duration={1500} />
+          <CircularStat value={300} prefix="$" suffix="K+" label="Revenue" percentage={90} color="#C9A84C" trackColor="rgba(201,168,76,0.12)" size={160} duration={2500} />
+          <CircularStat value={100} suffix="K+" label="Followers" percentage={65} color="#1A3A16" trackColor="rgba(26,58,22,0.08)" size={160} duration={2000} />
         </div>
       </section>
 
@@ -691,15 +756,42 @@ export default function Stock101Page() {
         </div>
       </section>
 
-      {/* ============ FAQ ============ */}
-      <section style={{ background: BG_ALT, padding: '6rem 1.5rem' }}>
-        <div data-reveal style={{ maxWidth: '672px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <p style={eyebrow}>FAQ</p>
-            <h2 style={sectionHeading('clamp(32px, 4.5vw, 48px)')}>Quick Answers</h2>
-          </div>
-          <LandingFaq items={faqItems} />
-        </div>
+      {/* ============ FAQ — scroll-driven accordion ============ */}
+      <section style={{ background: '#F8F5EE', paddingTop: '96px', overflow: 'hidden' }}>
+        <ScrollFAQAccordion
+          data={[
+            {
+              id: 1,
+              question: 'Is this really free?',
+              answer:
+                "Yes. Stock 101 is Tito's way of making financial education accessible to everyone — regardless of where you're starting from. No hidden fees, no credit card required.",
+            },
+            {
+              id: 2,
+              question: 'Do I need any experience?',
+              answer:
+                'None at all. This session is designed specifically for beginners. If you can use a smartphone, you can attend. Tito starts from the very basics.',
+            },
+            {
+              id: 3,
+              question: "I'm in the US/UK — is this relevant to me?",
+              answer:
+                "Absolutely. Whether you're investing in Nigerian stocks, US markets, or both, the fundamentals are the same. Tito covers both landscapes in every session.",
+            },
+            {
+              id: 4,
+              question: 'What happens after I register?',
+              answer:
+                "You'll receive a WhatsApp message with the session details, date, and link to join. The confirmation usually arrives within a few hours.",
+            },
+            {
+              id: 5,
+              question: 'I missed a previous session. Can I still join?',
+              answer:
+                "Yes — register and you'll be added to the next available date. Sessions run regularly so you won't have to wait long.",
+            },
+          ]}
+        />
       </section>
 
       {/* ============ FINAL CTA ============ */}
