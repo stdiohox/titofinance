@@ -125,3 +125,35 @@ body {
     border-top: none;
   }
 }
+
+/* ─── Footer (Tito Finance rebuild) responsive ─── */
+@media (max-width: 860px) {
+  .tf-footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .tf-footer-left {
+    min-height: auto !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .tf-footer-right {
+    padding: 24px !important;
+  }
+  .tf-footer-nav-cols {
+    gap: 32px !important;
+    padding-top: 48px !important;
+  }
+  .tf-footer-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 24px !important;
+  }
+  .tf-footer-subscribe {
+    width: 100% !important;
+  }
+  .tf-footer-badge {
+    right: 12px !important;
+    top: -24px !important;
+  }
+}
