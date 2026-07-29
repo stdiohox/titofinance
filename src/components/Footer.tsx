@@ -175,7 +175,7 @@ export default function Footer() {
         </div>
         <div className="flex justify-between items-center flex-wrap gap-4 mt-8">
           <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', color: 'rgba(255,255,255,0.25)' }}>
-            © 2025 Tito Finance. All rights reserved.
+            © 2026 Tito Finance. All rights reserved.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
             {[
