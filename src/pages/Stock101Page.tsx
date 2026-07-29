@@ -906,7 +906,7 @@ export default function Stock101Page() {
       </section>
 
       {/* ============ FOOTER (inline two-card) ============ */}
-      <footer style={{ background: '#0D0D0D', padding: '5rem 1.5rem 3rem' }}>
+      <footer style={{ background: 'linear-gradient(180deg, #0D0B08 0%, #1A3A16 100%)', padding: '5rem 1.5rem 3rem' }}>
         <div
           className="tf-footer-grid"
           style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '340px 1fr', gap: '16px' }}
@@ -927,16 +927,30 @@ export default function Stock101Page() {
               boxShadow: '0 12px 40px rgba(26,58,22,0.3)',
             }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0, opacity: 0.18, pointerEvents: 'none' }}
-            >
-              <source src="/videos/stock101-hero.mp4" type="video/mp4" />
-            </video>
+            <img
+              src="/images/titobi-authority.jpg"
+              alt="Titobi Oreolorun"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center 20%',
+                zIndex: 0,
+                opacity: 0.45,
+                pointerEvents: 'none',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to bottom, rgba(26,58,22,0.55) 0%, rgba(26,58,22,0.85) 100%)',
+                zIndex: 0,
+                pointerEvents: 'none',
+              }}
+            />
 
             {/* Logo */}
             <div style={{ position: 'relative', zIndex: 1 }}>
@@ -1037,18 +1051,16 @@ export default function Stock101Page() {
                   justifyContent: 'center',
                 }}
               >
-                <span
+                <img
+                  src="/tf-icon-white.png"
+                  alt="Tito Finance"
                   style={{
-                    fontFamily: 'Cormorant Garamond, serif',
-                    fontSize: '32px',
-                    fontWeight: 700,
-                    color: 'white',
-                    letterSpacing: '-0.04em',
+                    width: '48px',
+                    height: '48px',
+                    objectFit: 'contain',
                     transform: 'rotate(8deg)',
                   }}
-                >
-                  TF
-                </span>
+                />
               </div>
               <div
                 style={{ display: 'flex', gap: '6px', transform: 'rotate(-3deg)', marginTop: '8px', fontFamily: 'DM Mono, monospace', fontSize: '12px', color: '#9CA3AF' }}
@@ -1094,18 +1106,6 @@ export default function Stock101Page() {
             <div className="tf-footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '40px' }}>
               <div>
                 <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: '#9CA3AF' }}>© 2026 Tito Finance. All rights reserved.</p>
-                <p
-                  style={{
-                    fontFamily: 'DM Mono, monospace',
-                    fontSize: '10px',
-                    color: '#C9A84C',
-                    marginTop: '4px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
-                  }}
-                >
-                  Built by Samphics Digital
-                </p>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
