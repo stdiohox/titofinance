@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import '../components/landing/landing.css'
 import LandingNav from '../components/landing/LandingNav'
 import LandingFaq from '../components/landing/LandingFaq'
@@ -106,187 +107,297 @@ function CheckItem({ text }: { text: string }) {
   )
 }
 
+// Boomerang video background — captures the hero clip's frames, then loops
+// them forward/reverse for a seamless ping-pong effect.
+const BoomerangVideoBg = () => {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const frames = useRef<ImageData[]>([])
+  const frameIndex = useRef(0)
+  const direction = useRef(1)
+  const capturing = useRef(false)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    const canvas = canvasRef.current
+    if (!video || !canvas) return
+
+    const MAX_WIDTH = 960
+    let offscreen: HTMLCanvasElement | null = null
+    let offCtx: CanvasRenderingContext2D | null = null
+
+    const startCapture = () => {
+      if (capturing.current) return
+      // 'play' can fire before metadata loads; wait until the video has real
+      // dimensions so getImageData doesn't throw "source width is 0".
+      if (!video.videoWidth || !video.videoHeight) {
+        setTimeout(startCapture, 50)
+        return
+      }
+      capturing.current = true
+      offscreen = document.createElement('canvas')
+      const scale = Math.min(1, MAX_WIDTH / video.videoWidth)
+      offscreen.width = Math.round(video.videoWidth * scale)
+      offscreen.height = Math.round(video.videoHeight * scale)
+      offCtx = offscreen.getContext('2d')
+
+      const capture = () => {
+        if (!capturing.current || !offCtx || !offscreen) return
+        if (video.ended || video.paused) return
+        offCtx.drawImage(video, 0, 0, offscreen.width, offscreen.height)
+        const frame = offCtx.getImageData(0, 0, offscreen.width, offscreen.height)
+        frames.current.push(frame)
+        if (!video.ended) requestAnimationFrame(capture)
+      }
+      requestAnimationFrame(capture)
+    }
+
+    const startPlayback = () => {
+      if (!canvas || frames.current.length === 0) return
+      canvas.width = frames.current[0].width
+      canvas.height = frames.current[0].height
+      if (video) video.style.display = 'none'
+      canvas.style.display = 'block'
+
+      intervalRef.current = setInterval(() => {
+        if (frames.current.length === 0) return
+
+        // Skip every other frame for smoother slow motion
+        frameIndex.current += direction.current * 2
+
+        // Clamp to valid range
+        if (frameIndex.current >= frames.current.length - 1) {
+          frameIndex.current = frames.current.length - 1
+          direction.current = -1
+        } else if (frameIndex.current <= 0) {
+          frameIndex.current = 0
+          direction.current = 1
+        }
+
+        const ctx = canvasRef.current?.getContext('2d')
+        if (ctx && frames.current[frameIndex.current]) {
+          ctx.putImageData(frames.current[frameIndex.current], 0, 0)
+        }
+      }, 1000 / 12)
+    }
+
+    video.addEventListener('play', startCapture)
+    video.addEventListener('ended', () => {
+      capturing.current = false
+      startPlayback()
+    })
+
+    video.play().catch(() => {})
+
+    return () => {
+      capturing.current = false
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
+  }, [])
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, zIndex: 0, transform: 'scale(1.05)', transformOrigin: 'top', overflow: 'hidden' }}>
+      <video
+        ref={videoRef}
+        src="/videos/retirement-hero.mp4"
+        muted
+        playsInline
+        preload="auto"
+        crossOrigin="anonymous"
+        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+      />
+      <canvas
+        ref={canvasRef}
+        style={{ display: 'none', width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
+      />
+      {/* Dark overlay for readability */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(135deg, rgba(26,58,22,0.88) 0%, rgba(26,58,22,0.65) 50%, rgba(26,58,22,0.80) 100%)',
+        }}
+      />
+      {/* Film grain for a premium, intentional finish */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          opacity: 0.035,
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
+    </div>
+  )
+}
+
 export default function RetirementPage() {
   useReveal()
 
   return (
     <div style={{ background: IVORY, color: INK, overflowX: 'hidden' }}>
-      <LandingNav theme="green" />
+      <LandingNav />
 
       {/* ============ SECTION 1 — HERO ============ */}
-      <section
-        style={{
-          background: FOREST,
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '7rem clamp(1.5rem, 5vw, 4rem) 4rem',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Ambient video background */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            position: 'absolute',
-            inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            zIndex: 0,
-            opacity: 0.28,
-          }}
-        >
-          <source src="/videos/retirement-hero.mp4" type="video/mp4" />
-        </video>
+      <section style={{ position: 'relative', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden' }}>
 
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(135deg, rgba(26,58,22,0.92) 0%, rgba(26,58,22,0.72) 50%, rgba(26,58,22,0.90) 100%)',
-            zIndex: 1,
-          }}
-        />
+        {/* Boomerang video background */}
+        <BoomerangVideoBg />
 
-        {/* All hero content — layered above the video */}
+        {/* Hero content */}
         <div
           style={{
             position: 'relative',
-            zIndex: 2,
-            height: '100%',
-            width: '100%',
-            alignSelf: 'stretch',
+            zIndex: 10,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            paddingTop: 'clamp(100px, 15vh, 160px)',
+            paddingLeft: '24px',
+            paddingRight: '24px',
           }}
         >
-        <PullText
-          size="clamp(160px, 24vw, 280px)"
-          color="rgba(255,255,255,0.04)"
-          position={{ top: '50%', right: '2rem', transform: 'translateY(-50%)' }}
-        >
-          NOW
-        </PullText>
-        <div style={{ maxWidth: maxW, margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}>
-          <div data-reveal style={{ maxWidth: '46rem' }}>
-            <p style={eyebrow}>Free Strategy Session · Retirement Planning</p>
-            <h1
-              style={{
-                fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 'clamp(48px, 6vw, 72px)',
-                fontWeight: 300,
-                lineHeight: 1.1,
-                color: 'white',
-                marginBottom: '1.5rem',
-                maxWidth: '15ch',
-              }}
-            >
-              Retirement Is Coming Whether You're Ready or Not.
-            </h1>
-            <p
-              style={{
-                fontFamily: 'DM Sans, sans-serif',
-                fontSize: '18px',
-                color: 'rgba(255,255,255,0.7)',
-                maxWidth: '34rem',
-                lineHeight: 1.7,
-                marginBottom: '2rem',
-              }}
-            >
-              Most Nigerians will reach retirement age with nothing but a pension that barely covers the basics.
-              This free session shows you exactly how to build a retirement portfolio that actually works.
-            </p>
+          {/* Eyebrow */}
+          <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: '#C9A84C', textTransform: 'uppercase', marginBottom: '24px' }}>
+            Free Strategy Session · Retirement Planning
+          </p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', marginTop: '2rem' }}>
-              <a
-                href="#register"
-                style={{
-                  background: GOLD,
-                  color: FOREST,
-                  borderRadius: '999px',
-                  padding: '1rem 2rem',
-                  fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '15px',
-                  fontWeight: 500,
-                  textDecoration: 'none',
-                  transition: 'opacity 0.2s ease',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-              >
-                Book My Free Strategy Session →
-              </a>
-              <a
-                href="https://wa.me/2348184750870"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover-underline"
-                style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}
-              >
-                Or chat on WhatsApp →
-              </a>
-            </div>
-
-            <p
-              style={{
-                fontFamily: 'DM Mono, monospace',
-                fontSize: '10px',
-                color: 'rgba(255,255,255,0.35)',
-                letterSpacing: '0.12em',
-                marginTop: '2rem',
-              }}
-            >
-              FREE · 1-ON-1 WITH TITO · NIGERIANS AT HOME & ABROAD
-            </p>
-          </div>
-        </div>
-
-          {/* Scroll indicator */}
-          <div
-            onClick={() => document.getElementById('section-2')?.scrollIntoView({ behavior: 'smooth' })}
+          {/* H1 */}
+          <h1
             style={{
-              position: 'absolute',
-              bottom: '40px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '8px',
-              cursor: 'pointer',
-              opacity: 0.55,
-              zIndex: 2,
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: 'clamp(48px, 8vw, 96px)',
+              fontWeight: 300,
+              color: '#FFFFFF',
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
+              marginBottom: '24px',
+              maxWidth: '800px',
             }}
           >
-            <span
-              style={{
-                fontFamily: 'DM Mono, monospace',
-                fontSize: '10px',
-                letterSpacing: '0.15em',
-                color: 'white',
-                textTransform: 'uppercase',
-              }}
-            >
-              Scroll Down
-            </span>
-            <div
-              style={{
-                width: '1px',
-                height: '48px',
-                background: 'linear-gradient(to bottom, white, transparent)',
-                animation: 'scrollLine 1.5s ease-in-out infinite',
-              }}
-            />
-            <span style={{ color: 'white', fontSize: '16px', animation: 'scrollArrow 1.5s ease-in-out infinite' }}>↓</span>
+            Retirement Is Coming Whether You're Ready
+            <em style={{ color: '#C9A84C', fontStyle: 'italic' }}> or Not.</em>
+          </h1>
+
+          {/* Subline */}
+          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 'clamp(15px, 2vw, 18px)', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, maxWidth: '520px', marginBottom: '40px' }}>
+            Most Nigerians will reach retirement age with nothing but a pension that barely covers the basics. This free session changes that.
+          </p>
+
+          {/* CTA */}
+          <a
+            href="#register"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '14px 32px',
+              background: '#C9A84C',
+              color: '#1A3A16',
+              fontFamily: 'DM Sans, sans-serif',
+              fontSize: '15px',
+              fontWeight: 600,
+              borderRadius: '999px',
+              textDecoration: 'none',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#B8972B'
+              e.currentTarget.style.transform = 'translateY(-1px)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#C9A84C'
+              e.currentTarget.style.transform = 'translateY(0)'
+            }}
+          >
+            Book My Free Strategy Session →
+          </a>
+
+          {/* Trust bar */}
+          <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '10px', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginTop: '20px' }}>
+            FREE · 1-ON-1 WITH TITO · NIGERIANS AT HOME & ABROAD
+          </p>
+        </div>
+
+        {/* Bottom info panel — anchored to hero bottom */}
+        <div style={{ position: 'relative', zIndex: 10, marginTop: 'auto', width: '100%', maxWidth: '1000px', padding: '0 24px' }}>
+          <div
+            className="retirement-panel-inner"
+            style={{
+              background: 'rgba(248,245,238,0.95)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(26,58,22,0.12)',
+              borderBottom: 'none',
+              borderRadius: '20px 20px 0 0',
+              padding: '40px 48px 0 48px',
+              boxShadow: '0 -4px 40px rgba(0,0,0,0.15)',
+            }}
+          >
+            {/* Row 1 — 2 cols */}
+            <div className="retirement-panel-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '32px' }}>
+              <div>
+                <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: 'rgba(13,11,8,0.45)', textTransform: 'uppercase', fontWeight: 500, marginBottom: '12px' }}>
+                  WHAT IS THIS SESSION?
+                </p>
+                <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 400, color: '#0D0B08', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
+                  A plan built for your<br />
+                  retirement reality.
+                </h2>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'rgba(13,11,8,0.6)', lineHeight: 1.75 }}>
+                  Retirement planning built for Nigerians — at home and in the diaspora. Tito shows you the accounts, assets, and strategies that actually work for your situation.
+                </p>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div style={{ height: '1px', background: 'rgba(26,58,22,0.1)', width: '100%' }} />
+
+            {/* Row 2 — 3 feature rows */}
+            <div className="retirement-feature-rows" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', padding: '12px 0 0 0' }}>
+              {[
+                { num: '01', label: 'Tax-Advantaged Accounts' },
+                { num: '02', label: 'Portfolio Building' },
+                { num: '03', label: 'Income in Retirement' },
+              ].map((item) => (
+                <a
+                  key={item.num}
+                  href="#register"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '14px 20px',
+                    background: 'rgba(26,58,22,0.04)',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(26,58,22,0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(26,58,22,0.04)'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', color: 'rgba(13,11,8,0.35)' }}>{item.num}</span>
+                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', fontWeight: 500, color: '#0D0B08' }}>{item.label}</span>
+                  </div>
+                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'rgba(13,11,8,0.3)' }}>→</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
+
       </section>
 
       {/* ============ SECTION 2 — REALITY CHECK ============ */}
@@ -369,7 +480,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 3 — WHAT YOU'LL LEARN ============ */}
-      <section style={{ background: INK, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
+      <section id="modules" style={{ background: INK, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <PullText size="clamp(180px, 30vw, 300px)" color="rgba(255,255,255,0.03)" position={{ bottom: '-2rem', right: '1rem' }}>
           6
         </PullText>
@@ -434,7 +545,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 5 — WHO IT'S FOR ============ */}
-      <section style={{ background: IVORY, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
+      <section id="who" style={{ background: IVORY, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: maxW, margin: '0 auto' }}>
           <div className="two-col" data-reveal>
             <div>
@@ -471,7 +582,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 6 — ABOUT TITO ============ */}
-      <section style={{ background: IVORY, padding: sectionPad }}>
+      <section id="about" style={{ background: IVORY, padding: sectionPad }}>
         <div style={{ maxWidth: maxW, margin: '0 auto' }}>
           <div className="two-col" data-reveal>
             <div style={{ background: CREAM, borderRadius: '20px', aspectRatio: '3 / 4', overflow: 'hidden' }}>

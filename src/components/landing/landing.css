@@ -79,3 +79,24 @@
     align-items: stretch;
   }
 }
+
+/* ─── Retirement hero bottom panel — responsive ─── */
+@media (max-width: 768px) {
+  .retirement-panel-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .retirement-feature-rows {
+    grid-template-columns: 1fr !important;
+  }
+  .retirement-panel-inner {
+    padding: 24px 20px 0 20px !important;
+  }
+}
+
+/* ─── Landing nav center links — hide on mobile ─── */
+@media (max-width: 768px) {
+  .landing-nav-links {
+    display: none !important;
+  }
+}
