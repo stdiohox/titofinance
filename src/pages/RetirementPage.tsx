@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import '../components/landing/landing.css'
 import LandingNav from '../components/landing/LandingNav'
-import LandingFaq from '../components/landing/LandingFaq'
 import LandingForm from '../components/landing/LandingForm'
 import RetirementShaderCards from '@/components/ui/RetirementShaderCards'
 import PullText from '../components/landing/PullText'
@@ -25,29 +24,6 @@ const eyebrow: React.CSSProperties = {
 
 const sectionPad = 'clamp(5rem, 9vw, 7.5rem) clamp(1.5rem, 5vw, 4rem)'
 const maxW = '1200px'
-
-const faqItems = [
-  {
-    q: 'Is this actually free?',
-    a: 'Yes. Tito offers this session free because he believes retirement planning advice shouldn\'t be locked behind a paywall.',
-  },
-  {
-    q: 'I\'m based in Nigeria — not the diaspora. Is this still relevant?',
-    a: 'Completely. Tito specifically covers retirement strategies for people earning in naira and building wealth outside Western financial systems.',
-  },
-  {
-    q: 'I\'m in my 50s. Is it too late?',
-    a: 'No. A session tailored to where you are right now is more valuable than a generic plan. Tito will work with your actual situation.',
-  },
-  {
-    q: 'What happens after the session?',
-    a: 'You\'ll have a clear picture of your next steps. If you want to continue working with Tito, he\'ll tell you what that looks like. There\'s no pressure.',
-  },
-  {
-    q: 'I already have a 401(k)/pension. Do I still need this?',
-    a: 'Probably yes. Most people with pension plans are significantly under-invested for the retirement lifestyle they want. Tito will help you see the gap.',
-  },
-]
 
 const PlusIcon = ({ className = '', style = {} }: { className?: string; style?: React.CSSProperties }) => (
   <svg
@@ -171,6 +147,101 @@ const BoomerangVideoBg = () => {
           zIndex: 1,
         }}
       />
+    </div>
+  )
+}
+
+const FaqItem = ({
+  question,
+  answer,
+  index,
+}: {
+  question: string
+  answer: string
+  index: number
+}) => {
+  const [open, setOpen] = useState(false)
+  const panelId = `faq-panel-${index}`
+
+  return (
+    <div
+      style={{
+        borderBottom: '1px solid rgba(26,58,22,0.12)',
+        padding: '20px 0',
+        cursor: 'pointer',
+      }}
+      onClick={() => setOpen(!open)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          setOpen((v) => !v)
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-expanded={open}
+      aria-controls={panelId}
+    >
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '16px',
+      }}>
+        <h3 style={{
+          fontFamily: 'DM Sans, sans-serif',
+          fontSize: '16px',
+          fontWeight: 500,
+          color: '#0D0B08',
+          lineHeight: 1.5,
+          margin: 0,
+        }}>
+          {question}
+        </h3>
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          style={{
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.3s ease',
+            flexShrink: 0,
+            color: '#C9A84C',
+          }}
+        >
+          <path
+            d="m4.5 7.2 3.793 3.793a1 1 0 0 0 1.414 0L13.5 7.2"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+      <div
+        id={panelId}
+        style={{
+          overflow: 'hidden',
+          maxHeight: open ? '300px' : '0',
+          opacity: open ? 1 : 0,
+          transform: open ? 'translateY(0)' : 'translateY(-8px)',
+          transition: 'all 0.4s ease',
+          paddingTop: open ? '12px' : '0',
+        }}
+      >
+        <p style={{
+          fontFamily: 'DM Sans, sans-serif',
+          fontSize: '14px',
+          color: 'rgba(13,11,8,0.6)',
+          lineHeight: 1.75,
+          margin: 0,
+        }}>
+          {answer}
+        </p>
+      </div>
     </div>
   )
 }
@@ -1059,20 +1130,153 @@ export default function RetirementPage() {
 
       {/* ============ SECTION 8 — FAQ ============ */}
       <section style={{ background: IVORY, padding: sectionPad }}>
-        <div style={{ maxWidth: '820px', margin: '0 auto' }} data-reveal>
-          <p style={eyebrow}>Questions</p>
-          <h2
-            style={{
+        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 24px' }}>
+          {/* Header */}
+          <div style={{ marginBottom: '64px' }}>
+            <p style={{
+              fontFamily: 'DM Mono, monospace',
+              fontSize: '11px',
+              letterSpacing: '0.12em',
+              color: '#C9A84C',
+              textTransform: 'uppercase',
+              marginBottom: '12px',
+            }}>FAQ</p>
+            <h2 style={{
               fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(36px, 5vw, 52px)',
+              fontSize: 'clamp(36px, 5vw, 56px)',
               fontWeight: 400,
-              color: INK,
-              marginBottom: '2.5rem',
+              color: '#0D0B08',
+              lineHeight: 1.15,
+            }}>Quick Answers</h2>
+          </div>
+
+          {/* 2-col layout: image left, accordion right */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '64px',
+              alignItems: 'start',
             }}
+            className="faq-two-col"
           >
-            Before You Register
-          </h2>
-          <LandingFaq items={faqItems} />
+            {/* Left — Titobi photo */}
+            <div
+              style={{
+                borderRadius: '20px',
+                overflow: 'hidden',
+                position: 'sticky',
+                top: '100px',
+                aspectRatio: '3/4',
+              }}
+              className="faq-image-col"
+            >
+              <img
+                src="/images/titobi-authority.jpg"
+                alt="Titobi Oreolorun"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center 10%',
+                  display: 'block',
+                }}
+              />
+              {/* Overlay with quote */}
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                padding: '32px',
+                background: 'linear-gradient(to top, rgba(26,58,22,0.92) 0%, transparent 100%)',
+              }}>
+                <p style={{
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: '18px',
+                  fontStyle: 'italic',
+                  color: 'white',
+                  lineHeight: 1.5,
+                  marginBottom: '8px',
+                }}>
+                  "No question is too basic. Every expert was once a beginner."
+                </p>
+                <p style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: '10px',
+                  letterSpacing: '0.1em',
+                  color: '#C9A84C',
+                  textTransform: 'uppercase',
+                }}>
+                  — Titobi Oreolorun
+                </p>
+              </div>
+            </div>
+
+            {/* Right — FAQ accordion */}
+            <div>
+              {[
+                {
+                  q: 'Is this actually free?',
+                  a: 'Yes. Tito offers this session free because he believes retirement planning advice should not be locked behind a paywall. No hidden fees, no credit card required.',
+                },
+                {
+                  q: "I'm based in Nigeria — not the diaspora. Is this still relevant?",
+                  a: 'Completely. Tito specifically covers retirement strategies for people earning in naira and building wealth outside Western financial systems.',
+                },
+                {
+                  q: "I'm in my 50s. Is it too late?",
+                  a: 'No. A session tailored to where you are right now is more valuable than a generic plan. Tito will work with your actual situation, not a template.',
+                },
+                {
+                  q: 'What happens after the session?',
+                  a: "You'll have a clear picture of your next steps. If you want to continue working with Tito, he'll tell you what that looks like. There's no pressure.",
+                },
+                {
+                  q: 'I already have a 401(k) or pension. Do I still need this?',
+                  a: 'Probably yes. Most people with pension plans are significantly under-invested for the retirement lifestyle they want. Tito will help you see the gap clearly.',
+                },
+              ].map((item, index) => (
+                <FaqItem
+                  key={index}
+                  question={item.q}
+                  answer={item.a}
+                  index={index}
+                />
+              ))}
+
+              {/* CTA below FAQ */}
+              <div style={{ marginTop: '40px' }}>
+                <a
+                  href="#register"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '14px 28px',
+                    background: '#1A3A16',
+                    color: 'white',
+                    fontFamily: 'DM Sans, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    borderRadius: '999px',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#2D5A27'
+                    e.currentTarget.style.transform = 'translateY(-1px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#1A3A16'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                >
+                  Still have questions? Book a free session →
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

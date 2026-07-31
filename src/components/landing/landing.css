@@ -160,3 +160,17 @@
   border-color: rgba(201, 168, 76, 0.5) !important;
   background: rgba(201, 168, 76, 0.06) !important;
 }
+
+/* ─── FAQ — image + accordion responsive ─── */
+@media (max-width: 768px) {
+  .faq-two-col {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .faq-image-col {
+    /* `relative` (not `static`) un-sticks the image on mobile while keeping a
+       positioning context so the absolute quote overlay stays pinned to it. */
+    position: relative !important;
+    aspect-ratio: 4/3 !important;
+  }
+}
