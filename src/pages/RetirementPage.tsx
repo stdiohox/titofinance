@@ -2,7 +2,7 @@ import '../components/landing/landing.css'
 import LandingNav from '../components/landing/LandingNav'
 import LandingFaq from '../components/landing/LandingFaq'
 import LandingForm from '../components/landing/LandingForm'
-import ModuleRows from '../components/landing/ModuleRows'
+import RetirementShaderCards from '@/components/ui/RetirementShaderCards'
 import PullText from '../components/landing/PullText'
 import { useReveal } from '../components/landing/useReveal'
 
@@ -23,39 +23,6 @@ const eyebrow: React.CSSProperties = {
 
 const sectionPad = 'clamp(5rem, 9vw, 7.5rem) clamp(1.5rem, 5vw, 4rem)'
 const maxW = '1200px'
-
-const modules = [
-  {
-    num: '01',
-    title: 'The Retirement Reality',
-    body: 'Why retirement planning cannot wait. The real cost of delay. How inflation destroys retirement income — and how to protect against it.',
-  },
-  {
-    num: '02',
-    title: 'Retirement Investment Accounts',
-    body: 'Roth IRA. Traditional IRA. 401(k). Employer-sponsored plans. Matching contributions. Which account suits your situation — whether you\'re in Nigeria or abroad.',
-  },
-  {
-    num: '03',
-    title: 'Building Your Retirement Portfolio',
-    body: 'Diversification. ETFs. Dividend-paying investments. REITs. Bonds and fixed-income assets. Growth versus income — how to balance both over time.',
-  },
-  {
-    num: '04',
-    title: 'Retirement Income Strategy',
-    body: 'Creating passive income that replaces your salary. Dividend income. Withdrawal strategies. Managing risk as you get closer to retirement age.',
-  },
-  {
-    num: '05',
-    title: 'For Nigerians Specifically',
-    body: 'Investment opportunities for Nigerians in the diaspora. Retirement planning alternatives for those in Nigeria. Building wealth entirely outside government pensions.',
-  },
-  {
-    num: '06',
-    title: 'Common Retirement Mistakes',
-    body: 'Starting too late. Ignoring inflation. Depending only on pensions. Lack of diversification. Emotional investing. How to avoid every one of them.',
-  },
-]
 
 const faqItems = [
   {
@@ -410,7 +377,7 @@ export default function RetirementPage() {
               What Tito Will Walk You Through
             </h2>
           </div>
-          <ModuleRows modules={modules} />
+          <RetirementShaderCards />
         </div>
       </section>
 

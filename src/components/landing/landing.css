@@ -100,3 +100,16 @@
     display: none !important;
   }
 }
+
+/* ─── Retirement shader cards — responsive grid ─── */
+@media (max-width: 1024px) {
+  .retirement-shader-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .retirement-shader-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
