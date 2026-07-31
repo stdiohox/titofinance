@@ -361,24 +361,12 @@ export default function RetirementPage() {
       <section
         id="modules"
         style={{
-          background: 'linear-gradient(180deg, #0D0B08 0%, #111D0F 50%, #0D0B08 100%)',
+          background: '#F8F5EE',
           padding: sectionPad,
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        {/* Subtle film grain */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            opacity: 0.018,
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-
         <div style={{ position: 'relative', zIndex: 1 }}>
           <PullText size="clamp(180px, 30vw, 300px)" color="rgba(255,255,255,0.03)" position={{ bottom: '-2rem', right: '1rem' }}>
             6
@@ -391,7 +379,7 @@ export default function RetirementPage() {
                   fontFamily: 'Cormorant Garamond, serif',
                   fontSize: 'clamp(36px, 5vw, 52px)',
                   fontWeight: 400,
-                  color: 'white',
+                  color: '#0D0B08',
                   marginBottom: '1rem',
                 }}
               >
