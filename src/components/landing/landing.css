@@ -174,3 +174,30 @@
     aspect-ratio: 4/3 !important;
   }
 }
+
+/* ─── Footer — responsive ─── */
+@media (max-width: 900px) {
+  .retirement-footer-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .retirement-footer-brand {
+    grid-column: span 2 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .retirement-footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .retirement-footer-brand {
+    grid-column: span 1 !important;
+  }
+  .retirement-footer-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}
+
+.retirement-footer-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}

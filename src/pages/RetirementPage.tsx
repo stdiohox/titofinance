@@ -1251,6 +1251,365 @@ export default function RetirementPage() {
           </div>
         </div>
       </section>
+
+      {/* ============ FOOTER ============ */}
+      <footer style={{
+        background: '#0D0B08',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        {/* Subtle grain */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          opacity: 0.02,
+          pointerEvents: 'none',
+          zIndex: 0,
+        }} />
+
+        <div style={{
+          position: 'relative',
+          zIndex: 1,
+          maxWidth: '1100px',
+          margin: '0 auto',
+          padding: '72px 24px 48px',
+        }}>
+          {/* 4-col grid */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '48px',
+              marginBottom: '64px',
+            }}
+            className="retirement-footer-grid"
+          >
+            {/* Col 1 — Brand + newsletter */}
+            <div style={{ gridColumn: 'span 1' }} className="retirement-footer-brand">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                <img src="/tf-icon-white.png" style={{ height: '28px', width: 'auto' }} alt="Tito Finance" />
+                <span style={{
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: '18px',
+                  fontWeight: 500,
+                  color: 'white',
+                  letterSpacing: '-0.01em',
+                }}>
+                  Tito Finance
+                </span>
+              </div>
+
+              <p style={{
+                fontFamily: 'DM Sans, sans-serif',
+                fontSize: '13px',
+                color: 'rgba(255,255,255,0.5)',
+                lineHeight: 1.7,
+                marginBottom: '24px',
+              }}>
+                Building wealth with structure, discipline, and confidence — for Nigerians at home and abroad.
+              </p>
+
+              {/* Newsletter input */}
+              <p style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '10px',
+                letterSpacing: '0.1em',
+                color: '#C9A84C',
+                textTransform: 'uppercase',
+                marginBottom: '12px',
+              }}>
+                Stay ahead
+              </p>
+              <div style={{
+                display: 'flex',
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                borderRadius: '10px',
+                overflow: 'hidden',
+              }}>
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  style={{
+                    flex: 1,
+                    background: 'transparent',
+                    border: 'none',
+                    outline: 'none',
+                    padding: '10px 14px',
+                    fontFamily: 'DM Sans, sans-serif',
+                    fontSize: '13px',
+                    color: 'white',
+                  }}
+                  className="retirement-footer-input"
+                />
+                <button
+                  onClick={() => window.open('https://wa.me/2348184750870', '_blank')}
+                  aria-label="Subscribe via WhatsApp"
+                  style={{
+                    padding: '10px 16px',
+                    background: '#C9A84C',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'background 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#B8972B')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = '#C9A84C')}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A3A16" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Col 2 — Navigate */}
+            <div>
+              <h3 style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '10px',
+                letterSpacing: '0.12em',
+                color: 'rgba(255,255,255,0.4)',
+                textTransform: 'uppercase',
+                marginBottom: '20px',
+              }}>
+                Navigate
+              </h3>
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {[
+                  { label: 'The Session', href: '#modules' },
+                  { label: 'What You Get', href: '#outcomes' },
+                  { label: "Who It's For", href: '#who' },
+                  { label: 'About Tito', href: '#about' },
+                  { label: 'Register', href: '#register' },
+                  { label: 'FAQ', href: '#faq' },
+                ].map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    style={{
+                      fontFamily: 'DM Sans, sans-serif',
+                      fontSize: '14px',
+                      color: 'rgba(255,255,255,0.55)',
+                      textDecoration: 'none',
+                      transition: 'color 0.2s ease',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Col 3 — Other pages */}
+            <div>
+              <h3 style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '10px',
+                letterSpacing: '0.12em',
+                color: 'rgba(255,255,255,0.4)',
+                textTransform: 'uppercase',
+                marginBottom: '20px',
+              }}>
+                Explore
+              </h3>
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {[
+                  { label: 'Tito Finance Home', href: '/' },
+                  { label: 'Stock 101', href: '/stock-101' },
+                  { label: 'Book a Call', href: 'https://wa.me/2348184750870' },
+                  { label: 'Free Resources', href: '/#services' },
+                  { label: 'The GDR Method', href: '/#gdr' },
+                ].map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    style={{
+                      fontFamily: 'DM Sans, sans-serif',
+                      fontSize: '14px',
+                      color: 'rgba(255,255,255,0.55)',
+                      textDecoration: 'none',
+                      transition: 'color 0.2s ease',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Col 4 — Contact + socials */}
+            <div>
+              <h3 style={{
+                fontFamily: 'DM Mono, monospace',
+                fontSize: '10px',
+                letterSpacing: '0.12em',
+                color: 'rgba(255,255,255,0.4)',
+                textTransform: 'uppercase',
+                marginBottom: '20px',
+              }}>
+                Connect
+              </h3>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
+                <a
+                  href="https://wa.me/2348184750870"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: 'DM Sans, sans-serif',
+                    fontSize: '13px',
+                    color: 'rgba(255,255,255,0.55)',
+                    textDecoration: 'none',
+                    transition: 'color 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = '#C9A84C')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
+                >
+                  +234 818 475 0870
+                </a>
+                <a
+                  href="mailto:hello@titofinance.com"
+                  style={{
+                    fontFamily: 'DM Sans, sans-serif',
+                    fontSize: '13px',
+                    color: 'rgba(255,255,255,0.55)',
+                    textDecoration: 'none',
+                    transition: 'color 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = '#C9A84C')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
+                >
+                  hello@titofinance.com
+                </a>
+              </div>
+
+              {/* Social icons */}
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                {[
+                  {
+                    label: 'Instagram',
+                    href: 'https://www.instagram.com/teetobee',
+                    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>,
+                  },
+                  {
+                    label: 'YouTube',
+                    href: 'https://www.youtube.com/@teetobee',
+                    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>,
+                  },
+                  {
+                    label: 'TikTok',
+                    href: 'https://www.tiktok.com/@titofinance',
+                    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.84 1.56V6.81a4.85 4.85 0 01-1.07-.12z" /></svg>,
+                  },
+                  {
+                    label: 'X',
+                    href: 'https://x.com/titofinance?s=21',
+                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>,
+                  },
+                  {
+                    label: 'Facebook',
+                    href: 'https://www.facebook.com/Titobifinance',
+                    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>,
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={social.label}
+                    aria-label={social.label}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      background: 'rgba(255,255,255,0.07)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'rgba(255,255,255,0.6)',
+                      textDecoration: 'none',
+                      transition: 'all 0.2s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(201,168,76,0.15)'
+                      e.currentTarget.style.borderColor = 'rgba(201,168,76,0.4)'
+                      e.currentTarget.style.color = '#C9A84C'
+                      e.currentTarget.style.transform = 'translateY(-2px)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                      e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
+                      e.currentTarget.style.transform = 'translateY(0)'
+                    }}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div
+            style={{
+              borderTop: '1px solid rgba(255,255,255,0.07)',
+              paddingTop: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '16px',
+            }}
+            className="retirement-footer-bottom"
+          >
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
+              © 2026 Tito Finance. All rights reserved.
+            </p>
+
+            <nav style={{ display: 'flex', gap: '24px' }}>
+              {[
+                { label: 'Privacy Policy', href: '#' },
+                { label: 'Terms of Service', href: '#' },
+              ].map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  style={{
+                    fontFamily: 'DM Sans, sans-serif',
+                    fontSize: '12px',
+                    color: 'rgba(255,255,255,0.3)',
+                    textDecoration: 'none',
+                    transition: 'color 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '10px', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.2)' }}>
+              Built by Samphics Digital
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
