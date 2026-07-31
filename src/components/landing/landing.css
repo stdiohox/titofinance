@@ -129,3 +129,19 @@
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
+/* ─── About Tito — overlapping ProfileCard responsive ─── */
+@media (max-width: 768px) {
+  .about-desktop-layout {
+    display: none !important;
+  }
+  .about-mobile-layout {
+    display: block !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .about-mobile-layout {
+    display: none !important;
+  }
+}
