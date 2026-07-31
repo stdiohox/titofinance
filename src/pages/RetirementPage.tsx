@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import '../components/landing/landing.css'
 import LandingNav from '../components/landing/LandingNav'
 import LandingFaq from '../components/landing/LandingFaq'
@@ -107,111 +106,22 @@ function CheckItem({ text }: { text: string }) {
   )
 }
 
-// Boomerang video background — captures the hero clip's frames, then loops
-// them forward/reverse for a seamless ping-pong effect.
+// Simple looping video background for the hero.
 const BoomerangVideoBg = () => {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const frames = useRef<ImageData[]>([])
-  const frameIndex = useRef(0)
-  const direction = useRef(1)
-  const capturing = useRef(false)
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
-
-  useEffect(() => {
-    const video = videoRef.current
-    const canvas = canvasRef.current
-    if (!video || !canvas) return
-
-    const MAX_WIDTH = 960
-    let offscreen: HTMLCanvasElement | null = null
-    let offCtx: CanvasRenderingContext2D | null = null
-
-    const startCapture = () => {
-      if (capturing.current) return
-      // 'play' can fire before metadata loads; wait until the video has real
-      // dimensions so getImageData doesn't throw "source width is 0".
-      if (!video.videoWidth || !video.videoHeight) {
-        setTimeout(startCapture, 50)
-        return
-      }
-      capturing.current = true
-      offscreen = document.createElement('canvas')
-      const scale = Math.min(1, MAX_WIDTH / video.videoWidth)
-      offscreen.width = Math.round(video.videoWidth * scale)
-      offscreen.height = Math.round(video.videoHeight * scale)
-      offCtx = offscreen.getContext('2d')
-
-      const capture = () => {
-        if (!capturing.current || !offCtx || !offscreen) return
-        if (video.ended || video.paused) return
-        offCtx.drawImage(video, 0, 0, offscreen.width, offscreen.height)
-        const frame = offCtx.getImageData(0, 0, offscreen.width, offscreen.height)
-        frames.current.push(frame)
-        if (!video.ended) requestAnimationFrame(capture)
-      }
-      requestAnimationFrame(capture)
-    }
-
-    const startPlayback = () => {
-      if (!canvas || frames.current.length === 0) return
-      canvas.width = frames.current[0].width
-      canvas.height = frames.current[0].height
-      if (video) video.style.display = 'none'
-      canvas.style.display = 'block'
-
-      intervalRef.current = setInterval(() => {
-        if (frames.current.length === 0) return
-
-        // Skip every other frame for smoother slow motion
-        frameIndex.current += direction.current * 2
-
-        // Clamp to valid range
-        if (frameIndex.current >= frames.current.length - 1) {
-          frameIndex.current = frames.current.length - 1
-          direction.current = -1
-        } else if (frameIndex.current <= 0) {
-          frameIndex.current = 0
-          direction.current = 1
-        }
-
-        const ctx = canvasRef.current?.getContext('2d')
-        if (ctx && frames.current[frameIndex.current]) {
-          ctx.putImageData(frames.current[frameIndex.current], 0, 0)
-        }
-      }, 1000 / 12)
-    }
-
-    video.addEventListener('play', startCapture)
-    video.addEventListener('ended', () => {
-      capturing.current = false
-      startPlayback()
-    })
-
-    video.play().catch(() => {})
-
-    return () => {
-      capturing.current = false
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
-  }, [])
-
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 0, transform: 'scale(1.05)', transformOrigin: 'top', overflow: 'hidden' }}>
       <video
-        ref={videoRef}
-        src="/videos/retirement-hero.mp4"
+        autoPlay
         muted
+        loop
         playsInline
         preload="auto"
-        crossOrigin="anonymous"
         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
-      />
-      <canvas
-        ref={canvasRef}
-        style={{ display: 'none', width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }}
-      />
-      {/* Dark overlay for readability */}
+      >
+        <source src="/videos/retirement-hero.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark overlay */}
       <div
         style={{
           position: 'absolute',
@@ -219,7 +129,8 @@ const BoomerangVideoBg = () => {
           background: 'linear-gradient(135deg, rgba(26,58,22,0.88) 0%, rgba(26,58,22,0.65) 50%, rgba(26,58,22,0.80) 100%)',
         }}
       />
-      {/* Film grain for a premium, intentional finish */}
+
+      {/* Film grain */}
       <div
         style={{
           position: 'absolute',
