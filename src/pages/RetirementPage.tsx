@@ -49,31 +49,92 @@ const faqItems = [
   },
 ]
 
-function CheckItem({ text }: { text: string }) {
-  return (
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-      <span
-        aria-hidden
+const PlusIcon = ({ className = '', style = {} }: { className?: string; style?: React.CSSProperties }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+    strokeWidth="1"
+    stroke="currentColor"
+    style={{ color: 'rgba(26,58,22,0.25)', ...style }}
+    className={className}
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+  </svg>
+)
+
+const BentoCard = ({
+  title,
+  description,
+  icon,
+  dark = false,
+  style = {},
+}: {
+  title: string
+  description: string
+  icon?: React.ReactNode
+  dark?: boolean
+  style?: React.CSSProperties
+}) => (
+  <div
+    style={{
+      position: 'relative',
+      border: dark ? '1px dashed rgba(201,168,76,0.3)' : '1px dashed rgba(26,58,22,0.2)',
+      borderRadius: '16px',
+      padding: '28px',
+      background: dark ? '#1A3A16' : '#FFFFFF',
+      minHeight: '180px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      ...style,
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.transform = 'translateY(-2px)'
+      e.currentTarget.style.boxShadow = dark ? '0 8px 32px rgba(26,58,22,0.2)' : '0 8px 32px rgba(0,0,0,0.06)'
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'translateY(0)'
+      e.currentTarget.style.boxShadow = 'none'
+    }}
+  >
+    {/* Corner plus icons */}
+    <PlusIcon style={{ position: 'absolute', top: -10, left: -10 }} />
+    <PlusIcon style={{ position: 'absolute', top: -10, right: -10 }} />
+    <PlusIcon style={{ position: 'absolute', bottom: -10, left: -10 }} />
+    <PlusIcon style={{ position: 'absolute', bottom: -10, right: -10 }} />
+
+    {/* Content */}
+    <div style={{ position: 'relative', zIndex: 1 }}>
+      {icon && <div style={{ marginBottom: '16px' }}>{icon}</div>}
+      <h3
         style={{
-          width: '24px',
-          height: '24px',
-          borderRadius: '50%',
-          background: FOREST,
-          color: 'white',
-          flexShrink: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '13px',
-          marginTop: '0.25rem',
+          fontFamily: 'Cormorant Garamond, serif',
+          fontSize: '20px',
+          fontWeight: 500,
+          color: dark ? '#FFFFFF' : '#0D0B08',
+          lineHeight: 1.3,
+          marginBottom: '10px',
         }}
       >
-        ✓
-      </span>
-      <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', color: '#2A2A2A', lineHeight: 1.6 }}>{text}</span>
+        {title}
+      </h3>
+      <p
+        style={{
+          fontFamily: 'DM Sans, sans-serif',
+          fontSize: '13px',
+          color: dark ? 'rgba(255,255,255,0.65)' : 'rgba(13,11,8,0.6)',
+          lineHeight: 1.7,
+        }}
+      >
+        {description}
+      </p>
     </div>
-  )
-}
+  </div>
+)
 
 // Simple looping video background for the hero.
 const BoomerangVideoBg = () => {
@@ -477,40 +538,69 @@ export default function RetirementPage() {
       {/* ============ SECTION 4 — OUTCOMES ============ */}
       <section style={{ background: CREAM, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: maxW, margin: '0 auto' }}>
-          <div className="two-col" data-reveal>
-            <div>
-              <p style={eyebrow}>What You Leave With</p>
-              <h2
-                style={{
-                  fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 'clamp(36px, 5vw, 52px)',
-                  fontWeight: 400,
-                  color: INK,
-                  maxWidth: '14ch',
-                }}
-              >
-                After This Session, You Will Have:
-              </h2>
-            </div>
-            <div>
-              <CheckItem text="A clear understanding of how retirement planning actually works" />
-              <CheckItem text="Knowledge of the retirement investment accounts available to you" />
-              <CheckItem text="A practical framework for building your own retirement portfolio" />
-              <CheckItem text="Confidence in the specific next steps for your situation" />
-              <CheckItem text="Direct access to Tito for follow-up questions" />
-            </div>
+          <div data-reveal>
+            <p style={eyebrow}>What You Leave With</p>
+            <h2
+              style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: 'clamp(36px, 5vw, 52px)',
+                fontWeight: 400,
+                color: INK,
+                maxWidth: '14ch',
+              }}
+            >
+              After This Session, You Will Have:
+            </h2>
           </div>
 
-          <div data-reveal style={{ background: FOREST, borderRadius: '20px', padding: 'clamp(2rem, 4vw, 2.5rem)', marginTop: '3rem' }}>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: GOLD, marginBottom: '0.75rem' }}>
-              Important
-            </p>
-            <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontStyle: 'italic', color: 'white', marginBottom: '0.5rem', lineHeight: 1.35 }}>
-              This isn't a lecture. It's a strategy session.
-            </p>
-            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>
-              Tito will look at your specific situation and help you understand what to do — not just what's possible in theory.
-            </p>
+          <div
+            data-reveal
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '20px',
+              marginTop: '48px',
+            }}
+            className="retirement-bento-grid"
+          >
+            <BentoCard
+              title="Clarity on retirement planning"
+              description="A clear understanding of how retirement planning actually works — in plain language, not financial jargon."
+            />
+            <BentoCard
+              title="Knowledge of retirement accounts"
+              description="Roth IRA, Traditional IRA, 401(k) — which accounts are available to you and how to use them."
+            />
+            <BentoCard
+              title="A portfolio framework"
+              description="A practical framework for building your own retirement portfolio that matches your timeline and risk tolerance."
+              dark
+            />
+            <BentoCard
+              title="Confidence in your next steps"
+              description="Confidence in the specific next steps for your situation — not generic advice, but a plan built for you."
+              dark
+            />
+            <BentoCard
+              title="Direct access to Tito"
+              description="Direct access to Tito for follow-up questions after the session. You're not on your own."
+              style={{ gridColumn: 'span 2' }}
+              icon={
+                <div
+                  style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '50%',
+                    background: 'rgba(26,58,22,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <span style={{ fontSize: '18px' }}>✓</span>
+                </div>
+              }
+            />
           </div>
         </div>
       </section>
@@ -518,36 +608,58 @@ export default function RetirementPage() {
       {/* ============ SECTION 5 — WHO IT'S FOR ============ */}
       <section id="who" style={{ background: IVORY, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: maxW, margin: '0 auto' }}>
-          <div className="two-col" data-reveal>
-            <div>
-              <p style={eyebrow}>Who This Is For</p>
-              <h2
-                style={{
-                  fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 'clamp(36px, 5vw, 52px)',
-                  fontWeight: 400,
-                  color: INK,
-                  maxWidth: '14ch',
-                }}
-              >
-                This Session Is Built For You If...
-              </h2>
-            </div>
-            <div>
-              {[
-                'You\'re a salary earner who wants to retire with dignity — not dependency',
-                'You\'re self-employed with no employer pension and you know you need to act',
-                'You\'re a business owner who wants assets outside your business',
-                'You\'re Nigerian in the diaspora — US, UK, Canada — and haven\'t touched your Roth IRA or 401(k)',
-                'You\'re in Nigeria and want to build wealth completely outside the pension system',
-                'You\'re 25 or 55 — it\'s never too early and never too late to build a plan',
-              ].map((item) => (
-                <div key={item} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: FOREST, flexShrink: 0, marginTop: '0.7rem' }} />
-                  <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', color: '#2A2A2A', lineHeight: 1.7 }}>{item}</span>
-                </div>
-              ))}
-            </div>
+          <div data-reveal>
+            <p style={eyebrow}>Who This Is For</p>
+            <h2
+              style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: 'clamp(36px, 5vw, 52px)',
+                fontWeight: 400,
+                color: INK,
+                maxWidth: '14ch',
+              }}
+            >
+              This Session Is Built For You If...
+            </h2>
+          </div>
+
+          <div
+            data-reveal
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '20px',
+              marginTop: '48px',
+            }}
+            className="retirement-bento-grid"
+          >
+            <BentoCard
+              title="Salary earners"
+              description="You earn a salary and want to retire with dignity — not dependency on family or the government."
+            />
+            <BentoCard
+              title="Self-employed professionals"
+              description="No employer pension. You know you need to act — you just need a clear plan."
+              dark
+            />
+            <BentoCard
+              title="Business owners"
+              description="You want assets outside your business. Smart wealth means not having all your eggs in one basket."
+            />
+            <BentoCard
+              title="Nigerians in the diaspora"
+              description="US, UK, Canada — you haven't touched your Roth IRA or 401(k). This session will change that."
+              dark
+            />
+            <BentoCard
+              title="Nigerians at home"
+              description="You want to build wealth completely outside the government pension system. There's a way."
+            />
+            <BentoCard
+              title="Ages 25 to 55"
+              description="It's never too early and never too late. A plan built for where you are right now."
+              dark
+            />
           </div>
         </div>
       </section>
