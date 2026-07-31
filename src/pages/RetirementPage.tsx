@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import '../components/landing/landing.css'
 import LandingNav from '../components/landing/LandingNav'
 import LandingFaq from '../components/landing/LandingFaq'
@@ -114,6 +116,21 @@ const BoomerangVideoBg = () => {
 
 export default function RetirementPage() {
   useReveal()
+
+  const shouldReduce = useReducedMotion()
+  const [shown3x, setShown3x] = useState(false)
+  const card1Ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setShown3x(true)
+      },
+      { threshold: 0.5 }
+    )
+    if (card1Ref.current) observer.observe(card1Ref.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div style={{ background: IVORY, color: INK, overflowX: 'hidden' }}>
@@ -306,17 +323,44 @@ export default function RetirementPage() {
 
           <div className="reality-grid" data-reveal>
             {/* Card 1 — larger */}
-            <div style={{ background: FOREST, borderRadius: '16px', padding: '2.5rem' }}>
-              <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '80px', fontWeight: 300, color: GOLD, lineHeight: 0.9 }}>3×</div>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              style={{ background: FOREST, borderRadius: '16px', padding: '2.5rem', position: 'relative', overflow: 'hidden' }}
+            >
+              {/* Pulse ring */}
+              <motion.div
+                style={{ position: 'absolute', top: '24px', right: '24px', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(201,168,76,0.15)' }}
+                animate={shouldReduce ? undefined : { boxShadow: ['0 0 0 0 rgba(201,168,76,0.3)', '0 0 0 20px rgba(201,168,76,0)'] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: 'easeOut' }}
+              />
+              <div ref={card1Ref} style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '80px', fontWeight: 300, color: GOLD, lineHeight: 0.9 }}>
+                <motion.span
+                  style={{ display: 'inline-block' }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={shown3x ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.6, type: 'spring', bounce: 0.3 }}
+                >
+                  3×
+                </motion.span>
+              </div>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '18px', fontWeight: 500, color: 'white', marginTop: '0.5rem' }}>
                 More you need to invest
               </div>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.65)', marginTop: '0.5rem', lineHeight: 1.6 }}>
                 Every 10 years you delay retirement investing, you need to invest roughly 3× as much to reach the same outcome.
               </div>
-            </div>
+            </motion.div>
             {/* Card 2 */}
-            <div style={{ background: 'white', border: '1px solid rgba(26,58,22,0.1)', borderRadius: '16px', padding: '2rem' }}>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              style={{ background: 'white', border: '1px solid rgba(26,58,22,0.1)', borderRadius: '16px', padding: '2rem' }}
+            >
               <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '64px', fontWeight: 300, color: GOLD, lineHeight: 0.9 }}>15–20%</div>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', fontWeight: 500, color: INK, marginTop: '0.5rem' }}>
                 Annual inflation in Nigeria
@@ -324,9 +368,32 @@ export default function RetirementPage() {
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: '#6B6B6B', marginTop: '0.5rem', lineHeight: 1.6 }}>
                 A savings account at 5% interest is losing you money in real terms every year.
               </div>
-            </div>
+
+              {/* Animated inflation-trend bars */}
+              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'flex-end', gap: '6px', height: '48px' }}>
+                {[30, 55, 45, 70, 60, 85, 75].map((h, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ height: 0, opacity: 0 }}
+                    whileInView={{ height: `${h}%`, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.08, duration: 0.5, type: 'spring' }}
+                    style={{ flex: 1, borderRadius: '3px', background: i === 6 ? '#C9A84C' : 'rgba(201,168,76,0.2)' }}
+                  />
+                ))}
+              </div>
+              <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '9px', letterSpacing: '0.1em', color: 'rgba(13,11,8,0.35)', textTransform: 'uppercase', marginTop: '8px' }}>
+                Inflation trend
+              </p>
+            </motion.div>
             {/* Card 3 */}
-            <div style={{ background: CREAM, borderRadius: '16px', padding: '2rem' }}>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              style={{ background: CREAM, borderRadius: '16px', padding: '2rem' }}
+            >
               <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '64px', fontWeight: 300, color: FOREST, lineHeight: 0.9 }}>0</div>
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', fontWeight: 500, color: INK, marginTop: '0.5rem' }}>
                 Diaspora Nigerians using their Roth IRA
@@ -334,7 +401,23 @@ export default function RetirementPage() {
               <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: '#6B6B6B', marginTop: '0.5rem', lineHeight: 1.6 }}>
                 Most Nigerians abroad have access to tax-advantaged retirement accounts — and never use them.
               </div>
-            </div>
+
+              {/* Rotating globe */}
+              <motion.svg
+                width="80"
+                height="80"
+                viewBox="0 0 80 80"
+                fill="none"
+                style={{ marginTop: '16px', opacity: 0.15 }}
+                animate={shouldReduce ? undefined : { rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              >
+                <circle cx="40" cy="40" r="36" stroke="#1A3A16" strokeWidth="1.5" />
+                <ellipse cx="40" cy="40" rx="36" ry="14" stroke="#1A3A16" strokeWidth="1.5" />
+                <line x1="40" y1="4" x2="40" y2="76" stroke="#1A3A16" strokeWidth="1.5" />
+                <line x1="4" y1="40" x2="76" y2="40" stroke="#1A3A16" strokeWidth="1.5" />
+              </motion.svg>
+            </motion.div>
           </div>
 
           <p
