@@ -20,21 +20,53 @@ const labelStyle: React.CSSProperties = {
   fontSize: '11px',
   letterSpacing: '0.1em',
   textTransform: 'uppercase',
-  color: '#C9A84C',
+  color: 'rgba(255,255,255,0.55)',
   marginBottom: '0.5rem',
 }
 
-const controlStyle: React.CSSProperties = {
-  width: '100%',
-  fontFamily: 'DM Sans, sans-serif',
-  fontSize: '15px',
-  background: 'rgba(255,255,255,0.08)',
+// Frosted-glass shell that carries the border, blur and focus glow
+// (.retirement-glass-wrapper:focus-within lives in landing.css).
+const glassWrapperStyle: React.CSSProperties = {
+  borderRadius: '12px',
   border: '1px solid rgba(255,255,255,0.15)',
-  borderRadius: '8px',
-  padding: '1rem',
-  color: 'white',
+  background: 'rgba(255,255,255,0.06)',
+  backdropFilter: 'blur(8px)',
+  WebkitBackdropFilter: 'blur(8px)',
+  transition: 'border-color 0.2s ease, background 0.2s ease',
+  marginBottom: '4px',
+}
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  background: 'transparent',
+  border: 'none',
   outline: 'none',
-  transition: 'border-color 0.2s ease',
+  padding: '14px 16px',
+  fontFamily: 'DM Sans, sans-serif',
+  fontSize: '14px',
+  color: '#FFFFFF',
+  borderRadius: '12px',
+}
+
+const selectStyle: React.CSSProperties = {
+  width: '100%',
+  background: 'transparent',
+  border: 'none',
+  outline: 'none',
+  padding: '14px 16px',
+  paddingRight: '40px',
+  fontFamily: 'DM Sans, sans-serif',
+  fontSize: '14px',
+  color: 'rgba(255,255,255,0.7)',
+  borderRadius: '12px',
+  cursor: 'pointer',
+  appearance: 'none',
+  WebkitAppearance: 'none',
+  // Custom chevron so the select still reads as a dropdown after appearance:none.
+  backgroundImage:
+    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'right 16px center',
 }
 
 export default function LandingForm({ fields, submitLabel, webhookUrl }: LandingFormProps) {
@@ -97,9 +129,12 @@ export default function LandingForm({ fields, submitLabel, webhookUrl }: Landing
       onSubmit={handleSubmit}
       style={{
         background: 'rgba(255,255,255,0.06)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: '20px',
-        padding: '2rem',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        border: '1px solid rgba(255,255,255,0.12)',
+        borderRadius: '24px',
+        padding: '40px',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 20px 60px rgba(0,0,0,0.2)',
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -108,37 +143,37 @@ export default function LandingForm({ fields, submitLabel, webhookUrl }: Landing
             <label htmlFor={field.name} style={labelStyle}>
               {field.label}
             </label>
-            {field.type === 'select' ? (
-              <select
-                id={field.name}
-                name={field.name}
-                required
-                defaultValue=""
-                style={{ ...controlStyle, appearance: 'none', cursor: 'pointer' }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = '#C9A84C')}
-                onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)')}
-              >
-                <option value="" disabled style={{ color: '#0D0B08' }}>
-                  Select…
-                </option>
-                {field.options?.map((opt) => (
-                  <option key={opt} value={opt} style={{ color: '#0D0B08' }}>
-                    {opt}
+            <div className="retirement-glass-wrapper" style={glassWrapperStyle}>
+              {field.type === 'select' ? (
+                <select
+                  id={field.name}
+                  name={field.name}
+                  required
+                  defaultValue=""
+                  className="retirement-form-input"
+                  style={selectStyle}
+                >
+                  <option value="" disabled>
+                    Select…
                   </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                id={field.name}
-                name={field.name}
-                type={field.type}
-                required
-                placeholder={field.placeholder}
-                style={controlStyle}
-                onFocus={(e) => (e.currentTarget.style.borderColor = '#C9A84C')}
-                onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)')}
-              />
-            )}
+                  {field.options?.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  id={field.name}
+                  name={field.name}
+                  type={field.type}
+                  required
+                  placeholder={field.placeholder}
+                  className="retirement-form-input"
+                  style={inputStyle}
+                />
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -149,19 +184,28 @@ export default function LandingForm({ fields, submitLabel, webhookUrl }: Landing
         style={{
           width: '100%',
           background: '#C9A84C',
-          color: '#0D0B08',
-          borderRadius: '999px',
+          color: '#1A3A16',
           border: 'none',
-          padding: '1rem',
-          marginTop: '1.5rem',
+          borderRadius: '999px',
+          padding: '16px',
+          marginTop: '8px',
           fontFamily: 'DM Sans, sans-serif',
-          fontSize: '16px',
-          fontWeight: 500,
+          fontSize: '15px',
+          fontWeight: 600,
           cursor: status === 'submitting' ? 'wait' : 'pointer',
-          transition: 'opacity 0.2s ease',
+          transition: 'all 0.2s ease',
+          boxShadow: '0 4px 20px rgba(201,168,76,0.3)',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = '#B8972B'
+          e.currentTarget.style.transform = 'translateY(-1px)'
+          e.currentTarget.style.boxShadow = '0 8px 32px rgba(201,168,76,0.4)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = '#C9A84C'
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = '0 4px 20px rgba(201,168,76,0.3)'
+        }}
       >
         {status === 'submitting' ? 'Submitting…' : submitLabel}
       </button>

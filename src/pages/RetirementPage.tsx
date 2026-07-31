@@ -959,8 +959,13 @@ export default function RetirementPage() {
           FREE
         </PullText>
         <div style={{ maxWidth: maxW, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div className="two-col" data-reveal>
-            <div>
+          <div className="two-col">
+            <motion.div
+              initial={shouldReduce ? false : { opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
               <p style={eyebrow}>Save Your Spot</p>
               <h2
                 style={{
@@ -977,9 +982,42 @@ export default function RetirementPage() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7 }}>
                 Fill in your details and Tito's team will reach out to schedule your session.
               </p>
-            </div>
 
-            <div>
+              <div style={{
+                marginTop: '40px',
+                padding: '24px',
+                borderLeft: '2px solid rgba(201,168,76,0.4)',
+                background: 'rgba(201,168,76,0.05)',
+                borderRadius: '0 12px 12px 0',
+              }}>
+                <p style={{
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: '20px',
+                  fontStyle: 'italic',
+                  color: 'rgba(255,255,255,0.8)',
+                  lineHeight: 1.5,
+                  marginBottom: '8px',
+                }}>
+                  "The best time to start was yesterday. The second best time is right now."
+                </p>
+                <p style={{
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: '10px',
+                  letterSpacing: '0.1em',
+                  color: '#C9A84C',
+                  textTransform: 'uppercase',
+                }}>
+                  — Titobi Oreolorun
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={shouldReduce ? false : { opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
               <LandingForm
                 webhookUrl="https://n8n.srv1759554.hstgr.cloud/webhook/retirement-intake"
                 submitLabel="Book My Free Strategy Session →"
@@ -1014,7 +1052,7 @@ export default function RetirementPage() {
                   Chat with Tito directly →
                 </a>
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
