@@ -5,7 +5,7 @@ import PullText from '../components/landing/PullText'
 import { useReveal } from '../components/landing/useReveal'
 import { WorldMap } from '@/components/ui/WorldMap'
 import LandingFaq from '@/components/landing/LandingFaq'
-import { FaInstagram, FaYoutube, FaXTwitter, FaFacebook } from 'react-icons/fa6'
+import { FaInstagram, FaYoutube, FaXTwitter, FaFacebook, FaTiktok, FaWhatsapp } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 
 // ── Design tokens ──────────────────────────────────────────────
@@ -60,6 +60,8 @@ const footerSocials: { label: string; href: string; Icon: IconType }[] = [
   { label: 'YouTube', href: 'https://www.youtube.com/@teetobee', Icon: FaYoutube },
   { label: 'Twitter', href: 'https://x.com/titofinance?s=21', Icon: FaXTwitter },
   { label: 'Facebook', href: 'https://www.facebook.com/Titobifinance', Icon: FaFacebook },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@titofinance', Icon: FaTiktok },
+  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/Dya2CxUltpD6ZfUJFd90Ye?mode=gi_t', Icon: FaWhatsapp },
 ]
 
 const footerNavigate = [
