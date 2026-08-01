@@ -169,10 +169,22 @@
   }
   .faq-image-col {
     /* `relative` (not `static`) un-sticks the image on mobile while keeping a
-       positioning context so the absolute quote overlay stays pinned to it. */
+       positioning context so the absolute quote overlay stays pinned to it.
+       `top: 0` neutralizes the desktop sticky offset (top: 100px) which would
+       otherwise shift the image down into the first FAQ item. */
     position: relative !important;
+    top: 0 !important;
     aspect-ratio: 16/9 !important;
-    max-height: 220px !important;
+    max-height: 200px !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+  }
+  .faq-section-header {
+    margin-bottom: 24px !important;
+  }
+  .faq-accordion-col {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
   }
   .faq-section-wrapper {
     padding-top: 48px !important;
@@ -221,10 +233,22 @@
 }
 
 /* ─── Navbar CTA — condensed on mobile ─── */
+@media (min-width: 769px) {
+  .landing-nav-cta-text-short {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
+  .landing-nav-cta-text-full {
+    display: none;
+  }
+  .landing-nav-cta-text-short {
+    display: inline;
+  }
   .landing-nav-cta {
-    padding: 8px 14px !important;
-    font-size: 12px !important;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
   }
 }
 

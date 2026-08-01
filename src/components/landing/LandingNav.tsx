@@ -106,7 +106,8 @@ export default function LandingNav() {
           e.currentTarget.style.transform = 'translateY(0)'
         }}
       >
-        Book Free Session →
+        <span className="landing-nav-cta-text-full">Book Free Session →</span>
+        <span className="landing-nav-cta-text-short">Register →</span>
       </a>
     </header>
   )
