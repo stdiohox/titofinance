@@ -165,17 +165,28 @@
 @media (max-width: 768px) {
   .faq-two-col {
     grid-template-columns: 1fr !important;
-    gap: 40px !important;
+    gap: 24px !important;
   }
   .faq-image-col {
     /* `relative` (not `static`) un-sticks the image on mobile while keeping a
        positioning context so the absolute quote overlay stays pinned to it. */
     position: relative !important;
-    aspect-ratio: 4/3 !important;
+    aspect-ratio: 16/9 !important;
+    max-height: 220px !important;
+  }
+  .faq-section-wrapper {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
   }
 }
 
 /* ─── Footer — responsive ─── */
+/* Transparent on desktop/tablet so Navigate + Explore stay direct grid items
+   (keeps the 4-col / 2-col grid intact); becomes a real 2-col grid on mobile. */
+.retirement-footer-nav-cols {
+  display: contents;
+}
+
 @media (max-width: 900px) {
   .retirement-footer-grid {
     grid-template-columns: repeat(2, 1fr) !important;
@@ -196,8 +207,31 @@
     flex-direction: column !important;
     align-items: flex-start !important;
   }
+  /* Put Navigate and Explore side by side on mobile */
+  .retirement-footer-nav-cols {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+    grid-column: span 1 !important;
+  }
 }
 
 .retirement-footer-input::placeholder {
   color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Navbar CTA — condensed on mobile ─── */
+@media (max-width: 768px) {
+  .landing-nav-cta {
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ─── Mobile section padding — trims excess vertical space ─── */
+@media (max-width: 768px) {
+  .retirement-section-pad {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
 }

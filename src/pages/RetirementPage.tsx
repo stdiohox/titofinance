@@ -353,7 +353,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 2 — REALITY CHECK ============ */}
-      <section id="section-2" style={{ background: IVORY, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
+      <section id="section-2" className="retirement-section-pad" style={{ background: IVORY, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <PullText size="clamp(110px, 16vw, 160px)" color="rgba(26,58,22,0.04)" position={{ top: '2rem', right: '2rem' }}>
           TRUTH
         </PullText>
@@ -500,6 +500,7 @@ export default function RetirementPage() {
       {/* ============ SECTION 3 — WHAT YOU'LL LEARN ============ */}
       <section
         id="modules"
+        className="retirement-section-pad"
         style={{
           background: '#F8F5EE',
           padding: sectionPad,
@@ -532,7 +533,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 4 — OUTCOMES ============ */}
-      <section style={{ background: CREAM, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
+      <section className="retirement-section-pad" style={{ background: CREAM, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: maxW, margin: '0 auto' }}>
           <div data-reveal>
             <p style={eyebrow}>What You Leave With</p>
@@ -602,7 +603,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 5 — WHO IT'S FOR ============ */}
-      <section id="who" style={{ background: IVORY, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
+      <section id="who" className="retirement-section-pad" style={{ background: IVORY, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: maxW, margin: '0 auto' }}>
           <div data-reveal>
             <p style={eyebrow}>Who This Is For</p>
@@ -661,7 +662,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 6 — ABOUT TITO ============ */}
-      <section id="about" style={{ background: IVORY, padding: sectionPad }}>
+      <section id="about" className="retirement-section-pad" style={{ background: IVORY, padding: sectionPad }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 24px' }}>
           {/* Desktop layout — overlapping card */}
           <div
@@ -950,7 +951,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 7 — REGISTER FORM ============ */}
-      <section id="register" style={{ background: FOREST, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
+      <section id="register" className="retirement-section-pad" style={{ background: FOREST, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <PullText size="clamp(120px, 20vw, 200px)" color="rgba(255,255,255,0.03)" position={{ top: '2rem', right: '1.5rem' }}>
           FREE
         </PullText>
@@ -1054,7 +1055,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 8 — FAQ ============ */}
-      <section style={{ background: IVORY, padding: sectionPad }}>
+      <section className="faq-section-wrapper" style={{ background: IVORY, padding: sectionPad }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 24px' }}>
           {/* Header */}
           <div style={{ marginBottom: '64px' }}>
@@ -1368,6 +1369,8 @@ export default function RetirementPage() {
               </div>
             </div>
 
+            {/* Col 2 + 3 — Navigate & Explore (side by side on mobile) */}
+            <div className="retirement-footer-nav-cols">
             {/* Col 2 — Navigate */}
             <div>
               <h3 style={{
@@ -1448,6 +1451,7 @@ export default function RetirementPage() {
                 ))}
               </nav>
             </div>
+            </div>
 
             {/* Col 4 — Contact + socials */}
             <div>
@@ -1463,41 +1467,6 @@ export default function RetirementPage() {
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
-                <a
-                  href="https://wa.me/2348184750870"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Chat on WhatsApp"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    padding: '10px 16px',
-                    background: 'rgba(37,211,102,0.1)',
-                    border: '1px solid rgba(37,211,102,0.25)',
-                    borderRadius: '999px',
-                    color: '#25D366',
-                    textDecoration: 'none',
-                    fontFamily: 'DM Sans, sans-serif',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    transition: 'all 0.2s ease',
-                    marginBottom: '4px',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(37,211,102,0.18)'
-                    e.currentTarget.style.transform = 'translateY(-1px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(37,211,102,0.1)'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                  </svg>
-                  Chat on WhatsApp
-                </a>
                 <a
                   href="mailto:hello@titofinance.com"
                   style={{
@@ -1516,6 +1485,38 @@ export default function RetirementPage() {
 
               {/* Social icons */}
               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <a
+                  href="https://wa.me/2348184750870"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Chat on WhatsApp"
+                  aria-label="Chat on WhatsApp"
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '50%',
+                    background: 'rgba(37,211,102,0.15)',
+                    border: '1px solid rgba(37,211,102,0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#25D366',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(37,211,102,0.25)'
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(37,211,102,0.15)'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                  </svg>
+                </a>
                 {[
                   {
                     label: 'Instagram',

@@ -80,6 +80,7 @@ export default function LandingNav() {
       {/* CTA */}
       <a
         href="#register"
+        className="landing-nav-cta"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
