@@ -1500,7 +1500,7 @@ export default function RetirementPage() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#25D366',
+                    color: 'rgba(255,255,255,0.6)',
                     textDecoration: 'none',
                     transition: 'all 0.2s ease',
                   }}
@@ -1513,7 +1513,7 @@ export default function RetirementPage() {
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
                     e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
-                    e.currentTarget.style.color = '#25D366'
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
