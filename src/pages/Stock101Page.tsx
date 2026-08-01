@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { TrendingUp, BarChart2, DollarSign, PieChart, ShieldOff, ArrowRight, Menu, X } from 'lucide-react'
 import '../components/landing/landing.css'
 import PullText from '../components/landing/PullText'
@@ -63,7 +63,7 @@ const footerSocials: { label: string; href: string; Icon: IconType }[] = [
 ]
 
 const footerNavigate = [
-  { label: 'Stock 101', href: '#' },
+  { label: 'Stock 101', href: '#top' },
   { label: "What You'll Learn", href: '#modules' },
   { label: 'About Tito', href: '#about' },
   { label: 'Register', href: '#register' },
@@ -233,24 +233,42 @@ const formLabel: CSSProperties = {
 }
 
 function RegisterForm() {
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle')
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setStatus('submitting')
-    const form = e.currentTarget
-    const data = Object.fromEntries(new FormData(form).entries())
-    try {
-      await fetch('https://n8n.srv1759554.hstgr.cloud/webhook/stock101-intake', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      })
-    } catch {
-      // webhook may not be live yet — still confirm to the user
+    const form = e.target as HTMLFormElement
+    const formData = new FormData(form)
+
+    const data = {
+      form_type: 'stock101',
+      fullName: formData.get('fullName') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      location: formData.get('location') as string,
+      howHeard: formData.get('howHeard') as string,
     }
-    setStatus('success')
-    form.reset()
+
+    try {
+      setSubmitting(true)
+      await fetch(
+        'https://script.google.com/macros/s/AKfycbxS_n6QvCVS_BkgGTuQCAphOIpEV89gU4YO7RtDhdwEGf0v8ipOC7xVMpaMOHNu8EvgVg/exec',
+        {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        },
+      )
+      setSubmitted(true)
+      form.reset()
+    } catch (err) {
+      console.error('Form error:', err)
+      setSubmitted(true)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const cardStyle: CSSProperties = {
@@ -261,22 +279,11 @@ function RegisterForm() {
     boxShadow: '0 4px 32px rgba(0,0,0,0.06)',
   }
 
-  if (status === 'success') {
-    return (
-      <div style={{ ...cardStyle, textAlign: 'center' }}>
-        <div style={{ fontSize: '40px', color: FOREST, marginBottom: '0.75rem' }}>✓</div>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '18px', fontWeight: 500, color: FOREST, lineHeight: 1.6 }}>
-          You're registered! Check WhatsApp for your session details.
-        </p>
-      </div>
-    )
-  }
-
   const focus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => (e.currentTarget.style.borderColor = FOREST_MID)
   const blur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => (e.currentTarget.style.borderColor = 'rgba(26,58,22,0.15)')
 
   return (
-    <form onSubmit={onSubmit} style={cardStyle}>
+    <form onSubmit={handleSubmit} style={cardStyle}>
       <div style={{ marginBottom: '1.25rem' }}>
         <label htmlFor="fullName" style={formLabel}>Full Name</label>
         <input id="fullName" name="fullName" type="text" required style={inputStyle} onFocus={focus} onBlur={blur} />
@@ -297,21 +304,36 @@ function RegisterForm() {
         </select>
       </div>
       <div style={{ marginBottom: '1.25rem' }}>
-        <label htmlFor="source" style={formLabel}>How did you hear about us?</label>
-        <select id="source" name="source" required defaultValue="" style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focus} onBlur={blur}>
+        <label htmlFor="howHeard" style={formLabel}>How did you hear about us?</label>
+        <select id="howHeard" name="howHeard" required defaultValue="" style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focus} onBlur={blur}>
           <option value="" disabled>Select…</option>
           {['Instagram', 'WhatsApp', 'YouTube', 'TikTok', 'Friend', 'Other'].map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
       </div>
       <button
         type="submit"
-        disabled={status === 'submitting'}
-        style={{ width: '100%', background: FOREST, color: 'white', borderRadius: '999px', border: 'none', padding: '1rem', marginTop: '0.5rem', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500, cursor: status === 'submitting' ? 'wait' : 'pointer', transition: 'background 0.2s ease' }}
+        disabled={submitting}
+        style={{ width: '100%', background: FOREST, color: 'white', borderRadius: '999px', border: 'none', padding: '1rem', marginTop: '0.5rem', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500, cursor: submitting ? 'wait' : 'pointer', transition: 'background 0.2s ease' }}
         onMouseEnter={(e) => (e.currentTarget.style.background = FOREST_MID)}
         onMouseLeave={(e) => (e.currentTarget.style.background = FOREST)}
       >
-        {status === 'submitting' ? 'Submitting…' : 'Reserve My Free Spot →'}
+        {submitting ? 'Submitting...' : 'Reserve My Free Spot →'}
       </button>
+      {submitted && (
+        <div style={{
+          marginTop: '16px',
+          padding: '16px',
+          background: 'rgba(26,58,22,0.1)',
+          borderRadius: '12px',
+          border: '1px solid rgba(26,58,22,0.2)',
+          fontFamily: 'DM Sans, sans-serif',
+          fontSize: '14px',
+          color: '#1A3A16',
+          textAlign: 'center',
+        }}>
+          ✓ You're registered! We'll reach out on WhatsApp with your session details.
+        </div>
+      )}
       <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: STONE, textAlign: 'center', marginTop: '1rem' }}>
         Prefer WhatsApp?{' '}
         <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" style={{ color: GOLD, textDecoration: 'none' }}>Chat with Tito directly →</a>
@@ -825,7 +847,7 @@ export default function Stock101Page() {
       </section>
 
       {/* ============ FAQ — static accordion ============ */}
-      <section style={{ background: '#FFFFFF', padding: '96px 24px' }}>
+      <section id="faq" style={{ background: '#FFFFFF', padding: '96px 24px' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
             <p

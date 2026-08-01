@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 
 export interface FormField {
   name: string
@@ -69,59 +69,45 @@ const selectStyle: React.CSSProperties = {
   backgroundPosition: 'right 16px center',
 }
 
-export default function LandingForm({ fields, submitLabel, webhookUrl }: LandingFormProps) {
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+export default function LandingForm({ fields, submitLabel }: LandingFormProps) {
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setStatus('submitting')
-    const form = e.currentTarget
-    const data = Object.fromEntries(new FormData(form).entries())
-    try {
-      const res = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      })
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      setStatus('success')
-      form.reset()
-    } catch {
-      // Webhook may not be live yet — still confirm to the user, matching
-      // the brief's fallback ("You're registered! Check your WhatsApp...").
-      setStatus('success')
-      form.reset()
-    }
-  }
+    const form = e.target as HTMLFormElement
+    const formData = new FormData(form)
 
-  if (status === 'success') {
-    return (
-      <div
-        style={{
-          background: 'rgba(255,255,255,0.06)',
-          border: '1px solid rgba(255,255,255,0.1)',
-          borderRadius: '20px',
-          padding: '3rem 2rem',
-          textAlign: 'center',
-        }}
-      >
-        <div style={{ fontSize: '40px', marginBottom: '1rem' }}>✓</div>
-        <h3
-          style={{
-            fontFamily: 'Cormorant Garamond, serif',
-            fontSize: '32px',
-            fontWeight: 400,
-            color: 'white',
-            marginBottom: '0.75rem',
-          }}
-        >
-          You're registered!
-        </h3>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '15px', color: 'rgba(255,255,255,0.65)' }}>
-          Check your WhatsApp for the session details.
-        </p>
-      </div>
-    )
+    const data = {
+      form_type: 'retirement',
+      fullName: formData.get('fullName') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      ageRange: formData.get('ageRange') as string,
+      location: formData.get('location') as string,
+      retirementSavings: formData.get('retirementSavings') as string,
+      howHeard: formData.get('howHeard') as string,
+    }
+
+    try {
+      setSubmitting(true)
+      await fetch(
+        'https://script.google.com/macros/s/AKfycbxS_n6QvCVS_BkgGTuQCAphOIpEV89gU4YO7RtDhdwEGf0v8ipOC7xVMpaMOHNu8EvgVg/exec',
+        {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        },
+      )
+      setSubmitted(true)
+      form.reset()
+    } catch (err) {
+      console.error('Form error:', err)
+      setSubmitted(true)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -180,7 +166,7 @@ export default function LandingForm({ fields, submitLabel, webhookUrl }: Landing
 
       <button
         type="submit"
-        disabled={status === 'submitting'}
+        disabled={submitting}
         style={{
           width: '100%',
           background: '#C9A84C',
@@ -192,7 +178,7 @@ export default function LandingForm({ fields, submitLabel, webhookUrl }: Landing
           fontFamily: 'DM Sans, sans-serif',
           fontSize: '15px',
           fontWeight: 600,
-          cursor: status === 'submitting' ? 'wait' : 'pointer',
+          cursor: submitting ? 'wait' : 'pointer',
           transition: 'all 0.2s ease',
           boxShadow: '0 4px 20px rgba(201,168,76,0.3)',
         }}
@@ -207,8 +193,24 @@ export default function LandingForm({ fields, submitLabel, webhookUrl }: Landing
           e.currentTarget.style.boxShadow = '0 4px 20px rgba(201,168,76,0.3)'
         }}
       >
-        {status === 'submitting' ? 'Submitting…' : submitLabel}
+        {submitting ? 'Submitting...' : submitLabel}
       </button>
+
+      {submitted && (
+        <div style={{
+          marginTop: '16px',
+          padding: '16px',
+          background: 'rgba(37,211,102,0.15)',
+          borderRadius: '12px',
+          border: '1px solid rgba(37,211,102,0.35)',
+          fontFamily: 'DM Sans, sans-serif',
+          fontSize: '14px',
+          color: '#FFFFFF',
+          textAlign: 'center',
+        }}>
+          ✓ Received! Tito's team will reach out on WhatsApp to schedule your session.
+        </div>
+      )}
 
       <p
         style={{

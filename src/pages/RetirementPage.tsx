@@ -533,7 +533,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 4 — OUTCOMES ============ */}
-      <section className="retirement-section-pad" style={{ background: CREAM, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
+      <section id="outcomes" className="retirement-section-pad" style={{ background: CREAM, padding: sectionPad, position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: maxW, margin: '0 auto' }}>
           <div data-reveal>
             <p style={eyebrow}>What You Leave With</p>
@@ -1036,7 +1036,7 @@ export default function RetirementPage() {
                     options: ['None yet', 'Just started', 'Have some', 'Well invested'],
                   },
                   {
-                    name: 'source',
+                    name: 'howHeard',
                     label: 'How did you hear about this?',
                     type: 'select',
                     options: ['Instagram', 'WhatsApp', 'YouTube', 'TikTok', 'Friend', 'Other'],
@@ -1055,7 +1055,7 @@ export default function RetirementPage() {
       </section>
 
       {/* ============ SECTION 8 — FAQ ============ */}
-      <section className="faq-section-wrapper" style={{ background: IVORY, padding: sectionPad }}>
+      <section id="faq" className="faq-section-wrapper" style={{ background: IVORY, padding: sectionPad }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 24px' }}>
           {/* Header */}
           <div className="faq-section-header" style={{ marginBottom: '64px' }}>
