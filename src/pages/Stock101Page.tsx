@@ -1033,42 +1033,6 @@ export default function Stock101Page() {
               justifyContent: 'space-between',
             }}
           >
-            {/* Floating badge */}
-            <div
-              className="tf-footer-badge"
-              style={{ position: 'absolute', top: '-32px', right: '36px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <div
-                style={{
-                  width: '88px',
-                  height: '88px',
-                  borderRadius: '20px',
-                  transform: 'rotate(-8deg)',
-                  background: 'linear-gradient(135deg, #C9A84C 0%, #A07820 100%)',
-                  boxShadow: '8px 14px 28px rgba(201,168,76,0.35), inset 3px 3px 8px rgba(255,255,255,0.25), inset -3px -3px 12px rgba(0,0,0,0.15)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  src="/tf-icon-white.png"
-                  alt="Tito Finance"
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                    objectFit: 'contain',
-                    transform: 'rotate(8deg)',
-                  }}
-                />
-              </div>
-              <div
-                style={{ display: 'flex', gap: '6px', transform: 'rotate(-3deg)', marginTop: '8px', fontFamily: 'DM Mono, monospace', fontSize: '12px', color: '#9CA3AF' }}
-              >
-                wealth starts here
-              </div>
-            </div>
-
             {/* Nav columns */}
             <div className="tf-footer-nav-cols" style={{ display: 'flex', gap: '64px', paddingTop: '8px' }}>
               <div>
