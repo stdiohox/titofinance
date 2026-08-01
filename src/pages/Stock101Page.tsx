@@ -1002,9 +1002,6 @@ export default function Stock101Page() {
 
             {/* Bottom row */}
             <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic', fontSize: '18px', color: 'rgba(255,255,255,0.8)' }}>
-                Stay connected →
-              </span>
               <div style={{ display: 'flex', gap: '8px' }}>
                 {footerSocials.map((s) => (
                   <a
