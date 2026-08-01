@@ -906,7 +906,7 @@ export default function Stock101Page() {
       </section>
 
       {/* ============ FOOTER (inline two-card) ============ */}
-      <footer style={{ background: 'linear-gradient(180deg, #0D0B08 0%, #1A3A16 100%)', padding: '5rem 1.5rem 3rem' }}>
+      <footer className="tf-footer-wrapper" style={{ background: 'linear-gradient(180deg, #0D0B08 0%, #1A3A16 100%)', padding: '5rem 1.5rem 3rem' }}>
         <div
           className="tf-footer-grid"
           style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '340px 1fr', gap: '16px' }}

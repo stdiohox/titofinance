@@ -128,18 +128,30 @@ body {
 
 /* ─── Footer (Tito Finance rebuild) responsive ─── */
 @media (max-width: 860px) {
+  .tf-footer-wrapper {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
   .tf-footer-grid {
     grid-template-columns: 1fr !important;
     gap: 0 !important;
+    max-width: 100% !important;
   }
   .tf-footer-left {
     min-height: 280px !important;
     border-radius: 20px 20px 0 0 !important;
+    margin: 0 !important;
   }
   .tf-footer-right {
     border-radius: 0 0 20px 20px !important;
-    padding: 32px 24px !important;
+    padding: 28px 24px 32px !important;
     overflow: visible !important;
+    margin: 0 !important;
+  }
+  /* Remove excess top space in right card */
+  .tf-footer-right > div:first-child {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
   }
   .tf-footer-nav-cols {
     gap: 24px !important;
