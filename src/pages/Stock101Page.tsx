@@ -240,6 +240,17 @@ function RegisterForm() {
   const [submitting, setSubmitting] = useState(false)
   const [showThankYou, setShowThankYou] = useState(false)
 
+  useEffect(() => {
+    if (showThankYou) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [showThankYou])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const form = e.target as HTMLFormElement
@@ -346,6 +357,8 @@ function RegisterForm() {
             alignItems: 'center',
             justifyContent: 'space-between',
             overflow: 'hidden',
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
           }}
         >
           {/* Top image section with ellipse clip */}
@@ -360,10 +373,10 @@ function RegisterForm() {
               alt="Titobi Oreolorun"
               style={{
                 width: '100%',
-                height: '380px',
+                height: '45vh',
                 objectFit: 'cover',
-                objectPosition: 'center 15%',
-                clipPath: 'ellipse(100% 60% at 50% 40%)',
+                objectPosition: 'center 25%',
+                clipPath: 'ellipse(100% 65% at 50% 35%)',
                 display: 'block',
               }}
             />
@@ -372,7 +385,7 @@ function RegisterForm() {
               position: 'absolute',
               inset: 0,
               background: 'linear-gradient(to bottom, rgba(26,58,22,0.3), transparent 60%)',
-              clipPath: 'ellipse(100% 60% at 50% 40%)',
+              clipPath: 'ellipse(100% 65% at 50% 35%)',
             }} />
             {/* TF Logo top left */}
             <img
@@ -515,7 +528,10 @@ function RegisterForm() {
 
             {/* Secondary — back to site */}
             <button
-              onClick={() => setShowThankYou(false)}
+              onClick={() => {
+                setShowThankYou(false)
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
