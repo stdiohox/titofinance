@@ -47,7 +47,7 @@ export default function StorySection() {
             maxWidth: '440px',
             marginBottom: '2rem'
           }}>
-            My father was a daily contribution collector. I grew up counting people's money on our living room floor — watching how desperately people wanted to save, but didn't know how to multiply it.
+            My father used to be a banker with First Bank. He resigned out of passion for helping people with their finances, so he started a daily contribution business.
             <br /><br />
             When he retired, his pension was painfully small. That broke my heart. It sparked my obsession that led me to Zenith Bank, GTBank, and eventually a $300,000 MBA from Washington University in St. Louis.
           </p>
