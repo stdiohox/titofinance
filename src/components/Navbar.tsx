@@ -43,6 +43,8 @@ export default function Navbar() {
             { label: 'Approach', href: '#differentiators' },
             { label: 'Services', href: '#services' },
             { label: 'Results', href: '#who' },
+            { label: 'Stock 101', href: '/stock-101' },
+            { label: 'Retirement', href: '/retirement' },
           ].map(({ label, href }) => (
             <a
               key={label}
@@ -144,6 +146,8 @@ export default function Navbar() {
           { label: 'Approach', href: '#differentiators' },
           { label: 'Services', href: '#services' },
           { label: 'Results', href: '#who' },
+          { label: 'Stock 101', href: '/stock-101' },
+          { label: 'Retirement', href: '/retirement' },
         ].map(({ label, href }) => (
           <a
             key={label}

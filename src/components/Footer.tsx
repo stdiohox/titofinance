@@ -158,6 +158,8 @@ export default function Footer() {
               { label: 'About', href: '#story' },
               { label: 'Services', href: '#services' },
               { label: 'Approach', href: '#gdr' },
+              { label: 'Stock 101', href: '/stock-101' },
+              { label: 'Retirement Planning', href: '/retirement' },
               { label: 'Book a Call', href: 'https://wa.me/2348184750870', external: true },
             ].map(({ label, href, external }) => (
               <a
