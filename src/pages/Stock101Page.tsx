@@ -29,7 +29,7 @@ const eyebrow: CSSProperties = {
   marginBottom: '1rem',
 }
 
-const WHATSAPP = 'https://wa.me/2348184750870'
+const WHATSAPP = 'https://wa.me/2349064491583'
 
 // ── Data (all existing copy preserved) ─────────────────────────
 const modules = [
@@ -75,7 +75,7 @@ const footerNavigate = [
 ]
 
 const footerConnect: { label: string; href: string; external?: boolean }[] = [
-  { label: 'Book a Call', href: 'https://wa.me/2348184750870', external: true },
+  { label: 'Book a Call', href: 'https://wa.me/2349064491583', external: true },
   { label: 'Retirement Planning', href: '/retirement' },
   { label: 'Main Site', href: '/' },
   { label: 'Instagram', href: 'https://www.instagram.com/teetobee', external: true },
@@ -1350,11 +1350,11 @@ export default function Stock101Page() {
                       const email = input?.value?.trim()
                       if (email) {
                         window.open(
-                          `https://wa.me/2348184750870?text=Hi%20Tito%2C%20I%27d%20like%20to%20stay%20updated.%20My%20email%3A%20${encodeURIComponent(email)}`,
+                          `https://wa.me/2349064491583?text=Hi%20Tito%2C%20I%27d%20like%20to%20stay%20updated.%20My%20email%3A%20${encodeURIComponent(email)}`,
                           '_blank'
                         )
                       } else {
-                        window.open('https://wa.me/2348184750870', '_blank')
+                        window.open('https://wa.me/2349064491583', '_blank')
                       }
                     }}
                     style={{

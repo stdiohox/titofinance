@@ -32,7 +32,7 @@ export default function ServicesSection() {
           </div>
           <a
             data-reveal
-            href="https://wa.me/2348184750870"
+            href="https://wa.me/2349064491583"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 shrink-0"
@@ -125,7 +125,7 @@ export default function ServicesSection() {
                   A free monthly session covering the fundamentals of money management — budgeting, saving, and building healthy financial habits from the ground up.
                 </p>
                 <a
-                  href="https://wa.me/2348184750870"
+                  href="https://wa.me/2349064491583"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -175,7 +175,7 @@ export default function ServicesSection() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', lineHeight: 1.6 }}>
                 Your first step into investing. I'll guide you through building a starter portfolio that matches your risk tolerance and long-term goals.
               </p>
-              <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" style={{
+              <a href="https://wa.me/2349064491583" target="_blank" rel="noopener noreferrer" style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '11px',
                 color: '#C9A84C',
@@ -220,7 +220,7 @@ export default function ServicesSection() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', lineHeight: 1.6 }}>
                 An exclusive community of growth-minded individuals sharing strategies, accountability, and direct access to Titobi's insights.
               </p>
-              <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" style={{
+              <a href="https://wa.me/2349064491583" target="_blank" rel="noopener noreferrer" style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '11px',
                 color: '#C9A84C',
@@ -264,7 +264,7 @@ export default function ServicesSection() {
                 Ongoing one-on-one guidance tailored to your financial journey. Strategy sessions, goal tracking, and direct accountability.
               </p>
             </div>
-            <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href="https://wa.me/2349064491583" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#C9A84C',
@@ -307,7 +307,7 @@ export default function ServicesSection() {
                 A focused 30-minute session to tackle one specific financial question or decision. Fast, direct, actionable.
               </p>
             </div>
-            <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href="https://wa.me/2349064491583" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#2D5A27',
@@ -352,7 +352,7 @@ export default function ServicesSection() {
                 Long-term wealth structuring designed for the life you want after work.
                 We build positions today that compound into lasting freedom.
               </p>
-              <a href="https://wa.me/2348184750870" target="_blank" rel="noopener noreferrer" style={{
+              <a href="https://wa.me/2349064491583" target="_blank" rel="noopener noreferrer" style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '11px',
                 color: '#C9A84C',

@@ -133,7 +133,7 @@ export default function GDRSection() {
 
           <br />
           <a
-            href="https://wa.me/2348184750870"
+            href="https://wa.me/2349064491583"
             target="_blank"
             rel="noopener noreferrer"
             style={{

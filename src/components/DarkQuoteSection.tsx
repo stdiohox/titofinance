@@ -149,7 +149,7 @@ export default function DarkQuoteSection() {
 
         <a
           data-reveal
-          href="https://wa.me/2348184750870"
+          href="https://wa.me/2349064491583"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"

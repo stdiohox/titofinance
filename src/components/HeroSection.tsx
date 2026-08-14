@@ -79,7 +79,7 @@ export default function HeroSection() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-4 mt-auto md:mt-0">
               <a
-                href="https://wa.me/2348184750870"
+                href="https://wa.me/2349064491583"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden md:inline-flex items-center gap-3 rounded-full transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
