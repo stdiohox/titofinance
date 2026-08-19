@@ -25,7 +25,7 @@ const QUICK_REPLIES = [
 ]
 
 const WHATSAPP = 'https://wa.me/2349064491583'
-const GROUP = 'https://chat.whatsapp.com/KYMRgTG9Pxc0zm5hguO30N?mode=gi_t'
+const GROUP = 'https://chat.whatsapp.com/LGD9xagBy2Y4PjF7BCdp2n?mode=gi_t'
 
 const RESPONSES: Record<string, Omit<Message, 'role'>> = {
   'Our Services': {
