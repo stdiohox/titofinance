@@ -29,7 +29,7 @@ const GROUP = 'https://chat.whatsapp.com/LGD9xagBy2Y4PjF7BCdp2n?mode=gi_t'
 
 const RESPONSES: Record<string, Omit<Message, 'role'>> = {
   'Our Services': {
-    text: 'Tito offers 6 services: Personal Finance 101 (free monthly), Beginner\'s Portfolio, Closed Circuit Group, Mentorship, Quick Fire One-on-One, and Retirement Portfolio. Which would you like to know more about?',
+    text: 'Tito offers 6 services: Personal Finance 101 (free monthly), Beginner\'s Portfolio, Close Community, Mentorship, Quick Fire One-on-One, and Retirement Portfolio. Which would you like to know more about?',
   },
   'The GDR Strategy': {
     text: 'GDR stands for Growth · Dividend · Retirement — three purpose-built portfolios with one job each. Growth chases long-term capital appreciation. Dividend generates steady passive income. Retirement preserves capital for the future. Together they form Tito\'s complete wealth system.',

@@ -175,7 +175,7 @@ export default function ServicesSection() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', lineHeight: 1.6 }}>
                 Your first step into investing. I'll guide you through building a starter portfolio that matches your risk tolerance and long-term goals.
               </p>
-              <a href="https://wa.me/2349064491583" target="_blank" rel="noopener noreferrer" style={{
+              <a href="/beginners-portfolio" style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '11px',
                 color: '#C9A84C',
@@ -187,7 +187,7 @@ export default function ServicesSection() {
                 gap: '0.4rem',
                 marginTop: '1rem'
               }}>
-                Chat on WhatsApp →
+                Get Started →
               </a>
             </div>
           </div>
@@ -215,12 +215,12 @@ export default function ServicesSection() {
             </div>
             <div>
               <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'white', lineHeight: 1.15, marginBottom: '0.6rem' }}>
-                Closed Circuit Group
+                Close Community
               </h3>
               <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', lineHeight: 1.6 }}>
                 An exclusive community of growth-minded individuals sharing strategies, accountability, and direct access to Titobi's insights.
               </p>
-              <a href="https://wa.me/2349064491583" target="_blank" rel="noopener noreferrer" style={{
+              <a href="/close-community" style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '11px',
                 color: '#C9A84C',
@@ -232,7 +232,7 @@ export default function ServicesSection() {
                 gap: '0.4rem',
                 marginTop: '1rem'
               }}>
-                Chat on WhatsApp →
+                Get Started →
               </a>
             </div>
           </div>

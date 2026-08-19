@@ -5,6 +5,8 @@ import './index.css'
 import App from './App.tsx'
 import Stock101Page from './pages/Stock101Page.tsx'
 import RetirementPage from './pages/RetirementPage.tsx'
+import BeginnersPortfolioPage from './pages/BeginnersPortfolioPage.tsx'
+import CloseCommunityPage from './pages/CloseCommunityPage.tsx'
 
 const RouteTracker = () => {
   const location = useLocation()
@@ -31,6 +33,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<App />} />
         <Route path="/stock-101" element={<Stock101Page />} />
         <Route path="/retirement" element={<RetirementPage />} />
+        <Route path="/beginners-portfolio" element={<BeginnersPortfolioPage />} />
+        <Route path="/close-community" element={<CloseCommunityPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
