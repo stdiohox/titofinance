@@ -2,6 +2,7 @@ import { useEffect, useState, type CSSProperties, type FormEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, MotionConfig } from 'framer-motion'
 import { Compass, Layers, ShieldCheck, LineChart, Menu, X } from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa6'
 import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
 import {
@@ -484,40 +485,58 @@ function ApplyForm() {
                   next steps.
                 </p>
 
+                {/* PRIMARY, and this is a reversal.
+                     Joining the group used to be an 11px letter-spaced caps
+                     link sitting under a solid button, which is the treatment
+                     this codebase uses for "you probably do not want this".
+                     But the team follows up on their own schedule, whereas the
+                     group is the one thing the visitor can act on RIGHT NOW,
+                     while the intent that made them submit is still warm. The
+                     action with the shorter half-life gets the button.
+
+                     WHATSAPP GREEN AS AN ACCENT, NOT AS THE FILL. #25D366 is
+                     a bright mint that fights a cream and forest palette if it
+                     covers 200px of button. It sits on the glyph instead,
+                     where it is unmistakably WhatsApp against a FOREST_MID
+                     fill that already belongs to the site. The recognition
+                     comes from the mark; the colour only has to confirm it. */}
                 <a
-                  href="/"
+                  href={WHATSAPP_ENTRY_GROUP}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
-                    display: 'inline-block',
-                    background: FOREST,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.65rem',
+                    background: FOREST_MID,
                     color: 'white',
                     fontFamily: 'DM Sans, sans-serif',
-                    fontSize: '15px',
-                    fontWeight: 500,
-                    padding: '0.9rem 2rem',
+                    fontSize: '16px',
+                    fontWeight: 600,
+                    padding: '1.05rem 2.2rem',
                     borderRadius: '999px',
                     textDecoration: 'none',
+                    boxShadow: '0 4px 22px rgba(45,90,39,0.30)',
                   }}
                 >
-                  Back to Tito Finance
+                  <FaWhatsapp size={19} color="#25D366" aria-hidden />
+                  Join the free community →
                 </a>
 
-                {/* Secondary, deliberately. The primary outcome is the team
-                    following up; the group is a place to wait, not the point. */}
+                {/* Demoted to a text link. Going home is the exit, not the
+                     next step, and it no longer needs to compete. */}
                 <p style={{ marginTop: '1.5rem' }}>
                   <a
-                    href={WHATSAPP_ENTRY_GROUP}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/"
                     style={{
-                      fontFamily: 'DM Mono, monospace',
-                      fontSize: '11px',
-                      letterSpacing: '0.15em',
-                      textTransform: 'uppercase',
-                      color: GOLD,
-                      textDecoration: 'none',
+                      fontFamily: 'DM Sans, sans-serif',
+                      fontSize: '14px',
+                      color: STONE,
+                      textDecoration: 'underline',
+                      textUnderlineOffset: '3px',
                     }}
                   >
-                    Join the free community →
+                    Back to Tito Finance
                   </a>
                 </p>
               </div>
