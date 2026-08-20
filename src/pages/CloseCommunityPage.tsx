@@ -571,13 +571,27 @@ export default function CloseCommunityPage() {
           }}
         />
 
-        <div style={{ position: 'relative', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
+        <div
+          className="hero-grid"
+          style={{
+            position: 'relative',
+            maxWidth: '1240px',
+            margin: '0 auto',
+            width: '100%',
+            gap: 'clamp(2rem, 5vw, 4.5rem)',
+          }}
+        >
+          <div>
           <p style={eyebrow}>Close Community</p>
 
           <h1
             style={{
               fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(2.8rem, 8vw, 6rem)',
+              // Capped below the 6rem the single-column version carried, now
+              // that the headline shares the row with the portrait. The 14ch
+              // measure below is unchanged, so the line breaks fall in the
+              // same places; only the scale comes down.
+              fontSize: 'clamp(2.8rem, 6vw, 4.25rem)',
               fontWeight: 500,
               letterSpacing: '-0.03em',
               color: 'white',
@@ -622,6 +636,78 @@ export default function CloseCommunityPage() {
           >
             Request Access →
           </a>
+          </div>
+
+          {/* Portrait. Deliberately NOT the Beginner's Portfolio treatment.
+              That page uses titobi-services.jpg in a clean 24px-radius card
+              with a forest tint: a lit, legible, welcoming thumbnail, which is
+              right for a class. This page is about a closed room, so the photo
+              has to withhold rather than present.
+
+              ASSET. titobi-hero.jpg, the one Tito photograph not used anywhere
+              else in src/. It was shot low-key against near-black with a black
+              long-sleeve, so the darkness here is photographic, not painted on
+              afterwards. Nothing repeats and nothing is faked.
+
+              TREATMENT. Two stacked ink layers, both in INK (#0D0B08) so the
+              frame resolves into the section ground rather than sitting on it:
+
+                1. a vignette that keeps his face clear and carries all four
+                   edges to near-solid ink, which is what removes the card
+                   entirely. No radius, no border, no fill. He emerges from the
+                   ground instead of being mounted on it.
+                2. Stock101Page's shipped 135deg ink wash over media
+                   (line ~800), at lighter stops. That page lays it over a
+                   video at 0.3 opacity so it can afford 0.92; over a
+                   photograph that would crush the face, so the mid stop opens
+                   up to let the diagonal read as light rather than fog.
+
+              Ratio and framing follow Stock101Page's own portrait beside text
+              (4/5). fetchPriority/eager/<picture> match the Beginner's page,
+              since the technical pattern was never the thing to vary. */}
+          <div className="hero-visual">
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                aspectRatio: '4 / 5',
+                maxHeight: '620px',
+              }}
+            >
+              <picture>
+                <source
+                  srcSet="/images/titobi-hero-xs.webp 640w, /images/titobi-hero-sm.webp 1024w, /images/titobi-hero-md.webp 1920w, /images/titobi-hero.webp 2560w"
+                  // hero-visual is display:none below 900px, so the 1px branch
+                  // keeps narrow viewports off the large candidates.
+                  sizes="(min-width: 900px) 44vw, 1px"
+                  type="image/webp"
+                />
+                <img
+                  src="/images/titobi-hero.jpg"
+                  alt="Titobi Oreolorun"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center 18%',
+                    display: 'block',
+                  }}
+                  fetchPriority="high"
+                  loading="eager"
+                  draggable={false}
+                />
+              </picture>
+              <div
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background:
+                    'radial-gradient(ellipse 72% 62% at 55% 34%, transparent 22%, rgba(13,11,8,0.45) 58%, rgba(13,11,8,1) 90%), linear-gradient(135deg, rgba(13,11,8,0.8) 0%, rgba(13,11,8,0.15) 48%, rgba(13,11,8,0.72) 100%)',
+                }}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
