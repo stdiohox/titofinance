@@ -37,6 +37,17 @@ const eyebrow: CSSProperties = {
   marginBottom: '1rem',
 }
 
+/**
+ * Feathers the hero portrait into whatever sits behind it.
+ *
+ * Named rather than inlined because it is set twice, once prefixed for
+ * Safari, and the two must not drift apart. See the hero for why this is a
+ * mask and not an ink overlay, and for the per-edge arithmetic that sizes the
+ * ellipse.
+ */
+const HERO_PHOTO_MASK =
+  'radial-gradient(ellipse 54% 52% at 50% 46%, #000 0%, #000 46%, rgba(0,0,0,0.5) 68%, transparent 84%)'
+
 const inputStyle: CSSProperties = {
   width: '100%',
   fontFamily: 'DM Sans, sans-serif',
@@ -649,29 +660,54 @@ export default function CloseCommunityPage() {
               long-sleeve, so the darkness here is photographic, not painted on
               afterwards. Nothing repeats and nothing is faked.
 
-              TREATMENT. Two stacked ink layers, both in INK (#0D0B08) so the
-              frame resolves into the section ground rather than sitting on it:
+              TREATMENT. A MASK, not a dark overlay. The first attempt here
+              stacked an ink vignette on top and it left a visible rectangle,
+              worst on the right edge. The reason is that a radial-gradient
+              measures its stops along the ellipse ray, so each edge of a
+              rectangular box lands on a different point of the ramp. With the
+              ellipse that shipped, the right edge sat at 62% of the ray and
+              the top at 55%, reaching only ~0.45 alpha, while the bottom sat
+              past 100% and went solid. Only the bottom actually dissolved.
 
-                1. a vignette that keeps his face clear and carries all four
-                   edges to near-solid ink, which is what removes the card
-                   entirely. No radius, no border, no fill. He emerges from the
-                   ground instead of being mounted on it.
-                2. Stock101Page's shipped 135deg ink wash over media
-                   (line ~800), at lighter stops. That page lays it over a
-                   video at 0.3 opacity so it can afford 0.92; over a
-                   photograph that would crush the face, so the mid stop opens
-                   up to let the diagonal read as light rather than fog.
+              An overlay cannot win this. Hiding all four edges needs alpha 1.0
+              at every edge, which means painting out most of the photograph.
+              A mask makes the pixels genuinely transparent instead, so the
+              real section ground shows through and the seam cannot exist at
+              any edge, whatever colour sits behind it.
 
-              Ratio and framing follow Stock101Page's own portrait beside text
-              (4/5). fetchPriority/eager/<picture> match the Beginner's page,
-              since the technical pattern was never the thing to vary. */}
+              The ellipse below is sized so every edge clears the transparent
+              stop, which is the part the vignette got wrong:
+
+                right / left   50 / 54  = 93% of the ray
+                top            46 / 52  = 89%
+                bottom         54 / 52  = 104%
+
+              all past the 84% stop, so all four are fully transparent with
+              margin. The opaque core still runs x 25-75% and y 22-70%, and
+              his eyes and mouth sit around y 30-42%, so the feather takes the
+              backdrop and the edge of his shoulders, never his face.
+
+              What remains on top is only Stock101Page's shipped 135deg ink
+              wash over media (line ~800), lighter here than there because
+              that page lays it over a video at 0.3 opacity and can afford
+              0.92, where over a photograph that crushes the face. It no
+              longer has to hide an edge, so it can be gentler than before and
+              do only the job it is good at, which is mood.
+
+              Ratio follows Stock101Page's own portrait beside text (4/5).
+              fetchPriority/eager/<picture> match the Beginner's page, since
+              the technical pattern was never the thing to vary. */}
           <div className="hero-visual">
             <div
               style={{
                 position: 'relative',
                 width: '100%',
                 aspectRatio: '4 / 5',
-                maxHeight: '620px',
+                // Taller than the boxed version was, so the feather has room
+                // to happen in spare frame instead of eating the figure.
+                maxHeight: '700px',
+                WebkitMaskImage: HERO_PHOTO_MASK,
+                maskImage: HERO_PHOTO_MASK,
               }}
             >
               <picture>
@@ -703,7 +739,7 @@ export default function CloseCommunityPage() {
                   position: 'absolute',
                   inset: 0,
                   background:
-                    'radial-gradient(ellipse 72% 62% at 55% 34%, transparent 22%, rgba(13,11,8,0.45) 58%, rgba(13,11,8,1) 90%), linear-gradient(135deg, rgba(13,11,8,0.8) 0%, rgba(13,11,8,0.15) 48%, rgba(13,11,8,0.72) 100%)',
+                    'linear-gradient(135deg, rgba(13,11,8,0.72) 0%, rgba(13,11,8,0.08) 46%, rgba(13,11,8,0.6) 100%)',
                 }}
               />
             </div>
