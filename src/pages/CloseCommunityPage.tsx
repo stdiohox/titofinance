@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
-import { WHATSAPP_DIRECT, WHATSAPP_GROUP, submitLead } from '@/lib/forms'
+import { WHATSAPP_DIRECT, WHATSAPP_ENTRY_GROUP, submitLead } from '@/lib/forms'
 
 // ── Design tokens ──────────────────────────────────────────────
 // Identical to Stock101Page and BeginnersPortfolioPage. The premium weight of
@@ -520,7 +520,7 @@ function AccessForm() {
 
                 <p style={{ marginTop: '1.5rem' }}>
                   <a
-                    href={WHATSAPP_GROUP}
+                    href={WHATSAPP_ENTRY_GROUP}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{

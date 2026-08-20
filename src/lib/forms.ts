@@ -15,9 +15,21 @@ export const INGEST_ENDPOINT =
 /** Tito's direct line, for the fallback when a submission fails. */
 export const WHATSAPP_DIRECT = 'https://wa.me/2349064491583'
 
-/** The free community group, offered after a successful submission. */
-export const WHATSAPP_GROUP =
-  'https://chat.whatsapp.com/LGD9xagBy2Y4PjF7BCdp2n?mode=gi_t'
+/**
+ * The dedicated entry group for the two forms in this file's orbit, offered
+ * after a successful submission.
+ *
+ * NOT the general Stock 101 group. That one is a different invite and lives
+ * inline in Stock101Page.tsx and ChatBot.tsx, which do not import from here;
+ * this constant and those literals are deliberately separate and must not be
+ * reconciled into one.
+ *
+ * Named ENTRY rather than the plain WHATSAPP_GROUP it replaced, because the
+ * link is now specific to Beginner's Portfolio and Close Community rather
+ * than being "the" community group. A future form should join this one only
+ * if that is actually the intent, not because the constant sounded generic.
+ */
+export const WHATSAPP_ENTRY_GROUP = 'https://chat.whatsapp.com/KyRWv10tqjHDfo9H1b2bUs'
 
 export type FormType = 'beginner_portfolio' | 'closed_group'
 

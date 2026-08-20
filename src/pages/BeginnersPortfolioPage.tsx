@@ -6,7 +6,7 @@ import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
 import {
   WHATSAPP_DIRECT,
-  WHATSAPP_GROUP,
+  WHATSAPP_ENTRY_GROUP,
   submitLead,
 } from '@/lib/forms'
 
@@ -505,7 +505,7 @@ function ApplyForm() {
                     following up; the group is a place to wait, not the point. */}
                 <p style={{ marginTop: '1.5rem' }}>
                   <a
-                    href={WHATSAPP_GROUP}
+                    href={WHATSAPP_ENTRY_GROUP}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
