@@ -566,13 +566,30 @@ export default function BeginnersPortfolioPage() {
           }}
         />
 
-        <div style={{ position: 'relative', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
+        {/* hero-grid / hero-visual are the responsive helpers already in
+            landing.css: one column below 900px, 1.1fr / 0.9fr above it, with
+            the visual hidden on the narrow breakpoint. They were written for
+            exactly this layout and had no consumer until now. */}
+        <div
+          className="hero-grid"
+          style={{
+            position: 'relative',
+            maxWidth: '1240px',
+            margin: '0 auto',
+            width: '100%',
+            gap: 'clamp(2rem, 5vw, 4rem)',
+          }}
+        >
+          <div>
           <p style={eyebrow}>Beginner's Portfolio Class</p>
 
           <h1
             style={{
               fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(2.6rem, 7vw, 5rem)',
+              // Capped lower than the single-column siblings (Stock101 uses
+              // 5rem) because the headline now shares the row with the photo.
+              // At 5rem in a ~660px column it breaks to four lines.
+              fontSize: 'clamp(2.6rem, 5.5vw, 4rem)',
               fontWeight: 500,
               letterSpacing: '-0.025em',
               color: 'white',
@@ -617,6 +634,80 @@ export default function BeginnersPortfolioPage() {
           >
             Apply for the Class →
           </a>
+          </div>
+
+          {/* Portrait. Same asset as the "Personal Financial Management 101"
+              card on the homepage (ServicesSection card 01), and the same
+              treatment it already carries elsewhere:
+
+                crop     objectPosition 'center 10%', the framing RetirementPage
+                         uses for this exact file, because his head sits high
+                         in the frame and 'center' decapitates him
+                shape    24px radius, matching RetirementPage's portrait wrapper
+                overlay  a FOREST tint, not the black scrim ServicesSection
+                         uses. That scrim exists there to carry white text laid
+                         over the photo; nothing overlaps this one. On a dark
+                         ground the site tints toward the brand green instead
+                         (Stock101Page's hero image), which settles the photo
+                         into the section rather than leaving a lit rectangle
+                         floating on forest.
+
+              <picture> + eager + high priority mirrors HeroSection, since this
+              is above the fold and is the desktop LCP element. */}
+          <div className="hero-visual">
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                aspectRatio: '4 / 5',
+                maxHeight: '560px',
+                borderRadius: '24px',
+                overflow: 'hidden',
+                background: FOREST_MID,
+              }}
+            >
+              <picture>
+                <source
+                  srcSet="/images/titobi-services-xs.webp 640w, /images/titobi-services-sm.webp 1024w, /images/titobi-services-md.webp 1920w, /images/titobi-services.webp 2560w"
+                  // hero-visual is display:none below 900px, so the 1px branch
+                  // keeps narrow viewports off the large candidates for an
+                  // image they will never paint.
+                  sizes="(min-width: 900px) 44vw, 1px"
+                  type="image/webp"
+                />
+                <img
+                  src="/images/titobi-services.jpg"
+                  alt="Titobi Oreolorun"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center 10%',
+                    display: 'block',
+                  }}
+                  fetchPriority="high"
+                  loading="eager"
+                  draggable={false}
+                />
+              </picture>
+              <div
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  // Two forest tints, one from each edge. The photo was shot
+                  // on a pale studio backdrop, so a single scrim leaves the
+                  // top corners reading as a lit rectangle sitting on the
+                  // forest rather than in it. The top-down half is
+                  // Stock101Page's hero-image tint at its shipped values; the
+                  // bottom-up half is the ServicesSection scrim's shape in
+                  // forest instead of black. Both clear his face by 45%.
+                  background:
+                    'linear-gradient(to top, rgba(26,58,22,0.5) 0%, rgba(26,58,22,0.08) 45%, transparent 100%), linear-gradient(to bottom, rgba(26,58,22,0.3), transparent 55%)',
+                }}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
