@@ -1,3 +1,5 @@
+import TitoGallery from '@/components/TitoGallery'
+
 const portfolios = [
   {
     letter: 'G',
@@ -160,6 +162,10 @@ export default function GDRSection() {
             </svg>
             Chat with Tito on WhatsApp →
           </a>
+
+          {/* Evidence for the "15 countries" line this page already makes
+              twice. Sits under the WhatsApp link, inside the left column. */}
+          <TitoGallery />
         </div>
 
         {/* Right — portfolio cards */}
