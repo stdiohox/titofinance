@@ -97,7 +97,30 @@ export default function TitoGallery() {
         the row is CSS flex-grow under a hover selector, so it works with JS
         disabled and costs nothing at runtime.
       */}
-      <div className="grid grid-cols-2 gap-2 md:flex md:h-[220px] md:gap-2">
+      {/*
+        HEIGHT SCALES WITH THE BREAKPOINT because the panel WIDTH is not free.
+        This strip sits in one half of a two-column grid, so a collapsed panel
+        is (column - 24) / 4 - about 82px at 820 and 160px at 1440. A single
+        fixed height therefore reads completely differently across the range:
+        300px made 82x300 matchsticks at 820 while barely denting the gap at
+        1440.
+
+        The ladder holds each panel near a 0.35-0.40 ratio instead, so the
+        strip grows with the space it has rather than against it:
+
+          820   82x240   0.34      1280  140x400  0.35
+          1024 108x300   0.36      1440  160x400  0.40
+
+        400 at xl is not arbitrary. A HOVERED panel takes 2.5 of 5.5 shares -
+        302px at 1440 - and 302/400 is 0.75, the native ratio of three of the
+        four photographs. The expanded state is the one that shows the picture,
+        so that is the state worth fitting; at the old 220px it was 1.37, a
+        landscape window onto a portrait photo.
+
+        Below md none of this applies: the 2x2 grid is aspect-[3/4] and
+        untouched.
+      */}
+      <div className="grid grid-cols-2 gap-2 md:flex md:h-[240px] md:gap-2 lg:h-[300px] xl:h-[400px]">
         {GALLERY.map((photo) => (
           <figure
             key={photo.src}
