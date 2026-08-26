@@ -263,6 +263,11 @@ function RegisterForm() {
       phone: formData.get('phone') as string,
       location: formData.get('location') as string,
       howHeard: formData.get('howHeard') as string,
+      // Same key and same target column as the Beginner's Portfolio form
+      // (leads.learning_goal). One question asked on two forms, not two
+      // columns for one question - the ingest mapping already exists, so
+      // this needed no migration and no new payload key.
+      learningGoal: formData.get('learningGoal') as string,
     }
 
     try {
@@ -294,8 +299,13 @@ function RegisterForm() {
     boxShadow: '0 4px 32px rgba(0,0,0,0.06)',
   }
 
-  const focus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => (e.currentTarget.style.borderColor = FOREST_MID)
-  const blur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => (e.currentTarget.style.borderColor = 'rgba(26,58,22,0.15)')
+  // HTMLTextAreaElement added for the learning-goal field below. Widened to
+  // match the identical pair on BeginnersPortfolioPage rather than casting at
+  // the one call site, so both forms share one handler signature.
+  const focus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    (e.currentTarget.style.borderColor = FOREST_MID)
+  const blur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    (e.currentTarget.style.borderColor = 'rgba(26,58,22,0.15)')
 
   return (
     <>
@@ -325,6 +335,23 @@ function RegisterForm() {
           <option value="" disabled>Select…</option>
           {['Instagram', 'WhatsApp', 'YouTube', 'TikTok', 'Friend', 'Other'].map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
+      </div>
+      {/* Optional, and last. Every field above it is required, so putting the
+          one free-text question after them means a hesitant attendee has
+          already committed to the form before meeting the only box that asks
+          them to think. Matches the Beginner's Portfolio treatment: three
+          rows, a placeholder that lowers the bar rather than raising it. */}
+      <div style={{ marginBottom: '1.25rem' }}>
+        <label htmlFor="learningGoal" style={formLabel}>What do you hope to learn from the class?</label>
+        <textarea
+          id="learningGoal"
+          name="learningGoal"
+          rows={3}
+          placeholder="A sentence is plenty."
+          style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.5 }}
+          onFocus={focus}
+          onBlur={blur}
+        />
       </div>
       <button
         type="submit"
