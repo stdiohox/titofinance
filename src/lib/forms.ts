@@ -19,10 +19,18 @@ export const WHATSAPP_DIRECT = 'https://wa.me/2349064491583'
  * The dedicated entry group for the two forms in this file's orbit, offered
  * after a successful submission.
  *
- * NOT the general Stock 101 group. That one is a different invite and lives
- * inline in Stock101Page.tsx and ChatBot.tsx, which do not import from here;
- * this constant and those literals are deliberately separate and must not be
- * reconciled into one.
+ * THREE PLACES NOW POINT AT THIS INVITE, and only two of them are this
+ * constant. Stock101Page.tsx was moved onto the same group and holds it as its
+ * own literal, with a `?mode=gi_t` query param this constant does not carry -
+ * same destination, different string. It does not import from here.
+ *
+ * ChatBot.tsx still holds the ORIGINAL Stock 101 invite, deliberately, and is
+ * the only remaining user of it. Do not sweep it up in a find-and-replace
+ * across the other three; it was left behind on purpose.
+ *
+ * So these literals are still not to be reconciled into one, but the reason
+ * has changed: it used to be that they were different groups, and now it is
+ * that one of them is still meant to be.
  *
  * Named ENTRY rather than the plain WHATSAPP_GROUP it replaced, because the
  * link is now specific to Beginner's Portfolio and Close Community rather
