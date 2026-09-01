@@ -6,6 +6,7 @@ import '../components/landing/landing.css'
 import PullText from '../components/landing/PullText'
 import { useReveal } from '../components/landing/useReveal'
 import { WorldMap } from '@/components/ui/WorldMap'
+import { ClassAnnouncement } from '@/components/ClassAnnouncement'
 import LandingFaq from '@/components/landing/LandingFaq'
 import { FaInstagram, FaYoutube, FaXTwitter, FaFacebook, FaTiktok, FaWhatsapp } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
@@ -1443,6 +1444,12 @@ export default function Stock101Page() {
           </svg>
         </div>
       </footer>
+
+      {/* Same component as the homepage. It reads the route itself and turns
+          its CTA into an in-page scroll here, and it stays shut entirely if the
+          register section is already on screen - which is what anyone arriving
+          at /stock-101#register is looking at. */}
+      <ClassAnnouncement />
     </div>
   )
 }

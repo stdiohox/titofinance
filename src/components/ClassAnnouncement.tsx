@@ -1,6 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 /**
  * The upcoming-classes announcement.
@@ -71,6 +78,11 @@ const LONG_DATE = new Intl.DateTimeFormat('en-GB', {
  *  still read as part of arriving. An instant popup is an ambush. */
 const APPEAR_AFTER_MS = 1400
 
+/** The Stock 101 registration section, which already exists on that page
+ *  (Stock101Page.tsx:1070) and is what its own nav links point at. */
+const REGISTER_ID = 'register'
+const STOCK_101_PATH = '/stock-101'
+
 /* ------------------------------------------------------------- countdown */
 
 interface Remaining {
@@ -129,6 +141,67 @@ function CountdownCell({ value, label }: { value: string; label: string }) {
   )
 }
 
+/**
+ * The CTA. Same words, two actions, decided by where the reader already is.
+ *
+ * OFF /stock-101 - a real route change to /stock-101#register. RouteTracker
+ * (main.tsx) does the scrolling once the page has rendered, because React
+ * Router ignores the hash on its own.
+ *
+ * ON /stock-101 - no navigation at all; the section is already in the
+ * document. It stays an <a href="#register"> rather than becoming a <button>,
+ * so it is still a link to a fragment: middle-click, open-in-new-tab and the
+ * status bar all behave, and a screen reader announces a link, which is what
+ * it is.
+ *
+ * BUT THE DEFAULT JUMP IS PREVENTED, and that is not fussiness. While the
+ * popup is open the overlay effect holds `document.body.style.overflow =
+ * 'hidden'`. A native anchor jump fires synchronously inside the click event,
+ * BEFORE React commits the state change that unlocks it - so the browser would
+ * try to scroll a frozen body and land nowhere. Dismiss first, then scroll on
+ * the next frame, by which point the cleanup has restored the body.
+ */
+function CtaLink({
+  onStock101,
+  dismiss,
+  className,
+  style,
+  children,
+}: {
+  onStock101: boolean
+  dismiss: () => void
+  className?: string
+  style?: CSSProperties
+  children: ReactNode
+}) {
+  if (!onStock101) {
+    return (
+      <Link to={`${STOCK_101_PATH}#${REGISTER_ID}`} onClick={dismiss} className={className} style={style}>
+        {children}
+      </Link>
+    )
+  }
+
+  return (
+    <a
+      href={`#${REGISTER_ID}`}
+      className={className}
+      style={style}
+      onClick={(e) => {
+        e.preventDefault()
+        dismiss()
+        requestAnimationFrame(() => {
+          document
+            .getElementById(REGISTER_ID)
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        })
+      }}
+    >
+      {children}
+    </a>
+  )
+}
+
 /* ------------------------------------------------------------- component */
 
 export function ClassAnnouncement() {
@@ -137,6 +210,12 @@ export function ClassAnnouncement() {
   const [now, setNow] = useState(() => Date.now())
   const closeRef = useRef<HTMLButtonElement>(null)
   const previouslyFocused = useRef<Element | null>(null)
+
+  // ONE COMPONENT, TWO PAGES. The route decides the CTA's behaviour rather
+  // than a prop, because the caller has nothing to say that the URL does not
+  // already know - and a prop would let the two mount points drift.
+  const { pathname } = useLocation()
+  const onStock101 = pathname === STOCK_101_PATH
 
   const countdown = remainingUntil(STOCK_101, now)
 
@@ -154,7 +233,26 @@ export function ClassAnnouncement() {
   // install ad blockers over. Fresh visit, fresh popup; same visit, one popup.
   useEffect(() => {
     if (!countdown) return
-    const t = setTimeout(() => setOpen(true), APPEAR_AFTER_MS)
+    const t = setTimeout(() => {
+      // DO NOT COVER THE FORM. On /stock-101 the registration section is far
+      // below the fold, so at 1.4s a visitor who landed at the top is nowhere
+      // near it and the popup is harmless. Two people are not:
+      //
+      //   * anyone arriving at /stock-101#register - including everyone who
+      //     just clicked this popup's own CTA on the homepage, which is the
+      //     awkward case this feature would otherwise create for itself
+      //   * anyone who scrolled straight down inside the first 1.4 seconds
+      //
+      // Both are already looking at the form. One geometric check covers both
+      // and needs no special-casing of the hash: if the section has entered the
+      // viewport, say nothing at all this page view.
+      //
+      // Deliberately NOT a longer delay on this route. A delay only postpones
+      // the collision; asking where the reader actually is answers it.
+      const section = document.getElementById(REGISTER_ID)
+      if (section && section.getBoundingClientRect().top < window.innerHeight) return
+      setOpen(true)
+    }, APPEAR_AFTER_MS)
     return () => clearTimeout(t)
     // countdown is derived from `now`, which ticks every second. Depending on
     // it directly would re-arm this timer once a second and the popup would
@@ -409,10 +507,14 @@ export function ClassAnnouncement() {
                 ))}
               </dl>
 
-              {/* ONE CTA. Confirmed with the client: no second button. */}
-              <Link
-                to="/stock-101"
-                onClick={dismiss}
+              {/* ONE CTA. Confirmed with the client: no second button.
+                  Two renderings of it, because the same words mean two
+                  different actions depending on where the reader already is.
+                  Both are real anchors, so middle-click and "open in new tab"
+                  behave; neither is a <button> pretending to be a link. */}
+              <CtaLink
+                onStock101={onStock101}
+                dismiss={dismiss}
                 className="mt-6 inline-flex items-center justify-center gap-2 transition-transform duration-200 hover:-translate-y-0.5"
                 style={{
                   padding: '15px 28px',
@@ -440,7 +542,7 @@ export function ClassAnnouncement() {
                 >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </Link>
+              </CtaLink>
             </div>
           </motion.div>
         </motion.div>
