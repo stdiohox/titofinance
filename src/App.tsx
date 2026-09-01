@@ -13,6 +13,7 @@ import TestimonialsSection from './components/TestimonialsSection'
 import WhoItsForSection from './components/WhoItsForSection'
 import FinalCTA from './components/FinalCTA'
 import Footer from './components/Footer'
+import { ClassAnnouncement } from './components/ClassAnnouncement'
 import { useAnimations } from './hooks/useAnimations'
 
 export default function App() {
@@ -60,6 +61,10 @@ export default function App() {
       </section>
       <Footer />
       <ChatBot />
+      {/* HOMEPAGE ONLY, deliberately - see the component header. Mounting this
+          in main.tsx would fire it sitewide, including on /stock-101, where it
+          would cover the registration form the CTA sends people to. */}
+      <ClassAnnouncement />
     </main>
   )
 }
