@@ -25,6 +25,21 @@ import { Link } from 'react-router-dom'
  * single CTA underneath it.
  *
  * ============================================================================
+ * NO DISMISSAL MEMORY
+ * ============================================================================
+ * Closing it closes it for that page view only. Reload, come back from another
+ * page, or open a new tab and it greets you again after the same 1.4s beat.
+ *
+ * Deliberate for a dated announcement with two weeks to run: a visitor who
+ * dismissed it on Monday without reading it should still learn about the class
+ * on Thursday. The cost is that a determined re-loader sees it more than once,
+ * which is the cheaper mistake than a visitor who never sees it at all.
+ *
+ * There is no in-page timer bringing it back mid-visit. Re-interrupting
+ * somebody who has already closed it is a different and much worse thing than
+ * greeting them on a new visit.
+ *
+ * ============================================================================
  * IT RETIRES ITSELF
  * ============================================================================
  * The only button registers for Stock 101. Once that class has passed, the
@@ -51,8 +66,6 @@ const LONG_DATE = new Intl.DateTimeFormat('en-GB', {
   month: 'long',
   year: 'numeric',
 })
-
-const DISMISSED_KEY = 'tf-class-announcement-dismissed'
 
 /** Long enough for the hero to paint and the eye to settle; short enough to
  *  still read as part of arriving. An instant popup is an ambush. */
@@ -127,28 +140,25 @@ export function ClassAnnouncement() {
 
   const countdown = remainingUntil(STOCK_101, now)
 
-  // ---- Appear once, after a beat, and never after a dismissal this session.
+  // ---- Appear once per mount, after a beat. NO MEMORY OF A DISMISSAL.
   //
-  // sessionStorage rather than localStorage on purpose: this announces two
-  // dated classes, so it should come back on a new visit next week, not be
-  // silenced until someone clears their browser.
+  // This used to read a sessionStorage flag and stay closed for the rest of the
+  // session. That is gone by decision: the announcement is time-sensitive, so
+  // it should greet every fresh page load - a reload, a return from another
+  // page, a new tab - rather than being silenced by one early dismissal.
+  //
+  // ONCE PER MOUNT IS THE WHOLE RULE, and the empty dependency array is what
+  // enforces it. There is deliberately NO interval that re-opens the popup
+  // while somebody stays on the page: that was considered and rejected, since
+  // re-interrupting a reader who has already said no is the behaviour people
+  // install ad blockers over. Fresh visit, fresh popup; same visit, one popup.
   useEffect(() => {
     if (!countdown) return
-    let dismissed = false
-    try {
-      dismissed = sessionStorage.getItem(DISMISSED_KEY) === '1'
-    } catch {
-      // Private mode and blocked-storage browsers throw on access. Showing the
-      // popup is the safe failure: worst case somebody sees it twice.
-      dismissed = false
-    }
-    if (dismissed) return
-
     const t = setTimeout(() => setOpen(true), APPEAR_AFTER_MS)
     return () => clearTimeout(t)
     // countdown is derived from `now`, which ticks every second. Depending on
     // it directly would re-arm this timer once a second and the popup would
-    // never open. Gate on the target instead, which never changes.
+    // never open. Gate on mount instead; the target date never changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -159,15 +169,9 @@ export function ClassAnnouncement() {
     return () => clearInterval(id)
   }, [open])
 
-  const dismiss = useCallback(() => {
-    setOpen(false)
-    try {
-      sessionStorage.setItem(DISMISSED_KEY, '1')
-    } catch {
-      // Nothing to do. The popup closes either way; it may just return on the
-      // next page view in a browser that refuses storage.
-    }
-  }, [])
+  // Closes it for this mount and nothing more. Nothing is written anywhere, so
+  // there is no storage to fail on in private mode and nothing to clear.
+  const dismiss = useCallback(() => setOpen(false), [])
 
   // ---- Escape, focus, and the page behind it.
   useEffect(() => {
