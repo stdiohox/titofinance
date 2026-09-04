@@ -756,6 +756,14 @@ const CircularStat = ({
               letterSpacing: '0.1em',
               color: '#9A9A9A',
               textTransform: 'uppercase',
+              // A one-word label needs neither of these. A longer one does:
+              // "Invested in Education" runs ~132px on one line, which clears
+              // the ring by about 11px a side and reads as cramped. Capping the
+              // measure lets it break to two centred lines well inside the
+              // circle. The short labels are all under the cap and unchanged.
+              maxWidth: '104px',
+              textAlign: 'center',
+              lineHeight: 1.35,
             }}
           >
             {label}
@@ -1062,7 +1070,7 @@ export default function Stock101Page() {
         >
           <CircularStat value={15} suffix="+" label="Countries" percentage={75} color="#C9A84C" trackColor="rgba(201,168,76,0.12)" size={160} duration={2200} />
           <CircularStat value={2} label="Major Banks" percentage={40} color="#1A3A16" trackColor="rgba(26,58,22,0.08)" size={160} duration={1500} />
-          <CircularStat value={300} prefix="$" suffix="K+" label="Revenue" percentage={90} color="#C9A84C" trackColor="rgba(201,168,76,0.12)" size={160} duration={2500} />
+          <CircularStat value={300} prefix="$" suffix="K+" label="Invested in Education" percentage={90} color="#C9A84C" trackColor="rgba(201,168,76,0.12)" size={160} duration={2500} />
           <CircularStat value={100} suffix="K+" label="Followers" percentage={65} color="#1A3A16" trackColor="rgba(26,58,22,0.08)" size={160} duration={2000} />
         </div>
       </section>
