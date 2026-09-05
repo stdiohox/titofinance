@@ -64,7 +64,7 @@ const footerSocials: { label: string; href: string; Icon: IconType }[] = [
   { label: 'Twitter', href: 'https://x.com/titofinance?s=21', Icon: FaXTwitter },
   { label: 'Facebook', href: 'https://www.facebook.com/Titobifinance', Icon: FaFacebook },
   { label: 'TikTok', href: 'https://www.tiktok.com/@titofinance', Icon: FaTiktok },
-  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/KyRWv10tqjHDfo9H1b2bUs?mode=gi_t', Icon: FaWhatsapp },
+  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/F46uXpOk0hVLLxaD5RAdVc', Icon: FaWhatsapp },
 ]
 
 const footerNavigate = [
@@ -519,7 +519,7 @@ function RegisterForm() {
           >
             {/* Primary CTA — Join WhatsApp Group */}
             <a
-              href="https://chat.whatsapp.com/KyRWv10tqjHDfo9H1b2bUs?mode=gi_t"
+              href="https://chat.whatsapp.com/F46uXpOk0hVLLxaD5RAdVc"
               target="_blank"
               rel="noopener noreferrer"
               style={{

@@ -16,28 +16,21 @@ export const INGEST_ENDPOINT =
 export const WHATSAPP_DIRECT = 'https://wa.me/2349064491583'
 
 /**
- * The dedicated entry group for the two forms in this file's orbit, offered
- * after a successful submission.
+ * The entry group for the two forms in this file's orbit, offered after a
+ * successful submission.
  *
- * THREE PLACES NOW POINT AT THIS INVITE, and only two of them are this
- * constant. Stock101Page.tsx was moved onto the same group and holds it as its
- * own literal, with a `?mode=gi_t` query param this constant does not carry -
- * same destination, different string. It does not import from here.
+ * EVERY WHATSAPP GROUP LINK IN THE SITE NOW POINTS HERE. The earlier split -
+ * one invite for the forms, an older one kept on purpose in ChatBot.tsx - is
+ * gone; both were replaced with this single invite. Two other literals still
+ * spell it out rather than importing this constant: Stock101Page.tsx (twice)
+ * and ChatBot.tsx. If the invite rotates again, grep for chat.whatsapp.com
+ * rather than trusting this constant to be the only copy.
  *
- * ChatBot.tsx still holds the ORIGINAL Stock 101 invite, deliberately, and is
- * the only remaining user of it. Do not sweep it up in a find-and-replace
- * across the other three; it was left behind on purpose.
- *
- * So these literals are still not to be reconciled into one, but the reason
- * has changed: it used to be that they were different groups, and now it is
- * that one of them is still meant to be.
- *
- * Named ENTRY rather than the plain WHATSAPP_GROUP it replaced, because the
- * link is now specific to Beginner's Portfolio and Close Community rather
- * than being "the" community group. A future form should join this one only
- * if that is actually the intent, not because the constant sounded generic.
+ * Named ENTRY rather than the plain WHATSAPP_GROUP it replaced, from when the
+ * link was specific to Beginner's Portfolio and Close Community. That is no
+ * longer the distinction it draws.
  */
-export const WHATSAPP_ENTRY_GROUP = 'https://chat.whatsapp.com/KyRWv10tqjHDfo9H1b2bUs'
+export const WHATSAPP_ENTRY_GROUP = 'https://chat.whatsapp.com/F46uXpOk0hVLLxaD5RAdVc'
 
 export type FormType = 'beginner_portfolio' | 'closed_group'
 
