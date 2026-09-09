@@ -7,6 +7,7 @@ import PullText from '../components/landing/PullText'
 import { useReveal } from '../components/landing/useReveal'
 import { WorldMap } from '@/components/ui/WorldMap'
 import { ClassAnnouncement } from '@/components/ClassAnnouncement'
+import PhoneField from '@/components/PhoneField'
 import LandingFaq from '@/components/landing/LandingFaq'
 import { FaInstagram, FaYoutube, FaXTwitter, FaFacebook, FaTiktok, FaWhatsapp } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
@@ -321,7 +322,12 @@ function RegisterForm() {
       </div>
       <div style={{ marginBottom: '1.25rem' }}>
         <label htmlFor="phone" style={formLabel}>WhatsApp Number</label>
-        <input id="phone" name="phone" type="tel" required style={inputStyle} onFocus={focus} onBlur={blur} />
+        <PhoneField
+          inputStyle={inputStyle}
+          selectStyle={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
+          onFocus={focus}
+          onBlur={blur}
+        />
       </div>
       <div style={{ marginBottom: '1.25rem' }}>
         <label htmlFor="location" style={formLabel}>Where are you based?</label>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PhoneField from '@/components/PhoneField'
 
 export interface FormField {
   name: string
@@ -129,6 +130,23 @@ export default function LandingForm({ fields, submitLabel }: LandingFormProps) {
             <label htmlFor={field.name} style={labelStyle}>
               {field.label}
             </label>
+            {field.type === 'tel' ? (
+              // Two controls, so the glass shell is drawn per control rather
+              // than once around the row.
+              <PhoneField
+                id={field.name}
+                name={field.name}
+                placeholder={field.placeholder ?? '803 000 0000'}
+                inputStyle={inputStyle}
+                selectStyle={selectStyle}
+                className="retirement-form-input"
+                renderShell={(child, key) => (
+                  <div key={key} className="retirement-glass-wrapper" style={glassWrapperStyle}>
+                    {child}
+                  </div>
+                )}
+              />
+            ) : (
             <div className="retirement-glass-wrapper" style={glassWrapperStyle}>
               {field.type === 'select' ? (
                 <select
@@ -160,6 +178,7 @@ export default function LandingForm({ fields, submitLabel }: LandingFormProps) {
                 />
               )}
             </div>
+            )}
           </div>
         ))}
       </div>

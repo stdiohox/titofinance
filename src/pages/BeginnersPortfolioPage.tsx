@@ -5,6 +5,7 @@ import { Compass, Layers, ShieldCheck, LineChart, Menu, X } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa6'
 import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
+import PhoneField from '@/components/PhoneField'
 import {
   WHATSAPP_DIRECT,
   WHATSAPP_ENTRY_GROUP,
@@ -316,7 +317,12 @@ function ApplyForm() {
 
         <div style={{ marginBottom: '1.25rem' }}>
           <label htmlFor="phone" style={formLabel}>WhatsApp Number</label>
-          <input id="phone" name="phone" type="tel" required style={inputStyle} onFocus={focus} onBlur={blur} />
+          <PhoneField
+            inputStyle={inputStyle}
+            selectStyle={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
+            onFocus={focus}
+            onBlur={blur}
+          />
         </div>
 
         <div style={{ marginBottom: '1.25rem' }}>

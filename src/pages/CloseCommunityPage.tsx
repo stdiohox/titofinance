@@ -15,6 +15,7 @@ import { FaWhatsapp } from 'react-icons/fa6'
 import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
 import { WHATSAPP_DIRECT, WHATSAPP_ENTRY_GROUP, submitLead } from '@/lib/forms'
+import PhoneField from '@/components/PhoneField'
 
 // ── Design tokens ──────────────────────────────────────────────
 // Identical to Stock101Page and BeginnersPortfolioPage. The premium weight of
@@ -327,7 +328,12 @@ function AccessForm() {
 
         <div style={{ marginBottom: '1.25rem' }}>
           <label htmlFor="phone" style={formLabel}>WhatsApp Number</label>
-          <input id="phone" name="phone" type="tel" required style={inputStyle} onFocus={focus} onBlur={blur} />
+          <PhoneField
+            inputStyle={inputStyle}
+            selectStyle={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
+            onFocus={focus}
+            onBlur={blur}
+          />
         </div>
 
         <div style={{ marginBottom: '1.25rem' }}>
