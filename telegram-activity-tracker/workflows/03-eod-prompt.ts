@@ -24,7 +24,7 @@ const configNode = node({
           {
             id: 'team-chat-id',
             name: 'teamChatId',
-            value: 'REPLACE_WITH_TEAM_GROUP_CHAT_ID',
+            value: '-5457770656',
             type: 'string',
           },
           {

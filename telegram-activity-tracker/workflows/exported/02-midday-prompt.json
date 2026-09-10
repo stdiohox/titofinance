@@ -4,16 +4,17 @@
     "name": "Tito Daily \u2014 13:00 Midday Check-In Prompt",
     "active": false,
     "isArchived": false,
-    "versionId": "f12d895c-6013-4520-adcd-849543afa9a9",
+    "versionId": "89b107c3-999b-4efa-89fd-d18479cb3165",
     "activeVersionId": null,
     "triggerCount": 0,
     "nodeCount": 5,
     "createdAt": "2026-09-10T14:03:35.715Z",
-    "updatedAt": "2026-09-10T14:03:58.067Z",
+    "updatedAt": "2026-09-10T20:15:30.847Z",
     "settings": {
       "executionOrder": "v1",
       "availableInMCP": true,
-      "timezone": "Africa/Lagos"
+      "timezone": "Africa/Lagos",
+      "errorWorkflow": "RpnLYvEIQ4fwqyeX"
     },
     "tags": [],
     "parentFolderId": null,
@@ -111,7 +112,7 @@
               {
                 "id": "team-chat-id",
                 "name": "teamChatId",
-                "value": "REPLACE_WITH_TEAM_GROUP_CHAT_ID",
+                "value": "-5457770656",
                 "type": "string"
               },
               {

@@ -4,16 +4,18 @@
     "name": "Tito Daily \u2014 18:30 Report to Mr Tito",
     "active": false,
     "isArchived": false,
-    "versionId": "816cc1b8-60b6-44c6-bf84-88827a076ac4",
+    "versionId": "3c55fabd-1f53-40e4-b955-a48b74cb9a5b",
     "activeVersionId": null,
     "triggerCount": 0,
-    "nodeCount": 10,
+    "nodeCount": 9,
     "createdAt": "2026-09-10T14:03:47.331Z",
-    "updatedAt": "2026-09-10T14:04:00.707Z",
+    "updatedAt": "2026-09-10T20:15:33.205Z",
     "settings": {
       "executionOrder": "v1",
       "availableInMCP": true,
-      "timezone": "Africa/Lagos"
+      "timezone": "Africa/Lagos",
+      "binaryMode": "separate",
+      "errorWorkflow": "RpnLYvEIQ4fwqyeX"
     },
     "tags": [],
     "parentFolderId": null,
@@ -113,14 +115,6 @@
     },
     "nodes": [
       {
-        "id": "e9a94e7b-d42c-4bc0-9962-b88cd37caabc",
-        "name": "Weekdays 18:30 Lagos",
-        "type": "n8n-nodes-base.scheduleTrigger",
-        "typeVersion": 1.4,
-        "position": [
-          0,
-          96
-        ],
         "parameters": {
           "rule": {
             "interval": [
@@ -130,26 +124,24 @@
               }
             ]
           }
-        }
+        },
+        "id": "e9a94e7b-d42c-4bc0-9962-b88cd37caabc",
+        "name": "Weekdays 18:30 Lagos",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          96
+        ]
       },
       {
-        "id": "fd35716b-0d95-45f5-a016-e6f7dc484614",
-        "name": "Config",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.5,
-        "position": [
-          224,
-          96
-        ],
         "parameters": {
-          "mode": "manual",
-          "includeOtherFields": true,
           "assignments": {
             "assignments": [
               {
                 "id": "titobi-chat-id",
                 "name": "titobiChatId",
-                "value": "REPLACE_WITH_TITOBI_CHAT_ID",
+                "value": "6714808690",
                 "type": "string"
               },
               {
@@ -159,21 +151,21 @@
                 "type": "string"
               }
             ]
-          }
-        }
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "id": "fd35716b-0d95-45f5-a016-e6f7dc484614",
+        "name": "Config",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.5,
+        "position": [
+          224,
+          96
+        ]
       },
       {
-        "id": "9e60408e-4ae4-466b-b5cc-3254a4d5a6d9",
-        "name": "Get Active Team",
-        "type": "n8n-nodes-base.googleSheets",
-        "typeVersion": 4.7,
-        "position": [
-          448,
-          96
-        ],
         "parameters": {
-          "resource": "sheet",
-          "operation": "read",
           "documentId": {
             "__rl": true,
             "mode": "list",
@@ -193,22 +185,19 @@
               }
             ]
           },
-          "combineFilters": "AND",
           "options": {}
-        }
-      },
-      {
-        "id": "8e34770a-e313-4d9d-9f09-9ee42d5cbe9c",
-        "name": "Get Today's Tracker Rows",
+        },
+        "id": "9e60408e-4ae4-466b-b5cc-3254a4d5a6d9",
+        "name": "Get Active Team",
         "type": "n8n-nodes-base.googleSheets",
         "typeVersion": 4.7,
         "position": [
-          672,
+          448,
           96
-        ],
+        ]
+      },
+      {
         "parameters": {
-          "resource": "sheet",
-          "operation": "read",
           "documentId": {
             "__rl": true,
             "mode": "list",
@@ -228,13 +217,23 @@
               }
             ]
           },
-          "combineFilters": "AND",
           "options": {}
         },
+        "id": "8e34770a-e313-4d9d-9f09-9ee42d5cbe9c",
+        "name": "Get Today's Tracker Rows",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          672,
+          96
+        ],
         "executeOnce": true,
         "alwaysOutputData": true
       },
       {
+        "parameters": {
+          "jsCode": "// ---- Tunable configuration ------------------------------------------\nconst TIMEZONE = 'Africa/Lagos';\nconst FLAG = '\\u{1F534} MISSING';   // how a missed checkpoint is rendered\n// ----------------------------------------------------------------------\n\nconst now = $now.setZone(TIMEZONE);\nconst today = now.toFormat('yyyy-MM-dd');\n\nfunction esc(v) {\n  return String(v == null ? '' : v)\n    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n}\n\nconst team = $('Get Active Team').all()\n  .map(function (i) { return i.json; })\n  .filter(function (r) { return r && r.full_name && String(r.active).toUpperCase() === 'Y'; });\n\n// 'Get Todays Tracker Rows' has alwaysOutputData on, so a day with no replies at all\n// still reaches this node \u2014 as a single empty object, which this filter drops.\nconst tracker = $input.all()\n  .map(function (i) { return i.json; })\n  .filter(function (r) { return r && r.rep_name; });\n\nconst lines = [];\nconst proofs = [];\nconst rows = [];\n\nteam.forEach(function (member) {\n  const name = member.full_name;\n  const found = tracker.filter(function (r) {\n    return String(r.rep_name).trim() === String(name).trim();\n  })[0] || {};\n\n  const signinStatus = found.signin_status || 'missing';\n  const middayStatus = found.midday_status || 'missing';\n  const eodStatus = found.eod_status || 'missing';\n\n  const signinPart = signinStatus === 'missing'\n    ? FLAG\n    : esc(found.signin_time) + ' (' + (signinStatus === 'on_time' ? 'on time' : 'late') + ')';\n\n  const hasPhoto = found.midday_proof_link && String(found.midday_proof_link).indexOf('http') === 0;\n  const middayPart = middayStatus === 'submitted'\n    ? 'submitted (' + (hasPhoto ? 'photo attached' : 'no photo') + ')'\n    : FLAG;\n\n  const eodPart = eodStatus === 'submitted' ? 'submitted' : FLAG;\n\n  lines.push(esc(name) + ' \u2014 Sign-in: ' + signinPart + ' | Midday: ' + middayPart + ' | EOD: ' + eodPart);\n\n  if (hasPhoto) {\n    proofs.push(esc(name) + ': ' + esc(found.midday_proof_link));\n  }\n\n  rows.push({\n    date: today,\n    rep_name: name,\n    signin_time: found.signin_time || '',\n    signin_status: signinStatus,\n    midday_time: found.midday_time || '',\n    midday_proof_link: found.midday_proof_link || '',\n    midday_status: middayStatus,\n    eod_time: found.eod_time || '',\n    eod_report_text: found.eod_report_text || '',\n    eod_status: eodStatus,\n  });\n});\n\nlet report = '<b>Tito Finance \u2014 Daily Activity Report</b>\\n'\n  + now.toFormat('cccc, dd LLLL yyyy') + '\\n\\n';\n\nif (!team.length) {\n  report += '<i>No active team members found in the Team tab. Check that the roster is filled in '\n    + 'and that the active column reads Y.</i>';\n  return [{ json: { rep_name: '', report_text: report } }];\n}\n\nreport += lines.join('\\n');\nreport += proofs.length\n  ? '\\n\\n<b>Proof of work:</b>\\n' + proofs.join('\\n')\n  : '\\n\\n<i>No proof-of-work photos submitted today.</i>';\n\nreturn rows.map(function (r) {\n  return { json: Object.assign({}, r, { report_text: report }) };\n});\n"
+        },
         "id": "e8682083-c6b7-490f-8144-877f2f2efc48",
         "name": "Compile Daily Report",
         "type": "n8n-nodes-base.code",
@@ -242,28 +241,16 @@
         "position": [
           896,
           96
-        ],
-        "parameters": {
-          "mode": "runOnceForAllItems",
-          "language": "javaScript",
-          "jsCode": "// ---- Tunable configuration ------------------------------------------\nconst TIMEZONE = 'Africa/Lagos';\nconst FLAG = '\\u{1F534} MISSING';   // how a missed checkpoint is rendered\n// ----------------------------------------------------------------------\n\nconst now = $now.setZone(TIMEZONE);\nconst today = now.toFormat('yyyy-MM-dd');\n\nfunction esc(v) {\n  return String(v == null ? '' : v)\n    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n}\n\nconst team = $('Get Active Team').all()\n  .map(function (i) { return i.json; })\n  .filter(function (r) { return r && r.full_name && String(r.active).toUpperCase() === 'Y'; });\n\n// 'Get Todays Tracker Rows' has alwaysOutputData on, so a day with no replies at all\n// still reaches this node \u2014 as a single empty object, which this filter drops.\nconst tracker = $input.all()\n  .map(function (i) { return i.json; })\n  .filter(function (r) { return r && r.rep_name; });\n\nconst lines = [];\nconst proofs = [];\nconst rows = [];\n\nteam.forEach(function (member) {\n  const name = member.full_name;\n  const found = tracker.filter(function (r) {\n    return String(r.rep_name).trim() === String(name).trim();\n  })[0] || {};\n\n  const signinStatus = found.signin_status || 'missing';\n  const middayStatus = found.midday_status || 'missing';\n  const eodStatus = found.eod_status || 'missing';\n\n  const signinPart = signinStatus === 'missing'\n    ? FLAG\n    : esc(found.signin_time) + ' (' + (signinStatus === 'on_time' ? 'on time' : 'late') + ')';\n\n  const hasPhoto = found.midday_proof_link && String(found.midday_proof_link).indexOf('http') === 0;\n  const middayPart = middayStatus === 'submitted'\n    ? 'submitted (' + (hasPhoto ? 'photo attached' : 'no photo') + ')'\n    : FLAG;\n\n  const eodPart = eodStatus === 'submitted' ? 'submitted' : FLAG;\n\n  lines.push(esc(name) + ' \u2014 Sign-in: ' + signinPart + ' | Midday: ' + middayPart + ' | EOD: ' + eodPart);\n\n  if (hasPhoto) {\n    proofs.push(esc(name) + ': ' + esc(found.midday_proof_link));\n  }\n\n  rows.push({\n    date: today,\n    rep_name: name,\n    signin_time: found.signin_time || '',\n    signin_status: signinStatus,\n    midday_time: found.midday_time || '',\n    midday_proof_link: found.midday_proof_link || '',\n    midday_status: middayStatus,\n    eod_time: found.eod_time || '',\n    eod_report_text: found.eod_report_text || '',\n    eod_status: eodStatus,\n  });\n});\n\nlet report = '<b>Tito Finance \u2014 Daily Activity Report</b>\\n'\n  + now.toFormat('cccc, dd LLLL yyyy') + '\\n\\n';\n\nif (!team.length) {\n  report += '<i>No active team members found in the Team tab. Check that the roster is filled in '\n    + 'and that the active column reads Y.</i>';\n  return [{ json: { rep_name: '', report_text: report } }];\n}\n\nreport += lines.join('\\n');\nreport += proofs.length\n  ? '\\n\\n<b>Proof of work:</b>\\n' + proofs.join('\\n')\n  : '\\n\\n<i>No proof-of-work photos submitted today.</i>';\n\nreturn rows.map(function (r) {\n  return { json: Object.assign({}, r, { report_text: report }) };\n});\n"
-        }
+        ]
       },
       {
-        "id": "1d652cdc-b335-4e07-9f88-122b33f7d7d5",
-        "name": "Only Real Rows",
-        "type": "n8n-nodes-base.filter",
-        "typeVersion": 2.2,
-        "position": [
-          1120,
-          0
-        ],
         "parameters": {
           "conditions": {
             "options": {
               "caseSensitive": true,
               "leftValue": "",
-              "typeValidation": "loose"
+              "typeValidation": "loose",
+              "version": 1
             },
             "conditions": [
               {
@@ -277,20 +264,20 @@
             ],
             "combinator": "and"
           },
-          "looseTypeValidation": true
-        }
+          "looseTypeValidation": true,
+          "options": {}
+        },
+        "id": "1d652cdc-b335-4e07-9f88-122b33f7d7d5",
+        "name": "Only Real Rows",
+        "type": "n8n-nodes-base.filter",
+        "typeVersion": 2.2,
+        "position": [
+          1120,
+          0
+        ]
       },
       {
-        "id": "741d6140-b691-403d-b77e-95ae241d8845",
-        "name": "Write Back Final Statuses",
-        "type": "n8n-nodes-base.googleSheets",
-        "typeVersion": 4.7,
-        "position": [
-          1344,
-          0
-        ],
         "parameters": {
-          "resource": "sheet",
           "operation": "appendOrUpdate",
           "documentId": {
             "__rl": true,
@@ -418,11 +405,28 @@
             "cellFormat": "USER_ENTERED"
           }
         },
+        "id": "741d6140-b691-403d-b77e-95ae241d8845",
+        "name": "Write Back Final Statuses",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          1344,
+          0
+        ],
         "retryOnFail": true,
         "maxTries": 3,
         "onError": "continueRegularOutput"
       },
       {
+        "parameters": {
+          "chatId": "={{ $('Config').first().json.titobiChatId }}",
+          "text": "={{ $('Compile Daily Report').first().json.report_text }}",
+          "additionalFields": {
+            "appendAttribution": false,
+            "disable_web_page_preview": true,
+            "parse_mode": "HTML"
+          }
+        },
         "id": "3d8762c1-8492-4938-b19b-c1af74175b0d",
         "name": "Send Report to Mr Tito",
         "type": "n8n-nodes-base.telegram",
@@ -431,17 +435,6 @@
           1120,
           192
         ],
-        "parameters": {
-          "resource": "message",
-          "operation": "sendMessage",
-          "chatId": "={{ $('Config').first().json.titobiChatId }}",
-          "text": "={{ $('Compile Daily Report').first().json.report_text }}",
-          "additionalFields": {
-            "appendAttribution": false,
-            "parse_mode": "HTML",
-            "disable_web_page_preview": true
-          }
-        },
         "executeOnce": true,
         "retryOnFail": true,
         "maxTries": 3,
@@ -449,31 +442,19 @@
         "webhookId": "ee6781b8-5c36-4ed8-8f03-7c52bc743cde"
       },
       {
-        "id": "5122bf22-ce4a-4131-ad7b-27488fcfcb04",
-        "name": "Sticky Note 8e50cc1f",
+        "id": "e692652d-180e-4f01-bf1a-bb2c0444066c",
+        "name": "TEST Value Warning",
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          608,
-          192
+          160,
+          -300
         ],
         "parameters": {
-          "content": "## Gather the day\nReads the active roster, then todays Tracker rows. The Tracker read is `executeOnce`\nso it runs once rather than once per team member, and `alwaysOutputData` so a day with\nno replies at all still reaches the compiler.",
-          "color": 4
-        }
-      },
-      {
-        "id": "9eba54cd-c376-4b84-8ebe-bc88779d44ed",
-        "name": "Sticky Note 84fd9e51",
-        "type": "n8n-nodes-base.stickyNote",
-        "typeVersion": 1,
-        "position": [
-          608,
-          448
-        ],
-        "parameters": {
-          "content": "## Compile and deliver\nWalks the active roster \u2014 not the Tracker \u2014 so a rep who never replied still appears,\nflagged MISSING. Final statuses are written back to the sheet on one branch while the\nreport goes to Mr Tito on the other, so a Sheets hiccup cannot swallow the report.\n\n**Tunable:** the MISSING flag and the timezone sit at the top of **Compile Daily Report**.\nMr Titos chat ID is in **Config**.",
-          "color": 3
+          "content": "## \u26a0\ufe0f TEST VALUE \u2014 swap before go-live\n`titobiChatId` in **Config** is currently **6714808690**, which is Stdio standing in\nfor Mr Tito during the test cycle. The daily report goes to that chat, not to Titobi.\n\n**Before going live:** replace it with Mr Titos real chat ID. He must have sent the bot\nat least one message first, or the send fails with `chat not found`.\n\nThe team group is likewise the test group (`-5457770656`) in workflows 1-3 and in the\nreply routers trigger filter.",
+          "color": 2,
+          "width": 620,
+          "height": 260
         }
       }
     ],

@@ -4,16 +4,18 @@
     "name": "Tito Daily \u2014 09:00 Sign-In Prompt",
     "active": false,
     "isArchived": false,
-    "versionId": "1c7e4c7f-d74e-41c3-966c-a96ab3062391",
+    "versionId": "3d9186ce-a818-4da5-a15f-4d5b11f901d6",
     "activeVersionId": null,
     "triggerCount": 0,
-    "nodeCount": 5,
+    "nodeCount": 4,
     "createdAt": "2026-09-10T14:03:27.381Z",
-    "updatedAt": "2026-09-10T14:03:57.177Z",
+    "updatedAt": "2026-09-10T20:15:30.067Z",
     "settings": {
       "executionOrder": "v1",
       "availableInMCP": true,
-      "timezone": "Africa/Lagos"
+      "timezone": "Africa/Lagos",
+      "binaryMode": "separate",
+      "errorWorkflow": "RpnLYvEIQ4fwqyeX"
     },
     "tags": [],
     "parentFolderId": null,
@@ -75,14 +77,6 @@
     },
     "nodes": [
       {
-        "id": "8a598d03-7d79-475e-b6f8-6cea4282cfca",
-        "name": "Weekdays 09:00 Lagos",
-        "type": "n8n-nodes-base.scheduleTrigger",
-        "typeVersion": 1.4,
-        "position": [
-          0,
-          0
-        ],
         "parameters": {
           "rule": {
             "interval": [
@@ -92,26 +86,24 @@
               }
             ]
           }
-        }
+        },
+        "id": "8a598d03-7d79-475e-b6f8-6cea4282cfca",
+        "name": "Weekdays 09:00 Lagos",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          0
+        ]
       },
       {
-        "id": "0064a89c-fa81-49de-a0fa-9ababdb4fd00",
-        "name": "Config",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 3.5,
-        "position": [
-          224,
-          0
-        ],
         "parameters": {
-          "mode": "manual",
-          "includeOtherFields": true,
           "assignments": {
             "assignments": [
               {
                 "id": "team-chat-id",
                 "name": "teamChatId",
-                "value": "REPLACE_WITH_TEAM_GROUP_CHAT_ID",
+                "value": "-5457770656",
                 "type": "string"
               },
               {
@@ -121,10 +113,28 @@
                 "type": "string"
               }
             ]
-          }
-        }
+          },
+          "includeOtherFields": true,
+          "options": {}
+        },
+        "id": "0064a89c-fa81-49de-a0fa-9ababdb4fd00",
+        "name": "Config",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.5,
+        "position": [
+          224,
+          0
+        ]
       },
       {
+        "parameters": {
+          "chatId": "={{ $json.teamChatId }}",
+          "text": "<b>Good morning, Tito Finance team.</b>\n\nPlease <b>reply to this message</b> to sign in for the day.\n\nOn time: reply before <b>09:15</b>.\nUse the Telegram <i>Reply</i> feature on this exact message so your sign-in is recorded.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "HTML"
+          }
+        },
         "id": "bd13713f-5312-4e51-8235-62990a48e44e",
         "name": "Send Sign-In Prompt",
         "type": "n8n-nodes-base.telegram",
@@ -133,32 +143,13 @@
           448,
           0
         ],
-        "parameters": {
-          "resource": "message",
-          "operation": "sendMessage",
-          "chatId": "={{ $json.teamChatId }}",
-          "text": "<b>Good morning, Tito Finance team.</b>\n\nPlease <b>reply to this message</b> to sign in for the day.\n\nOn time: reply before <b>09:15</b>.\nUse the Telegram <i>Reply</i> feature on this exact message so your sign-in is recorded.",
-          "additionalFields": {
-            "appendAttribution": false,
-            "parse_mode": "HTML"
-          }
-        },
         "retryOnFail": true,
         "maxTries": 3,
         "waitBetweenTries": 5000,
         "webhookId": "23314da8-c5e2-4333-a9ec-e9b32a5d148c"
       },
       {
-        "id": "a16d29d8-5021-45f1-866c-8e08926d3e09",
-        "name": "Store Sign-In Prompt ID",
-        "type": "n8n-nodes-base.dataTable",
-        "typeVersion": 1.1,
-        "position": [
-          672,
-          0
-        ],
         "parameters": {
-          "resource": "row",
           "operation": "upsert",
           "dataTableId": {
             "__rl": true,
@@ -171,21 +162,20 @@
             "conditions": [
               {
                 "keyName": "day",
-                "condition": "eq",
                 "keyValue": "={{ $('Config').item.json.today }}"
               }
             ]
           },
           "columns": {
             "mappingMode": "defineBelow",
-            "matchingColumns": [
-              "day"
-            ],
             "value": {
               "day": "={{ $('Config').item.json.today }}",
               "chat_id": "={{ $('Config').item.json.teamChatId }}",
               "signin_msg_id": "={{ $json.result.message_id }}"
             },
+            "matchingColumns": [
+              "day"
+            ],
             "schema": [
               {
                 "id": "day",
@@ -194,7 +184,8 @@
                 "defaultMatch": false,
                 "display": true,
                 "type": "string",
-                "canBeUsedToMatch": true
+                "readOnly": false,
+                "removed": false
               },
               {
                 "id": "chat_id",
@@ -203,7 +194,8 @@
                 "defaultMatch": false,
                 "display": true,
                 "type": "string",
-                "canBeUsedToMatch": false
+                "readOnly": false,
+                "removed": false
               },
               {
                 "id": "signin_msg_id",
@@ -212,27 +204,45 @@
                 "defaultMatch": false,
                 "display": true,
                 "type": "string",
-                "canBeUsedToMatch": false
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "midday_msg_id",
+                "displayName": "midday_msg_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "eod_msg_id",
+                "displayName": "eod_msg_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
               }
-            ]
-          }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
         },
-        "retryOnFail": true,
-        "maxTries": 3
-      },
-      {
-        "id": "a5284406-2b62-48c8-94d4-2ca16961b78e",
-        "name": "Sticky Note c7a88e76",
-        "type": "n8n-nodes-base.stickyNote",
-        "typeVersion": 1,
+        "id": "a16d29d8-5021-45f1-866c-8e08926d3e09",
+        "name": "Store Sign-In Prompt ID",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
         "position": [
-          272,
+          672,
           0
         ],
-        "parameters": {
-          "content": "## 09:00 Sign-in prompt\nPosts the daily sign-in message to the team group, then records its `message_id` in the\n**Tito Daily Prompt IDs** data table under todays date.\n\nThe reply-router workflow matches incoming `reply_to_message.message_id` against that stored ID.\n\n**Tunable:** cron in the trigger, chat ID in **Config**, prompt wording here.",
-          "color": 4
-        }
+        "retryOnFail": true,
+        "maxTries": 3
       }
     ],
     "nodeGroups": [],

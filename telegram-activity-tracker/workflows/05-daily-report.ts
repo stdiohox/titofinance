@@ -24,7 +24,7 @@ const configNode = node({
           {
             id: 'titobi-chat-id',
             name: 'titobiChatId',
-            value: 'REPLACE_WITH_TITOBI_CHAT_ID',
+            value: '6714808690',
             type: 'string',
           },
           {
@@ -362,6 +362,18 @@ const reportNote = sticky(
   { color: 3 },
 );
 
+const testValueNote = sticky(
+  '## ⚠️ TEST VALUE — swap before go-live\n' +
+    '`titobiChatId` in **Config** is currently **6714808690**, which is Stdio standing in\n' +
+    'for Mr Tito during the test cycle. The daily report goes to that chat, not to Titobi.\n\n' +
+    '**Before going live:** replace it with Mr Titos real chat ID. He must have sent the bot\n' +
+    'at least one message first, or the send fails with `chat not found`.\n\n' +
+    'The team group is likewise the test group (`-5457770656`) in workflows 1-3 and in the\n' +
+    'reply routers trigger filter.',
+  [configNode],
+  { color: 2 },
+);
+
 export default workflow('tito-daily-report', 'Tito Daily — 18:30 Report to Mr Tito')
   .add(reportTrigger)
   .to(configNode)
@@ -373,4 +385,5 @@ export default workflow('tito-daily-report', 'Tito Daily — 18:30 Report to Mr 
   .add(compileReport)
   .to(sendReport)
   .add(gatherNote)
-  .add(reportNote);
+  .add(reportNote)
+  .add(testValueNote);

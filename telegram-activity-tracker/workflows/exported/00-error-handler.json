@@ -1,0 +1,183 @@
+{
+  "workflow": {
+    "id": "RpnLYvEIQ4fwqyeX",
+    "name": "Tito Daily \u2014 Error Handler",
+    "active": true,
+    "isArchived": false,
+    "versionId": "ad934e4f-9c82-4bba-a535-e72283ecedd4",
+    "activeVersionId": "ad934e4f-9c82-4bba-a535-e72283ecedd4",
+    "triggerCount": 0,
+    "nodeCount": 5,
+    "createdAt": "2026-09-10T19:49:14.303Z",
+    "updatedAt": "2026-09-10T19:50:49.848Z",
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true,
+      "timezone": "Africa/Lagos"
+    },
+    "tags": [],
+    "parentFolderId": null,
+    "description": "Shared error handler for the Tito Finance tracker. Triggered by any linked workflows failure, extracts the workflow name, failed node, error and Lagos timestamp, and emails the details via Gmail.",
+    "scopes": [
+      "execution:reveal",
+      "workflow:create",
+      "workflow:delete",
+      "workflow:disableRedaction",
+      "workflow:enableRedaction",
+      "workflow:execute",
+      "workflow:execute-chat",
+      "workflow:export",
+      "workflow:import",
+      "workflow:list",
+      "workflow:move",
+      "workflow:publish",
+      "workflow:read",
+      "workflow:share",
+      "workflow:unpublish",
+      "workflow:unshare",
+      "workflow:update"
+    ],
+    "canExecute": true,
+    "connections": {
+      "On Workflow Failure": {
+        "main": [
+          [
+            {
+              "node": "Config",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Config": {
+        "main": [
+          [
+            {
+              "node": "Extract Failure Details",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Failure Details": {
+        "main": [
+          [
+            {
+              "node": "Email the Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodes": [
+      {
+        "id": "e4ebe92f-88b6-4e33-92e0-0f457a6afc08",
+        "name": "On Workflow Failure",
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "ac4156a2-4082-4c40-a827-56242d8a80e2",
+        "name": "Config",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.5,
+        "position": [
+          224,
+          0
+        ],
+        "parameters": {
+          "mode": "manual",
+          "includeOtherFields": true,
+          "assignments": {
+            "assignments": [
+              {
+                "id": "alert-recipient",
+                "name": "alertRecipient",
+                "value": "REPLACE_WITH_ALERT_RECIPIENT_EMAIL",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "b83c9832-b0a0-4e72-90ba-0d2bfccb8fc2",
+        "name": "Extract Failure Details",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          448,
+          0
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "language": "javaScript",
+          "jsCode": "// ---- Tunable configuration ------------------------------------------\nconst TIMEZONE = 'Africa/Lagos';\n// ----------------------------------------------------------------------\n\n// The Error Trigger hands over one of two shapes: `execution` when a running\n// workflow threw, or `trigger` when the trigger itself could not start. Read\n// both so a poll/webhook failure is not reported as an empty error.\nconst d = $input.first().json;\nconst ex = d.execution || {};\nconst tr = d.trigger || {};\nconst wf = d.workflow || {};\n\nconst err = ex.error || tr.error || {};\n\nlet failedNode = ex.lastNodeExecuted;\nif (!failedNode) failedNode = tr.error ? '(trigger could not start)' : 'unknown node';\n\nfunction esc(v) {\n  return String(v == null ? '' : v)\n    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n}\n\nconst workflowName = wf.name || 'Unknown workflow';\nconst errorMessage = err.message || 'No error message supplied';\nconst stack = err.stack || '';\nconst when = $now.setZone(TIMEZONE).toFormat('cccc, dd LLLL yyyy HH:mm:ss') + ' WAT';\nconst executionUrl = ex.url || '';\n\nlet body = '<p><b>A Tito Finance tracker workflow failed.</b></p>'\n  + '<table cellpadding=\"6\" style=\"border-collapse:collapse\">'\n  + '<tr><td><b>Workflow</b></td><td>' + esc(workflowName) + '</td></tr>'\n  + '<tr><td><b>Failed node</b></td><td>' + esc(failedNode) + '</td></tr>'\n  + '<tr><td><b>When</b></td><td>' + esc(when) + '</td></tr>'\n  + '<tr><td><b>Error</b></td><td>' + esc(errorMessage) + '</td></tr>'\n  + '</table>';\n\nif (executionUrl) {\n  body += '<p><a href=\"' + esc(executionUrl) + '\">Open the failed execution in n8n</a></p>';\n}\n\nif (stack) {\n  body += '<p><b>Stack trace</b></p><pre style=\"white-space:pre-wrap;font-size:12px\">'\n    + esc(stack) + '</pre>';\n}\n\nbody += '<hr><p style=\"color:#666;font-size:12px\">Sent by the Tito Finance Error Handler. '\n  + 'Every tracker workflow points at it via Settings &gt; Error Workflow.</p>';\n\nreturn [{ json: {\n  workflowName: workflowName,\n  failedNode: failedNode,\n  errorMessage: errorMessage,\n  timestamp: when,\n  executionUrl: executionUrl,\n  emailBody: body,\n} }];\n"
+        }
+      },
+      {
+        "id": "89dc9620-9fb5-436c-8be6-3d891ef021bc",
+        "name": "Email the Failure",
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2.2,
+        "position": [
+          672,
+          0
+        ],
+        "parameters": {
+          "resource": "message",
+          "operation": "send",
+          "sendTo": "={{ $('Config').first().json.alertRecipient }}",
+          "subject": "=Tito Tracker failure: {{ $json.workflowName }}",
+          "emailType": "html",
+          "message": "={{ $json.emailBody }}",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "retryOnFail": true,
+        "maxTries": 3,
+        "waitBetweenTries": 5000,
+        "webhookId": "ca74c3c2-0152-47fc-aaa3-57fb2a740436",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "fKd3XOdH7HD9dFik",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "id": "5b0b4491-ec93-4fcf-ae6b-6f584dd3d682",
+        "name": "Sticky Note d5cbc4b6",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          272,
+          0
+        ],
+        "parameters": {
+          "content": "## Shared error handler\nAll five tracker workflows point here via **Settings > Error Workflow**, so failure\nnotification lives in one place instead of being rebuilt per workflow.\n\nFires only for **production** executions \u2014 manual test runs never reach it. A workflow\nthat has its own Error Trigger would use that instead; none of ours do.\n\n**Tunable:** recipient in **Config**, timezone at the top of **Extract Failure Details**.\n\nTo move alerts to Telegram once the bot credential exists, swap **Email the Failure**\nfor a Telegram sendMessage to Samuels personal chat ID \u2014 not the team group.",
+          "color": 3
+        }
+      }
+    ],
+    "nodeGroups": [],
+    "activeVersion": {
+      "sameAsDraft": true
+    },
+    "meta": {
+      "aiBuilderAssisted": true,
+      "builderVariant": "mcp"
+    }
+  },
+  "triggerInfo": "This workflow's trigger(s) are not supported for direct execution through MCP: On Workflow Failure. Only Schedule, Webhook, Form, and Chat triggers can be executed directly through MCP, so this workflow cannot be executed through MCP. Its trigger(s) still run normally when the workflow is active."
+}

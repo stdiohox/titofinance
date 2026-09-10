@@ -18,10 +18,17 @@ can run — until [Manual setup](#manual-setup) is complete.
 | Piece | State |
 |---|---|
 | 5 n8n workflows | ✅ Created, validated, timezone set, **inactive** |
+| Shared Error Handler workflow | ✅ Created and **published**; all five link to it |
 | `Tito Daily Prompt IDs` data table | ✅ Created (`UclN0JC7VWt19l9S`) |
-| Google Sheet | ⛔ **You create it** — one-click script provided |
-| Telegram bot + chat IDs | ⛔ **You create them** — BotFather, then paste IDs in |
+| Test chat IDs wired in | ✅ Group `-5457770656`, report recipient `6714808690` |
+| Google Sheet | ⛔ **You create it** — one-click script provided, test roster pre-seeded |
+| Telegram bot token | ⛔ **You enter it** in the n8n credential UI |
 | Google Sheets / Drive credentials | ⛔ **You create them** in n8n |
+| Error-alert email recipient | ⛔ **You confirm it** — currently a placeholder |
+
+> **This is a test cycle.** The group, the two reps and the report recipient are all
+> stand-ins. See [Test configuration](#test-configuration) for exactly what must be
+> swapped before this goes live.
 
 ### Why the sheet and credentials are not done for you
 
@@ -95,12 +102,32 @@ someone not listed in the **Team** tab is dropped. Neither writes anything.
 | 3 | Tito Daily — 18:00 End-Of-Day Prompt | `WLlDEUtTqWQGWxiJ` | Cron `0 18 * * 1-5` |
 | 4 | Tito Daily — Telegram Reply Router | `V49Lek2Ise7fAgnv` | Telegram Trigger |
 | 5 | Tito Daily — 18:30 Report to Mr Tito | `A6U0h8vJAljEzlZO` | Cron `30 18 * * 1-5` |
+| 0 | Tito Daily — Error Handler | `RpnLYvEIQ4fwqyeX` | Error Trigger (**published**) |
 
 Open any of them at `https://dancheezy.app.n8n.cloud/workflow/<ID>`.
 
 All five have `settings.timezone = Africa/Lagos`, so the cron expressions above are WAT
 (UTC+1, no DST). **The timezone is a per-workflow setting** — if you clone a workflow,
 re-check it under Workflow settings → Timezone.
+
+### Error notifications
+
+Failure notification is centralised in **one** workflow rather than rebuilt in each of
+the five. All five point at it via **Settings → Error Workflow**, so n8n runs it
+automatically whenever one of them fails.
+
+The handler reads the failed workflow name, the node that failed, the error message and
+a Lagos timestamp, and emails them via the existing Gmail credential with the subject
+`Tito Tracker failure: <workflow name>`. The email links straight to the failed
+execution.
+
+Two things to know about how n8n fires this:
+
+- **It only fires for production executions.** A manual "Execute Workflow" that fails
+  will not send an alert. To test the handler, let a scheduled run fail, or temporarily
+  break an active workflow.
+- **The Error Handler must stay published.** n8n refuses to link an error workflow that
+  has no published version, and an unpublished handler silently stops alerting.
 
 ### Source of record
 
@@ -215,6 +242,32 @@ workflow nodes already reference, so matching them means the nodes bind on impor
 | Google Sheets OAuth2 API | `Tito Finance Google Sheets` |
 | Google Drive OAuth2 API | `Tito Finance Google Drive` |
 
+The **bot token goes straight into the Telegram credential in the n8n UI** and nowhere
+else. It is deliberately absent from every file in this folder — do not paste it into a
+workflow parameter, a Config node, or this README.
+
+Gmail is already connected (credential `Gmail account`) and the Error Handler is bound
+to it, so there is nothing to create for alerting.
+
+#### ⚠️ Confirm the error-alert recipient
+
+The Error Handler's **Config** node has `alertRecipient` set to the placeholder
+`REPLACE_WITH_ALERT_RECIPIENT_EMAIL`. **Alerts will fail to send until you replace it**
+with Samuel's real address. It was left as a placeholder rather than guessed: the only
+address discoverable on the instance is the n8n account owner's
+(`infinitytech228@gmail.com`, which owns the Gmail credential), and the repo's git
+author is `samphicsdigital@gmail.com`. Pick the right one deliberately.
+
+The failure is loud, not silent — the Error Handler itself errors — but it surfaces at
+the worst possible moment, so set it before go-live.
+
+**Swapping alerts to Telegram:** once the bot credential exists, the email step can be
+replaced with a Telegram `sendMessage`. Send it to **Samuel's personal chat ID — not the
+team group**; failure alerts include stack traces and node names that the team should
+not see. Replace the `Email the Failure` node, keep `Extract Failure Details` as is, and
+use `{{ $json.errorMessage }}` / `{{ $json.workflowName }}` / `{{ $json.timestamp }}`
+from its output.
+
 For the two Google credentials you can use either OAuth2 (sign in as the Google account
 that owns the sheet) or a service account. **If you use a service account, you must
 share the spreadsheet and the Drive proof folder with the service account's email
@@ -246,9 +299,22 @@ The **Sheet** field is already set by name (`Team` / `Tracker`) and needs no cha
 
 ### 7. Populate the Team tab
 
-You need each rep's numeric `telegram_user_id`. Have every rep send one message in the
-group (or DM the bot), then read the IDs off `getUpdates` as in step 3 —
-`result[].message.from.id` alongside `from.username`.
+**For the test cycle this is already done** — `create-tracker-sheet.gs` seeds the two
+stand-in reps, so running the script in step 5 creates the roster ready to go:
+
+| telegram_user_id | full_name | active |
+|---|---|---|
+| `7367051427` | Phelix Dc | `Y` |
+| `6714381331` | Tommy Smart | `Y` |
+
+> **Pending:** these rows exist only once the Apps Script has been run. They could not be
+> written directly, because the n8n instance has no Google credential on it yet — nothing
+> here can reach a spreadsheet. If you created the sheet by hand instead of running the
+> script, add these two rows yourself.
+
+For real reps later, you need each one's numeric `telegram_user_id`. Have every rep send
+one message in the group (or DM the bot), then read the IDs off `getUpdates` as in step 3
+— `result[].message.from.id` alongside `from.username`.
 
 Set `active` to `Y` for anyone who should appear in the 18:30 report.
 
@@ -278,17 +344,35 @@ Everything tunable, and exactly where it lives. All times are Africa/Lagos.
 | EOD time | 18:00 Mon–Fri | WF3 trigger, cron `0 18 * * 1-5` |
 | Report time | 18:30 Mon–Fri | WF5 trigger, cron `30 18 * * 1-5` |
 | **Sign-in grace cutoff** | `09:15` | WF4 → `Classify Reply` → `SIGNIN_ON_TIME_CUTOFF` |
-| Timezone | `Africa/Lagos` | Each workflow's settings, **and** the `TIMEZONE` const in the two Code nodes |
-| Team group chat ID | `REPLACE_WITH_TEAM_GROUP_CHAT_ID` | `Config` node in WF1/2/3, **and** the `chatIds` field of WF4's Telegram Trigger |
-| Mr Tito's chat ID | `REPLACE_WITH_TITOBI_CHAT_ID` | `Config` node in WF5 |
+| Timezone | `Africa/Lagos` | Each workflow's settings, **and** the `TIMEZONE` const in the three Code nodes |
+| Team group chat ID | `-5457770656` ⚠️ test | `Config` node in WF1/2/3, **and** the `chatIds` field of WF4's Telegram Trigger |
+| Report recipient chat ID | `6714808690` ⚠️ test | `Config` node in WF5 (`titobiChatId`) |
+| Error-alert recipient | `REPLACE_WITH_ALERT_RECIPIENT_EMAIL` | `Config` node in the Error Handler |
 | MISSING flag | 🔴 MISSING | WF5 → `Compile Daily Report` → `FLAG` |
 | Prompt wording | — | The `text` field of each prompt's Telegram node |
 | Data table ID | `UclN0JC7VWt19l9S` | Hard-coded in WF1–4 |
+| Error workflow link | `RpnLYvEIQ4fwqyeX` | Settings → Error Workflow on all five |
 
-**Grep for `REPLACE_WITH_` before going live** — four places across four workflows. The
-team group chat ID is needed in two different kinds of place: the `Config` Set node in
-the three prompt workflows, and the trigger's own `chatIds` filter in the router. Miss
-the router one and the bot will happily process replies from any chat it is added to.
+The team group chat ID lives in two *different kinds* of place: the `Config` Set node in
+the three prompt workflows, and the trigger's own `chatIds` filter in the router. Both
+are set. Miss the router one and the bot processes replies from any chat it is in — so
+if you change the group, change it in both.
+
+One `REPLACE_WITH_` remains, in the Error Handler. Grep for it before go-live.
+
+### Test configuration
+
+Everything below is a stand-in for the test cycle and must be swapped before real use.
+
+| What | Test value | Swap to |
+|---|---|---|
+| Team group | `-5457770656` ("Testing") | The real Tito Finance team group |
+| Reps | Phelix Dc, Tommy Smart | The real reps |
+| Report recipient | `6714808690` (Stdio) | Mr Tito's real chat ID |
+
+A sticky note on the 18:30 report's canvas flags the recipient as a test value. Whoever
+you swap in must have sent the bot at least one message first, or the send fails with
+`chat not found`.
 
 Changing a schedule means editing the cron in that workflow's trigger. Weekday-only is
 the `1-5` field; `* * *` would make it every day.
@@ -379,9 +463,9 @@ Verify the next morning that the 09:00 prompt fired on its own.
 - **Telegram nodes retry** three times with a 5s backoff. Drive share failures are
   non-fatal (the upload link still gets written). In the report workflow the Sheets
   write-back is non-fatal so a Sheets hiccup cannot swallow Mr Tito's report.
-- **Error notifications are not configured.** n8n's Error Trigger can notify you when a
-  workflow fails, either as a shared error-handler workflow or an Error Trigger inside
-  each workflow. Nothing was wired up silently — say the word and it can be added.
+- **Failures email you** via the shared Error Handler (`RpnLYvEIQ4fwqyeX`) — but only for
+  production runs, and only once the recipient placeholder is replaced. See
+  [Error notifications](#error-notifications).
 
 ---
 
@@ -393,6 +477,7 @@ telegram-activity-tracker/
 ├── setup/
 │   └── create-tracker-sheet.gs        one-click Google Sheet creation
 └── workflows/
+    ├── 00-error-handler.ts            shared failure notifier
     ├── 01-signin-prompt.ts            n8n Workflow SDK source
     ├── 02-midday-prompt.ts
     ├── 03-eod-prompt.ts

@@ -4,16 +4,17 @@
     "name": "Tito Daily \u2014 18:00 End-Of-Day Prompt",
     "active": false,
     "isArchived": false,
-    "versionId": "2bfba92f-0c01-4840-b4a4-3d0e56b84d82",
+    "versionId": "3cc37321-4ef1-4e6d-a197-f09253b7476a",
     "activeVersionId": null,
     "triggerCount": 0,
     "nodeCount": 5,
     "createdAt": "2026-09-10T14:03:36.705Z",
-    "updatedAt": "2026-09-10T14:03:58.949Z",
+    "updatedAt": "2026-09-10T20:15:31.608Z",
     "settings": {
       "executionOrder": "v1",
       "availableInMCP": true,
-      "timezone": "Africa/Lagos"
+      "timezone": "Africa/Lagos",
+      "errorWorkflow": "RpnLYvEIQ4fwqyeX"
     },
     "tags": [],
     "parentFolderId": null,
@@ -111,7 +112,7 @@
               {
                 "id": "team-chat-id",
                 "name": "teamChatId",
-                "value": "REPLACE_WITH_TEAM_GROUP_CHAT_ID",
+                "value": "-5457770656",
                 "type": "string"
               },
               {

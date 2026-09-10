@@ -17,7 +17,7 @@ const telegramTrigger = trigger({
     parameters: {
       updates: ['message'],
       additionalFields: {
-        chatIds: 'REPLACE_WITH_TEAM_GROUP_CHAT_ID',
+        chatIds: '-5457770656',
       },
     },
     credentials: { telegramApi: newCredential('Tito Finance Telegram Bot') },

@@ -35,11 +35,13 @@ function createTitoTrackerSheet() {
   team.setName('Team');
   writeHeaders_(team, TEAM_HEADERS);
 
-  // Two sample rows so the roster's shape is obvious. Overwrite them with real
-  // reps — the workflows only ever read rows whose active column reads Y.
+  // Test-cycle roster. Phelix and Tommy are standing in as reps while the tracker
+  // is being proven out; both are active, so both appear in the 18:30 report.
+  // Add the real reps here (or straight into the sheet) when the test cycle ends.
+  // telegram_username is left blank deliberately — nothing matches on it.
   team.getRange(2, 1, 2, TEAM_HEADERS.length).setValues([
-    ['000000000', 'replace_me', 'Replace With Real Name', 'N'],
-    ['000000001', 'replace_me_too', 'Another Real Name', 'N'],
+    ['7367051427', '', 'Phelix Dc', 'Y'],
+    ['6714381331', '', 'Tommy Smart', 'Y'],
   ]);
   team.setColumnWidth(1, 150);
   team.setColumnWidth(3, 200);
