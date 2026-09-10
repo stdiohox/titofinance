@@ -24,7 +24,7 @@ can run — until [Manual setup](#manual-setup) is complete.
 | Google Sheet | ⛔ **You create it** — one-click script provided, test roster pre-seeded |
 | Telegram bot token | ⛔ **You enter it** in the n8n credential UI |
 | Google Sheets / Drive credentials | ⛔ **You create them** in n8n |
-| Error-alert email recipient | ⛔ **You confirm it** — currently a placeholder |
+| Error-alert email recipient | ✅ `samphicsdigital@gmail.com` |
 
 > **This is a test cycle.** The group, the two reps and the report recipient are all
 > stand-ins. See [Test configuration](#test-configuration) for exactly what must be
@@ -249,17 +249,14 @@ workflow parameter, a Config node, or this README.
 Gmail is already connected (credential `Gmail account`) and the Error Handler is bound
 to it, so there is nothing to create for alerting.
 
-#### ⚠️ Confirm the error-alert recipient
+#### Error-alert recipient
 
-The Error Handler's **Config** node has `alertRecipient` set to the placeholder
-`REPLACE_WITH_ALERT_RECIPIENT_EMAIL`. **Alerts will fail to send until you replace it**
-with Samuel's real address. It was left as a placeholder rather than guessed: the only
-address discoverable on the instance is the n8n account owner's
-(`infinitytech228@gmail.com`, which owns the Gmail credential), and the repo's git
-author is `samphicsdigital@gmail.com`. Pick the right one deliberately.
+Alerts go to **`samphicsdigital@gmail.com`**, set in the Error Handler's **Config** node
+(`alertRecipient`). Nothing further is needed.
 
-The failure is loud, not silent — the Error Handler itself errors — but it surfaces at
-the worst possible moment, so set it before go-live.
+Note that the Error Handler is a **published** workflow, so editing it is not enough —
+n8n runs the published version, not the draft. After any change, publish it again or
+alerts keep using the old configuration.
 
 **Swapping alerts to Telegram:** once the bot credential exists, the email step can be
 replaced with a Telegram `sendMessage`. Send it to **Samuel's personal chat ID — not the
@@ -347,7 +344,7 @@ Everything tunable, and exactly where it lives. All times are Africa/Lagos.
 | Timezone | `Africa/Lagos` | Each workflow's settings, **and** the `TIMEZONE` const in the three Code nodes |
 | Team group chat ID | `-5457770656` ⚠️ test | `Config` node in WF1/2/3, **and** the `chatIds` field of WF4's Telegram Trigger |
 | Report recipient chat ID | `6714808690` ⚠️ test | `Config` node in WF5 (`titobiChatId`) |
-| Error-alert recipient | `REPLACE_WITH_ALERT_RECIPIENT_EMAIL` | `Config` node in the Error Handler |
+| Error-alert recipient | `samphicsdigital@gmail.com` | `Config` node in the Error Handler (re-publish after editing) |
 | MISSING flag | 🔴 MISSING | WF5 → `Compile Daily Report` → `FLAG` |
 | Prompt wording | — | The `text` field of each prompt's Telegram node |
 | Data table ID | `UclN0JC7VWt19l9S` | Hard-coded in WF1–4 |
@@ -358,7 +355,9 @@ the three prompt workflows, and the trigger's own `chatIds` filter in the router
 are set. Miss the router one and the bot processes replies from any chat it is in — so
 if you change the group, change it in both.
 
-One `REPLACE_WITH_` remains, in the Error Handler. Grep for it before go-live.
+No `REPLACE_WITH_` placeholders remain. What is left to swap is the test configuration
+below, which is real-looking rather than obviously placeholder — so it will not announce
+itself in a grep.
 
 ### Test configuration
 

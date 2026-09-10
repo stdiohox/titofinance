@@ -102,6 +102,8 @@ const storeSignInPromptId = node({
           { id: 'day', displayName: 'day', required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: true },
           { id: 'chat_id', displayName: 'chat_id', required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: false },
           { id: 'signin_msg_id', displayName: 'signin_msg_id', required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: false },
+          { id: 'midday_msg_id', displayName: 'midday_msg_id', required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: false },
+          { id: 'eod_msg_id', displayName: 'eod_msg_id', required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: false },
         ],
       },
     },

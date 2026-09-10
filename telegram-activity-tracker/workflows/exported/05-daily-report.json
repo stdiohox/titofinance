@@ -4,12 +4,12 @@
     "name": "Tito Daily \u2014 18:30 Report to Mr Tito",
     "active": false,
     "isArchived": false,
-    "versionId": "3c55fabd-1f53-40e4-b955-a48b74cb9a5b",
+    "versionId": "b89c42eb-a0ad-44aa-ae26-c9bcac98020d",
     "activeVersionId": null,
     "triggerCount": 0,
-    "nodeCount": 9,
+    "nodeCount": 11,
     "createdAt": "2026-09-10T14:03:47.331Z",
-    "updatedAt": "2026-09-10T20:15:33.205Z",
+    "updatedAt": "2026-09-10T20:27:57.821Z",
     "settings": {
       "executionOrder": "v1",
       "availableInMCP": true,
@@ -455,6 +455,34 @@
           "color": 2,
           "width": 620,
           "height": 260
+        }
+      },
+      {
+        "id": "19bf0e38-f0fb-41c8-b246-6c25bdc8a9ea",
+        "name": "Sticky Note 4bc38db3",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          608,
+          192
+        ],
+        "parameters": {
+          "content": "## Gather the day\nReads the active roster, then todays Tracker rows. The Tracker read is `executeOnce`\nso it runs once rather than once per team member, and `alwaysOutputData` so a day with\nno replies at all still reaches the compiler.",
+          "color": 4
+        }
+      },
+      {
+        "id": "aadfe1b6-d26c-462f-8e60-dc78de88066d",
+        "name": "Sticky Note 3e59b25e",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          608,
+          448
+        ],
+        "parameters": {
+          "content": "## Compile and deliver\nWalks the active roster \u2014 not the Tracker \u2014 so a rep who never replied still appears,\nflagged MISSING. Final statuses are written back to the sheet on one branch while the\nreport goes to Mr Tito on the other, so a Sheets hiccup cannot swallow the report.\n\n**Tunable:** the MISSING flag and the timezone sit at the top of **Compile Daily Report**.\nMr Titos chat ID is in **Config**.",
+          "color": 3
         }
       }
     ],

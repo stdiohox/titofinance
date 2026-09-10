@@ -34,7 +34,7 @@ const configNode = node({
           {
             id: 'alert-recipient',
             name: 'alertRecipient',
-            value: 'REPLACE_WITH_ALERT_RECIPIENT_EMAIL',
+            value: 'samphicsdigital@gmail.com',
             type: 'string',
           },
         ],

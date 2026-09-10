@@ -4,12 +4,12 @@
     "name": "Tito Daily \u2014 Telegram Reply Router",
     "active": false,
     "isArchived": false,
-    "versionId": "dc31a804-622b-4fb0-87b8-77b8986de7be",
+    "versionId": "d25af419-b267-4faa-be26-7e54ea7dcefb",
     "activeVersionId": null,
     "triggerCount": 0,
-    "nodeCount": 15,
+    "nodeCount": 18,
     "createdAt": "2026-09-10T14:03:46.223Z",
-    "updatedAt": "2026-09-10T20:15:32.380Z",
+    "updatedAt": "2026-09-10T20:27:56.976Z",
     "settings": {
       "executionOrder": "v1",
       "availableInMCP": true,
@@ -689,6 +689,48 @@
         ],
         "retryOnFail": true,
         "maxTries": 3
+      },
+      {
+        "id": "5268f671-a1f5-4756-843f-27f7dd68260b",
+        "name": "Sticky Note 486f2b1f",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1392,
+          192
+        ],
+        "parameters": {
+          "content": "## Reply routing\nEvery team reply lands here. The reply is classified by matching\n`message.reply_to_message.message_id` against the three prompt IDs stored for today,\nand the sender is identified by `message.from.id` against the **Team** tab.\n\nReplies that are not a reply to one of todays prompts, or that come from someone not\nlisted in the **Team** tab, are dropped without writing anything.\n\n**Tunable:** the sign-in grace cutoff lives at the top of **Classify Reply**.\nThe team group filter lives in the trigger (`chatIds`).",
+          "color": 4
+        }
+      },
+      {
+        "id": "ce054424-44bf-4dd9-8795-67791769064d",
+        "name": "Sticky Note 01d5c250",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1392,
+          448
+        ],
+        "parameters": {
+          "content": "## Proof of work\nA midday reply carrying a photo is re-downloaded from Telegram, pushed to Drive and\nshared as anyone-with-the-link, and the share URL is written to `midday_proof_link`.\n\nA midday reply with no photo is still logged; the cell reads `no photo attached`.\n\n**Tunable:** the destination folder is the `folderId` field of **Upload Proof Photo**.",
+          "color": 3
+        }
+      },
+      {
+        "id": "8ee13ae8-4cb4-4659-a177-77937f6de306",
+        "name": "Sticky Note 544a1760",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1392,
+          704
+        ],
+        "parameters": {
+          "content": "## Read-modify-write\nGoogle Sheets `appendOrUpdate` overwrites every column it is given, so the existing row\nis read first and **Merge Tracker Row** overlays only the checkpoint that just arrived.\nWithout this, a midday reply would blank that mornings sign-in cells.",
+          "color": 5
+        }
       }
     ],
     "nodeGroups": [],
