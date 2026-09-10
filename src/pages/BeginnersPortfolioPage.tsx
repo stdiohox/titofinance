@@ -6,6 +6,7 @@ import { FaWhatsapp } from 'react-icons/fa6'
 import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
 import PhoneField from '@/components/PhoneField'
+import { ClassAnnouncement } from '@/components/ClassAnnouncement'
 import {
   WHATSAPP_DIRECT,
   WHATSAPP_ENTRY_GROUP,
@@ -921,6 +922,11 @@ export default function BeginnersPortfolioPage() {
           </p>
         </div>
       </footer>
+
+      {/* The popup suppresses itself if the #apply section is already on
+          screen, so arriving here from its own homepage CTA does not get
+          greeted by the thing you just clicked. See the component header. */}
+      <ClassAnnouncement />
     </div>
   )
 }

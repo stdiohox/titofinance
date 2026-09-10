@@ -61,9 +61,10 @@ export default function App() {
       </section>
       <Footer />
       <ChatBot />
-      {/* HOMEPAGE ONLY, deliberately - see the component header. Mounting this
-          in main.tsx would fire it sitewide, including on /stock-101, where it
-          would cover the registration form the CTA sends people to. */}
+      {/* Mounted per page rather than in main.tsx, so the surfaces it appears
+          on stay a deliberate list: here, /beginners-portfolio and /stock-101.
+          Sitewide would put it over /retirement and /close-community too, which
+          sell something else. See the component header. */}
       <ClassAnnouncement />
     </main>
   )

@@ -20,16 +20,20 @@ import { Link, useLocation } from 'react-router-dom'
  * and Stock101Page's forest pill button.
  *
  * ============================================================================
- * ONE COUNTDOWN, NOT TWO
+ * ONE CLASS, ONE CLOCK, ONE CTA
  * ============================================================================
- * Both dates are shown; only the nearer one gets a ticking clock.
+ * This pass promotes the Beginner's Portfolio Class on 19 September.
  *
- * Two live timers a fortnight apart tick in lockstep - the seconds column is
- * identical, the minutes column is identical, and only the day count differs.
- * The eye reads two near-identical number rows, compares them, and takes longer
- * to parse either than it would take to read one. Urgency does not add up; it
- * divides. One clock gives the popup a single focal point, which matches the
- * single CTA underneath it.
+ * It previously showed two classes - Stock 101 on 5 September and this one -
+ * with a clock on the nearer of the two. Stock 101 has now run, so listing it
+ * would date the popup at a glance and split attention away from the only
+ * offer that can still be acted on. The second date row is gone rather than
+ * greyed out: a passed class is not information, it is clutter.
+ *
+ * The single clock is unchanged in spirit. Two live timers a fortnight apart
+ * tick in lockstep - identical seconds, identical minutes, only the day count
+ * differing - so the eye compares two near-identical number rows instead of
+ * reading one. Urgency does not add up; it divides.
  *
  * ============================================================================
  * NO DISMISSAL MEMORY
@@ -49,12 +53,13 @@ import { Link, useLocation } from 'react-router-dom'
  * ============================================================================
  * IT RETIRES ITSELF
  * ============================================================================
- * The only button registers for Stock 101. Once that class has passed, the
- * button is a dead offer, and a popup whose one action is stale is worse than
- * no popup - so the whole thing stops rendering on 5 September. It does not
- * silently fall through to the Beginner's Portfolio date, because there is no
- * CTA for that class in this pass; that was a deliberate client decision, and
- * quietly promoting a class nobody can register for from here would undo it.
+ * The only button applies for the Beginner's Portfolio Class. Once that class
+ * has run, the button is a dead offer, and a popup whose one action is stale is
+ * worse than no popup - so the whole thing stops rendering on 19 September.
+ *
+ * There is no next date to fall through to. When the following class is
+ * scheduled, change BEGINNERS_PORTFOLIO and the copy below; the popup starts
+ * showing again on its own, with no other edit needed.
  */
 
 /* --------------------------------------------------------------- content */
@@ -64,7 +69,6 @@ import { Link, useLocation } from 'react-router-dom'
  * number their own calendar agrees with; `new Date(y, m, d)` is local by
  * construction. Month is 0-indexed: 8 is September.
  */
-const STOCK_101 = new Date(2026, 8, 5)
 const BEGINNERS_PORTFOLIO = new Date(2026, 8, 19)
 
 const LONG_DATE = new Intl.DateTimeFormat('en-GB', {
@@ -78,10 +82,13 @@ const LONG_DATE = new Intl.DateTimeFormat('en-GB', {
  *  still read as part of arriving. An instant popup is an ambush. */
 const APPEAR_AFTER_MS = 1400
 
-/** The Stock 101 registration section, which already exists on that page
- *  (Stock101Page.tsx:1070) and is what its own nav links point at. */
-const REGISTER_ID = 'register'
-const STOCK_101_PATH = '/stock-101'
+/** The apply section on the Beginner's Portfolio page - `<section id="apply">`
+ *  (BeginnersPortfolioPage.tsx), which holds ApplyForm and is what that page's
+ *  own hero button already points at. Note it is `apply`, not `register`: the
+ *  page's language throughout is "apply", and the form opens a WhatsApp
+ *  conversation rather than taking a seat directly. */
+const REGISTER_ID = 'apply'
+const CLASS_PATH = '/beginners-portfolio'
 
 /* ------------------------------------------------------------- countdown */
 
@@ -144,12 +151,12 @@ function CountdownCell({ value, label }: { value: string; label: string }) {
 /**
  * The CTA. Same words, two actions, decided by where the reader already is.
  *
- * OFF /stock-101 - a real route change to /stock-101#register. RouteTracker
- * (main.tsx) does the scrolling once the page has rendered, because React
- * Router ignores the hash on its own.
+ * OFF /beginners-portfolio - a real route change to /beginners-portfolio#apply.
+ * RouteTracker (main.tsx) does the scrolling once the page has rendered,
+ * because React Router ignores the hash on its own.
  *
- * ON /stock-101 - no navigation at all; the section is already in the
- * document. It stays an <a href="#register"> rather than becoming a <button>,
+ * ON /beginners-portfolio - no navigation at all; the section is already in the
+ * document. It stays an <a href="#apply"> rather than becoming a <button>,
  * so it is still a link to a fragment: middle-click, open-in-new-tab and the
  * status bar all behave, and a screen reader announces a link, which is what
  * it is.
@@ -162,21 +169,21 @@ function CountdownCell({ value, label }: { value: string; label: string }) {
  * the next frame, by which point the cleanup has restored the body.
  */
 function CtaLink({
-  onStock101,
+  onClassPage,
   dismiss,
   className,
   style,
   children,
 }: {
-  onStock101: boolean
+  onClassPage: boolean
   dismiss: () => void
   className?: string
   style?: CSSProperties
   children: ReactNode
 }) {
-  if (!onStock101) {
+  if (!onClassPage) {
     return (
-      <Link to={`${STOCK_101_PATH}#${REGISTER_ID}`} onClick={dismiss} className={className} style={style}>
+      <Link to={`${CLASS_PATH}#${REGISTER_ID}`} onClick={dismiss} className={className} style={style}>
         {children}
       </Link>
     )
@@ -215,9 +222,9 @@ export function ClassAnnouncement() {
   // than a prop, because the caller has nothing to say that the URL does not
   // already know - and a prop would let the two mount points drift.
   const { pathname } = useLocation()
-  const onStock101 = pathname === STOCK_101_PATH
+  const onClassPage = pathname === CLASS_PATH
 
-  const countdown = remainingUntil(STOCK_101, now)
+  const countdown = remainingUntil(BEGINNERS_PORTFOLIO, now)
 
   // ---- Appear once per mount, after a beat. NO MEMORY OF A DISMISSAL.
   //
@@ -234,12 +241,12 @@ export function ClassAnnouncement() {
   useEffect(() => {
     if (!countdown) return
     const t = setTimeout(() => {
-      // DO NOT COVER THE FORM. On /stock-101 the registration section is far
+      // DO NOT COVER THE FORM. On /beginners-portfolio the apply section is far
       // below the fold, so at 1.4s a visitor who landed at the top is nowhere
       // near it and the popup is harmless. Two people are not:
       //
-      //   * anyone arriving at /stock-101#register - including everyone who
-      //     just clicked this popup's own CTA on the homepage, which is the
+      //   * anyone arriving at /beginners-portfolio#apply - including everyone
+      //     who just clicked this popup's own CTA on the homepage, which is the
       //     awkward case this feature would otherwise create for itself
       //   * anyone who scrolled straight down inside the first 1.4 seconds
       //
@@ -415,7 +422,7 @@ export function ClassAnnouncement() {
                   color: '#C9A84C',
                 }}
               >
-                Upcoming classes
+                Upcoming class
               </p>
 
               <h2
@@ -431,7 +438,7 @@ export function ClassAnnouncement() {
                   textWrap: 'balance',
                 }}
               >
-                Two classes, two weeks apart
+                Build your first portfolio. Properly.
               </h2>
 
               {/* THE CLOCK — one, for the nearer date. */}
@@ -453,7 +460,7 @@ export function ClassAnnouncement() {
                     marginBottom: '12px',
                   }}
                 >
-                  Stock 101 starts in
+                  The class starts in
                 </p>
                 <div
                   className="grid grid-cols-4"
@@ -469,42 +476,37 @@ export function ClassAnnouncement() {
                     numbers ticking every second is unusable read aloud. This
                     says the same thing once, and politely. */}
                 <p className="sr-only" aria-live="polite">
-                  Stock 101 starts in {countdown.days} days.
+                  The Beginner&rsquo;s Portfolio Class starts in {countdown.days} days.
                 </p>
               </div>
 
-              {/* BOTH DATES, plainly. */}
+              {/* THE DATE, plainly. One row now that there is one class - see
+                  the header note on why the passed class is not listed. */}
               <dl style={{ marginTop: '18px', display: 'grid', gap: '10px' }}>
-                {[
-                  { name: 'Stock 101', date: STOCK_101, soonest: true },
-                  { name: "Beginner's Portfolio", date: BEGINNERS_PORTFOLIO, soonest: false },
-                ].map((c) => (
-                  <div
-                    key={c.name}
-                    className="flex flex-wrap items-baseline justify-between"
-                    style={{ gap: '4px 12px' }}
+                <div
+                  className="flex flex-wrap items-baseline justify-between"
+                  style={{ gap: '4px 12px' }}
+                >
+                  <dt
+                    style={{
+                      fontFamily: "'DM Sans', system-ui, sans-serif",
+                      fontSize: '15px',
+                      fontWeight: 600,
+                      color: '#1A3A16',
+                    }}
                   >
-                    <dt
-                      style={{
-                        fontFamily: "'DM Sans', system-ui, sans-serif",
-                        fontSize: '15px',
-                        fontWeight: c.soonest ? 600 : 400,
-                        color: c.soonest ? '#1A3A16' : '#2A2A2A',
-                      }}
-                    >
-                      {c.name}
-                    </dt>
-                    <dd
-                      style={{
-                        fontFamily: "'DM Sans', system-ui, sans-serif",
-                        fontSize: '14px',
-                        color: '#6B6B6B',
-                      }}
-                    >
-                      {LONG_DATE.format(c.date)}
-                    </dd>
-                  </div>
-                ))}
+                    Beginner&rsquo;s Portfolio Class
+                  </dt>
+                  <dd
+                    style={{
+                      fontFamily: "'DM Sans', system-ui, sans-serif",
+                      fontSize: '14px',
+                      color: '#6B6B6B',
+                    }}
+                  >
+                    {LONG_DATE.format(BEGINNERS_PORTFOLIO)}
+                  </dd>
+                </div>
               </dl>
 
               {/* ONE CTA. Confirmed with the client: no second button.
@@ -513,7 +515,7 @@ export function ClassAnnouncement() {
                   Both are real anchors, so middle-click and "open in new tab"
                   behave; neither is a <button> pretending to be a link. */}
               <CtaLink
-                onStock101={onStock101}
+                onClassPage={onClassPage}
                 dismiss={dismiss}
                 className="mt-6 inline-flex items-center justify-center gap-2 transition-transform duration-200 hover:-translate-y-0.5"
                 style={{
@@ -528,7 +530,7 @@ export function ClassAnnouncement() {
                   boxShadow: '0 4px 20px rgba(26, 58, 22, 0.25)',
                 }}
               >
-                Register for Stock 101
+                Apply for the class
                 <svg
                   width="16"
                   height="16"
