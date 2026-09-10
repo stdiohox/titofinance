@@ -1,0 +1,246 @@
+{
+  "workflow": {
+    "id": "WLlDEUtTqWQGWxiJ",
+    "name": "Tito Daily \u2014 18:00 End-Of-Day Prompt",
+    "active": false,
+    "isArchived": false,
+    "versionId": "2bfba92f-0c01-4840-b4a4-3d0e56b84d82",
+    "activeVersionId": null,
+    "triggerCount": 0,
+    "nodeCount": 5,
+    "createdAt": "2026-09-10T14:03:36.705Z",
+    "updatedAt": "2026-09-10T14:03:58.949Z",
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true,
+      "timezone": "Africa/Lagos"
+    },
+    "tags": [],
+    "parentFolderId": null,
+    "description": "Posts the 18:00 weekday end-of-day report prompt to the team group and records its message_id.",
+    "scopes": [
+      "execution:reveal",
+      "workflow:create",
+      "workflow:delete",
+      "workflow:disableRedaction",
+      "workflow:enableRedaction",
+      "workflow:execute",
+      "workflow:execute-chat",
+      "workflow:export",
+      "workflow:import",
+      "workflow:list",
+      "workflow:move",
+      "workflow:publish",
+      "workflow:read",
+      "workflow:share",
+      "workflow:unpublish",
+      "workflow:unshare",
+      "workflow:update"
+    ],
+    "canExecute": true,
+    "connections": {
+      "Weekdays 18:00 Lagos": {
+        "main": [
+          [
+            {
+              "node": "Config",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Config": {
+        "main": [
+          [
+            {
+              "node": "Send End-Of-Day Prompt",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send End-Of-Day Prompt": {
+        "main": [
+          [
+            {
+              "node": "Store EOD Prompt ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodes": [
+      {
+        "id": "e52874e3-b90a-48db-a3d6-2a2097dad50c",
+        "name": "Weekdays 18:00 Lagos",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 18 * * 1-5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "07f8a9cb-2c53-4c9d-bc16-321d1a44d242",
+        "name": "Config",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.5,
+        "position": [
+          224,
+          0
+        ],
+        "parameters": {
+          "mode": "manual",
+          "includeOtherFields": true,
+          "assignments": {
+            "assignments": [
+              {
+                "id": "team-chat-id",
+                "name": "teamChatId",
+                "value": "REPLACE_WITH_TEAM_GROUP_CHAT_ID",
+                "type": "string"
+              },
+              {
+                "id": "today",
+                "name": "today",
+                "value": "={{ $now.setZone('Africa/Lagos').toFormat('yyyy-MM-dd') }}",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "34356d25-ad9c-4db6-b712-073bf42d2086",
+        "name": "Send End-Of-Day Prompt",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          448,
+          0
+        ],
+        "parameters": {
+          "resource": "message",
+          "operation": "sendMessage",
+          "chatId": "={{ $json.teamChatId }}",
+          "text": "<b>End of day report.</b>\n\nPlease <b>reply to this message</b> with a summary of what you completed today.\n\nReports are compiled and sent to Mr Tito at <b>18:30</b>, so reply before then.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "HTML"
+          }
+        },
+        "retryOnFail": true,
+        "maxTries": 3,
+        "waitBetweenTries": 5000,
+        "webhookId": "4f7fba06-2941-4eca-8255-44c8bb88ed5d"
+      },
+      {
+        "id": "583b3a49-b133-4d1f-aa6e-b6c3f640981c",
+        "name": "Store EOD Prompt ID",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          672,
+          0
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "upsert",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "UclN0JC7VWt19l9S",
+            "cachedResultName": "Tito Daily Prompt IDs"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "day",
+                "condition": "eq",
+                "keyValue": "={{ $('Config').item.json.today }}"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "matchingColumns": [
+              "day"
+            ],
+            "value": {
+              "day": "={{ $('Config').item.json.today }}",
+              "chat_id": "={{ $('Config').item.json.teamChatId }}",
+              "eod_msg_id": "={{ $json.result.message_id }}"
+            },
+            "schema": [
+              {
+                "id": "day",
+                "displayName": "day",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "chat_id",
+                "displayName": "chat_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "eod_msg_id",
+                "displayName": "eod_msg_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              }
+            ]
+          }
+        },
+        "retryOnFail": true,
+        "maxTries": 3
+      },
+      {
+        "id": "0c3753e0-c9a9-462e-93a3-97eec74acdea",
+        "name": "Sticky Note 23ba9ff6",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          272,
+          0
+        ],
+        "parameters": {
+          "content": "## 18:00 End-of-day prompt\nAsks for a completion summary, then records this messages `message_id` as `eod_msg_id`\non todays row of the **Tito Daily Prompt IDs** data table.\n\nThe 18:30 report workflow runs 30 minutes later and marks anything still blank as missing.\n\n**Tunable:** cron in the trigger, chat ID in **Config**, prompt wording here.",
+          "color": 4
+        }
+      }
+    ],
+    "nodeGroups": [],
+    "activeVersion": null,
+    "meta": {
+      "aiBuilderAssisted": true,
+      "builderVariant": "mcp"
+    }
+  },
+  "triggerInfo": "This workflow has the following trigger(s):\n\n\nSchedule trigger(s):\n\n\n\t\t\t\t<trigger 1>\n\t\t\t\t\t - Node name: Weekdays 18:00 Lagos\n\t\t\t\t</trigger 1>\n\nScheduled workflows do not take inputs. To execute a specific schedule trigger, pass triggerNodeName only: { triggerNodeName: \"<node name>\" }."
+}

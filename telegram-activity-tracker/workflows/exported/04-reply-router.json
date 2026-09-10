@@ -1,0 +1,763 @@
+{
+  "workflow": {
+    "id": "V49Lek2Ise7fAgnv",
+    "name": "Tito Daily \u2014 Telegram Reply Router",
+    "active": false,
+    "isArchived": false,
+    "versionId": "61098ad3-1a8a-45b4-82d0-f066a4259856",
+    "activeVersionId": null,
+    "triggerCount": 0,
+    "nodeCount": 18,
+    "createdAt": "2026-09-10T14:03:46.223Z",
+    "updatedAt": "2026-09-10T14:03:59.799Z",
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true,
+      "timezone": "Africa/Lagos"
+    },
+    "tags": [],
+    "parentFolderId": null,
+    "description": "Classifies each team Telegram reply as sign-in, midday or EOD by matching reply_to_message.message_id against the days stored prompt IDs, uploads proof photos to Drive, and upserts the Tracker row.",
+    "scopes": [
+      "execution:reveal",
+      "workflow:create",
+      "workflow:delete",
+      "workflow:disableRedaction",
+      "workflow:enableRedaction",
+      "workflow:execute",
+      "workflow:execute-chat",
+      "workflow:export",
+      "workflow:import",
+      "workflow:list",
+      "workflow:move",
+      "workflow:publish",
+      "workflow:read",
+      "workflow:share",
+      "workflow:unpublish",
+      "workflow:unshare",
+      "workflow:update"
+    ],
+    "canExecute": true,
+    "connections": {
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "Is a Reply to a Prompt?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Is a Reply to a Prompt?": {
+        "main": [
+          [
+            {
+              "node": "Get Today's Prompt IDs",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Today's Prompt IDs": {
+        "main": [
+          [
+            {
+              "node": "Classify Reply",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Classify Reply": {
+        "main": [
+          [
+            {
+              "node": "Look Up Rep",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Look Up Rep": {
+        "main": [
+          [
+            {
+              "node": "Midday Reply With Photo?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Midday Reply With Photo?": {
+        "main": [
+          [
+            {
+              "node": "Download Proof Photo",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Proof Link",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download Proof Photo": {
+        "main": [
+          [
+            {
+              "node": "Upload Proof Photo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload Proof Photo": {
+        "main": [
+          [
+            {
+              "node": "Share Proof Photo",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Share Proof Photo": {
+        "main": [
+          [
+            {
+              "node": "Proof Link From Drive",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Proof Link From Drive": {
+        "main": [
+          [
+            {
+              "node": "Proof Link",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Proof Link": {
+        "main": [
+          [
+            {
+              "node": "Read Existing Tracker Row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "No Proof Link": {
+        "main": [
+          [
+            {
+              "node": "Proof Link",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Read Existing Tracker Row": {
+        "main": [
+          [
+            {
+              "node": "Merge Tracker Row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge Tracker Row": {
+        "main": [
+          [
+            {
+              "node": "Upsert Tracker Row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodes": [
+      {
+        "id": "2bce82bd-87e0-4eed-97df-9f3113d66d98",
+        "name": "Telegram Trigger",
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.5,
+        "position": [
+          0,
+          96
+        ],
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {
+            "chatIds": "REPLACE_WITH_TEAM_GROUP_CHAT_ID"
+          }
+        },
+        "webhookId": "12793084-d3fb-4046-a1d8-5affabe0d17b"
+      },
+      {
+        "id": "02620ece-364d-4ad0-af47-8235ac974e2a",
+        "name": "Is a Reply to a Prompt?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          224,
+          96
+        ],
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose"
+            },
+            "conditions": [
+              {
+                "leftValue": "={{ $json.message.reply_to_message.message_id }}",
+                "operator": {
+                  "type": "number",
+                  "operation": "exists",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": true
+        }
+      },
+      {
+        "id": "60a0a24c-e08b-4b55-a361-8515fc97596f",
+        "name": "Get Today's Prompt IDs",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          448,
+          96
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "UclN0JC7VWt19l9S",
+            "cachedResultName": "Tito Daily Prompt IDs"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "day",
+                "condition": "eq",
+                "keyValue": "={{ $now.setZone('Africa/Lagos').toFormat('yyyy-MM-dd') }}"
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "297aac90-1add-4db5-8326-3ee2c9dc6bd3",
+        "name": "Classify Reply",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          672,
+          96
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "language": "javaScript",
+          "jsCode": "// ---- Tunable configuration ------------------------------------------\nconst TIMEZONE = 'Africa/Lagos';\nconst SIGNIN_ON_TIME_CUTOFF = '09:15'; // reply at or before this = on_time\n// ----------------------------------------------------------------------\n\nconst msg = $('Telegram Trigger').first().json.message;\nconst row = $input.first().json;\n\nconst replyTo = msg.reply_to_message ? String(msg.reply_to_message.message_id) : '';\nlet kind = '';\nif (replyTo && replyTo === String(row.signin_msg_id)) kind = 'signin';\nelse if (replyTo && replyTo === String(row.midday_msg_id)) kind = 'midday';\nelse if (replyTo && replyTo === String(row.eod_msg_id)) kind = 'eod';\n\n// Replies to anything other than today's three prompts are ignored.\nif (!kind) return [];\n\nconst now = $now.setZone(TIMEZONE);\nconst time = now.toFormat('HH:mm');\n\nconst photos = msg.photo || [];\nconst largest = photos.length ? photos[photos.length - 1] : null;\n\nreturn [{ json: {\n  kind: kind,\n  today: now.toFormat('yyyy-MM-dd'),\n  time: time,\n  signinStatus: time <= SIGNIN_ON_TIME_CUTOFF ? 'on_time' : 'late',\n  telegramUserId: String(msg.from.id),\n  text: msg.text || msg.caption || '',\n  hasPhoto: !!largest,\n  fileId: largest ? largest.file_id : '',\n} }];\n"
+        }
+      },
+      {
+        "id": "608766bb-5221-449a-90b3-68420eb0a69e",
+        "name": "Look Up Rep",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          896,
+          96
+        ],
+        "parameters": {
+          "resource": "sheet",
+          "operation": "read",
+          "documentId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "",
+            "cachedResultName": "Tito Finance \u2013 Daily Activity Tracker"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "Team"
+          },
+          "filtersUI": {
+            "values": [
+              {
+                "lookupColumn": "telegram_user_id",
+                "lookupValue": "={{ $json.telegramUserId }}"
+              }
+            ]
+          },
+          "combineFilters": "AND",
+          "options": {}
+        }
+      },
+      {
+        "id": "fc765cd4-d6c1-4024-a052-b0eb3b1393ea",
+        "name": "Midday Reply With Photo?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1120,
+          96
+        ],
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose"
+            },
+            "conditions": [
+              {
+                "leftValue": "={{ $('Classify Reply').first().json.kind }}",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                },
+                "rightValue": "midday"
+              },
+              {
+                "leftValue": "={{ $('Classify Reply').first().json.hasPhoto }}",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": true
+        }
+      },
+      {
+        "id": "3fd55e4a-701c-4781-b3d1-0584e8a91b1e",
+        "name": "Download Proof Photo",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          1344,
+          0
+        ],
+        "parameters": {
+          "resource": "file",
+          "operation": "get",
+          "fileId": "={{ $('Classify Reply').first().json.fileId }}",
+          "download": true
+        },
+        "retryOnFail": true,
+        "maxTries": 3,
+        "webhookId": "3f9b1af6-13dc-47e6-943f-39eaedf4728a"
+      },
+      {
+        "id": "a4f57b22-1c97-406b-bfa1-c6ee892e88f0",
+        "name": "Upload Proof Photo",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1568,
+          0
+        ],
+        "parameters": {
+          "resource": "file",
+          "operation": "upload",
+          "inputDataFieldName": "data",
+          "name": "={{ $('Look Up Rep').first().json.full_name }} \u2014 {{ $('Classify Reply').first().json.today }} midday proof.jpg",
+          "driveId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "root",
+            "cachedResultName": "/ (Root folder)"
+          },
+          "options": {}
+        },
+        "retryOnFail": true,
+        "maxTries": 3
+      },
+      {
+        "id": "23d345ff-b384-4050-b1be-99c8e389a419",
+        "name": "Share Proof Photo",
+        "type": "n8n-nodes-base.googleDrive",
+        "typeVersion": 3,
+        "position": [
+          1792,
+          0
+        ],
+        "parameters": {
+          "resource": "file",
+          "operation": "share",
+          "fileId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "={{ $json.id }}"
+          },
+          "permissionsUi": {
+            "permissionsValues": {
+              "role": "reader",
+              "type": "anyone",
+              "allowFileDiscovery": false
+            }
+          },
+          "options": {}
+        },
+        "retryOnFail": true,
+        "maxTries": 3,
+        "onError": "continueRegularOutput"
+      },
+      {
+        "id": "aca0c133-c8c5-415f-a710-1b6b15d0126c",
+        "name": "Proof Link From Drive",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.5,
+        "position": [
+          2016,
+          0
+        ],
+        "parameters": {
+          "mode": "manual",
+          "includeOtherFields": false,
+          "assignments": {
+            "assignments": [
+              {
+                "id": "proof-link",
+                "name": "proofLink",
+                "value": "={{ $('Upload Proof Photo').item.json.webViewLink || 'https://drive.google.com/file/d/' + $('Upload Proof Photo').item.json.id + '/view' }}",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "9a0d8ed3-5e44-4931-ad8d-a3dba58e9cc0",
+        "name": "Proof Link",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          2240,
+          96
+        ],
+        "parameters": {
+          "mode": "append",
+          "numberInputs": 2
+        }
+      },
+      {
+        "id": "14faea2a-cd0b-4518-98ea-9b6ce35ce2ca",
+        "name": "No Proof Link",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.5,
+        "position": [
+          2016,
+          192
+        ],
+        "parameters": {
+          "mode": "manual",
+          "includeOtherFields": false,
+          "assignments": {
+            "assignments": [
+              {
+                "id": "proof-link",
+                "name": "proofLink",
+                "value": "={{ $('Classify Reply').first().json.kind === 'midday' ? 'no photo attached' : '' }}",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "3ac52fb6-c055-4e17-bc19-b99ec88bae0b",
+        "name": "Read Existing Tracker Row",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2464,
+          96
+        ],
+        "parameters": {
+          "resource": "sheet",
+          "operation": "read",
+          "documentId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "",
+            "cachedResultName": "Tito Finance \u2013 Daily Activity Tracker"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "Tracker"
+          },
+          "filtersUI": {
+            "values": [
+              {
+                "lookupColumn": "date",
+                "lookupValue": "={{ $('Classify Reply').first().json.today }}"
+              },
+              {
+                "lookupColumn": "rep_name",
+                "lookupValue": "={{ $('Look Up Rep').first().json.full_name }}"
+              }
+            ]
+          },
+          "combineFilters": "AND",
+          "options": {}
+        },
+        "alwaysOutputData": true
+      },
+      {
+        "id": "58248692-4486-44f7-a5c2-d4ffaa963cda",
+        "name": "Merge Tracker Row",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2688,
+          96
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "language": "javaScript",
+          "jsCode": "// Reads whatever is already on today's row for this rep and overlays only the\n// checkpoint that just came in, so a midday reply never blanks the sign-in cells.\nconst c = $('Classify Reply').first().json;\nconst rep = $('Look Up Rep').first().json;\nconst proof = $('Proof Link').first().json.proofLink;\n\n// 'Read Existing Tracker Row' has alwaysOutputData on, so an absent row arrives\n// as an empty object rather than stopping the chain. Guard on a real field.\nconst found = $input.first() ? $input.first().json : {};\nconst existing = found && found.date ? found : {};\n\nconst row = {\n  date: c.today,\n  rep_name: rep.full_name,\n  signin_time: existing.signin_time || '',\n  signin_status: existing.signin_status || '',\n  midday_time: existing.midday_time || '',\n  midday_proof_link: existing.midday_proof_link || '',\n  midday_status: existing.midday_status || '',\n  eod_time: existing.eod_time || '',\n  eod_report_text: existing.eod_report_text || '',\n  eod_status: existing.eod_status || '',\n};\n\nif (c.kind === 'signin') {\n  row.signin_time = c.time;\n  row.signin_status = c.signinStatus;\n} else if (c.kind === 'midday') {\n  row.midday_time = c.time;\n  row.midday_status = 'submitted';\n  row.midday_proof_link = proof;\n} else if (c.kind === 'eod') {\n  row.eod_time = c.time;\n  row.eod_status = 'submitted';\n  row.eod_report_text = c.text;\n}\n\nreturn [{ json: row }];\n"
+        }
+      },
+      {
+        "id": "ebd4f06d-5232-45d7-8a9a-022dc0179ae6",
+        "name": "Upsert Tracker Row",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          2912,
+          96
+        ],
+        "parameters": {
+          "resource": "sheet",
+          "operation": "appendOrUpdate",
+          "documentId": {
+            "__rl": true,
+            "mode": "list",
+            "value": "",
+            "cachedResultName": "Tito Finance \u2013 Daily Activity Tracker"
+          },
+          "sheetName": {
+            "__rl": true,
+            "mode": "name",
+            "value": "Tracker"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "matchingColumns": [
+              "date",
+              "rep_name"
+            ],
+            "value": {
+              "date": "={{ $json.date }}",
+              "rep_name": "={{ $json.rep_name }}",
+              "signin_time": "={{ $json.signin_time }}",
+              "signin_status": "={{ $json.signin_status }}",
+              "midday_time": "={{ $json.midday_time }}",
+              "midday_proof_link": "={{ $json.midday_proof_link }}",
+              "midday_status": "={{ $json.midday_status }}",
+              "eod_time": "={{ $json.eod_time }}",
+              "eod_report_text": "={{ $json.eod_report_text }}",
+              "eod_status": "={{ $json.eod_status }}"
+            },
+            "schema": [
+              {
+                "id": "date",
+                "displayName": "date",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "rep_name",
+                "displayName": "rep_name",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "signin_time",
+                "displayName": "signin_time",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "signin_status",
+                "displayName": "signin_status",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "midday_time",
+                "displayName": "midday_time",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "midday_proof_link",
+                "displayName": "midday_proof_link",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "midday_status",
+                "displayName": "midday_status",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "eod_time",
+                "displayName": "eod_time",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "eod_report_text",
+                "displayName": "eod_report_text",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "eod_status",
+                "displayName": "eod_status",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              }
+            ]
+          },
+          "options": {
+            "cellFormat": "USER_ENTERED"
+          }
+        },
+        "retryOnFail": true,
+        "maxTries": 3
+      },
+      {
+        "id": "2df55b5d-ecab-4122-b44f-234925c70b9e",
+        "name": "Sticky Note 5eca132c",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1392,
+          192
+        ],
+        "parameters": {
+          "content": "## Reply routing\nEvery team reply lands here. The reply is classified by matching\n`message.reply_to_message.message_id` against the three prompt IDs stored for today,\nand the sender is identified by `message.from.id` against the **Team** tab.\n\nReplies that are not a reply to one of todays prompts, or that come from someone not\nlisted in the **Team** tab, are dropped without writing anything.\n\n**Tunable:** the sign-in grace cutoff lives at the top of **Classify Reply**.\nThe team group filter lives in the trigger (`chatIds`).",
+          "color": 4
+        }
+      },
+      {
+        "id": "e511527c-142f-41f8-b27d-a0e57b77149f",
+        "name": "Sticky Note 701bd1a4",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1392,
+          448
+        ],
+        "parameters": {
+          "content": "## Proof of work\nA midday reply carrying a photo is re-downloaded from Telegram, pushed to Drive and\nshared as anyone-with-the-link, and the share URL is written to `midday_proof_link`.\n\nA midday reply with no photo is still logged; the cell reads `no photo attached`.\n\n**Tunable:** the destination folder is the `folderId` field of **Upload Proof Photo**.",
+          "color": 3
+        }
+      },
+      {
+        "id": "0faa91a9-5e55-4d75-ac9f-6f2ab600d7d6",
+        "name": "Sticky Note 8bb4134d",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1392,
+          704
+        ],
+        "parameters": {
+          "content": "## Read-modify-write\nGoogle Sheets `appendOrUpdate` overwrites every column it is given, so the existing row\nis read first and **Merge Tracker Row** overlays only the checkpoint that just arrived.\nWithout this, a midday reply would blank that mornings sign-in cells.",
+          "color": 5
+        }
+      }
+    ],
+    "nodeGroups": [],
+    "activeVersion": null,
+    "meta": {
+      "aiBuilderAssisted": true,
+      "builderVariant": "mcp"
+    }
+  },
+  "triggerInfo": "This workflow's trigger(s) are not supported for direct execution through MCP: Telegram Trigger. Only Schedule, Webhook, Form, and Chat triggers can be executed directly through MCP, so this workflow cannot be executed through MCP. Its trigger(s) still run normally when the workflow is active."
+}

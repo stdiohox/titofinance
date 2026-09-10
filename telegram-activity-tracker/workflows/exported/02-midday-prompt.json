@@ -1,0 +1,246 @@
+{
+  "workflow": {
+    "id": "IYuP8Q6uyD0JedS0",
+    "name": "Tito Daily \u2014 13:00 Midday Check-In Prompt",
+    "active": false,
+    "isArchived": false,
+    "versionId": "f12d895c-6013-4520-adcd-849543afa9a9",
+    "activeVersionId": null,
+    "triggerCount": 0,
+    "nodeCount": 5,
+    "createdAt": "2026-09-10T14:03:35.715Z",
+    "updatedAt": "2026-09-10T14:03:58.067Z",
+    "settings": {
+      "executionOrder": "v1",
+      "availableInMCP": true,
+      "timezone": "Africa/Lagos"
+    },
+    "tags": [],
+    "parentFolderId": null,
+    "description": "Posts the 13:00 weekday midday check-in prompt asking for current work plus a screenshot, and records its message_id.",
+    "scopes": [
+      "execution:reveal",
+      "workflow:create",
+      "workflow:delete",
+      "workflow:disableRedaction",
+      "workflow:enableRedaction",
+      "workflow:execute",
+      "workflow:execute-chat",
+      "workflow:export",
+      "workflow:import",
+      "workflow:list",
+      "workflow:move",
+      "workflow:publish",
+      "workflow:read",
+      "workflow:share",
+      "workflow:unpublish",
+      "workflow:unshare",
+      "workflow:update"
+    ],
+    "canExecute": true,
+    "connections": {
+      "Weekdays 13:00 Lagos": {
+        "main": [
+          [
+            {
+              "node": "Config",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Config": {
+        "main": [
+          [
+            {
+              "node": "Send Midday Check-In Prompt",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Midday Check-In Prompt": {
+        "main": [
+          [
+            {
+              "node": "Store Midday Prompt ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodes": [
+      {
+        "id": "b6072858-9897-411f-a1f5-dd8eb717d059",
+        "name": "Weekdays 13:00 Lagos",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 13 * * 1-5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "ba9e6bb2-e5e7-4587-bdea-5228db6cebc9",
+        "name": "Config",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.5,
+        "position": [
+          224,
+          0
+        ],
+        "parameters": {
+          "mode": "manual",
+          "includeOtherFields": true,
+          "assignments": {
+            "assignments": [
+              {
+                "id": "team-chat-id",
+                "name": "teamChatId",
+                "value": "REPLACE_WITH_TEAM_GROUP_CHAT_ID",
+                "type": "string"
+              },
+              {
+                "id": "today",
+                "name": "today",
+                "value": "={{ $now.setZone('Africa/Lagos').toFormat('yyyy-MM-dd') }}",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "ec057f4d-8841-4b8f-b7d5-79c61431da2f",
+        "name": "Send Midday Check-In Prompt",
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          448,
+          0
+        ],
+        "parameters": {
+          "resource": "message",
+          "operation": "sendMessage",
+          "chatId": "={{ $json.teamChatId }}",
+          "text": "<b>Midday check-in.</b>\n\nPlease <b>reply to this message</b> with:\n1. What you are working on right now\n2. A <b>screenshot</b> as proof of work (attach the photo to your reply)\n\nReplies without a screenshot are still logged, but they are flagged as <i>no photo attached</i>.",
+          "additionalFields": {
+            "appendAttribution": false,
+            "parse_mode": "HTML"
+          }
+        },
+        "retryOnFail": true,
+        "maxTries": 3,
+        "waitBetweenTries": 5000,
+        "webhookId": "d9d3dbab-4289-4852-9b0d-ce298a49d6ef"
+      },
+      {
+        "id": "b3610361-d271-4fbc-92e9-c73e77a2e90e",
+        "name": "Store Midday Prompt ID",
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1.1,
+        "position": [
+          672,
+          0
+        ],
+        "parameters": {
+          "resource": "row",
+          "operation": "upsert",
+          "dataTableId": {
+            "__rl": true,
+            "mode": "id",
+            "value": "UclN0JC7VWt19l9S",
+            "cachedResultName": "Tito Daily Prompt IDs"
+          },
+          "matchType": "allConditions",
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "day",
+                "condition": "eq",
+                "keyValue": "={{ $('Config').item.json.today }}"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "matchingColumns": [
+              "day"
+            ],
+            "value": {
+              "day": "={{ $('Config').item.json.today }}",
+              "chat_id": "={{ $('Config').item.json.teamChatId }}",
+              "midday_msg_id": "={{ $json.result.message_id }}"
+            },
+            "schema": [
+              {
+                "id": "day",
+                "displayName": "day",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "chat_id",
+                "displayName": "chat_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              },
+              {
+                "id": "midday_msg_id",
+                "displayName": "midday_msg_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": false
+              }
+            ]
+          }
+        },
+        "retryOnFail": true,
+        "maxTries": 3
+      },
+      {
+        "id": "8b4fec52-3160-4573-8821-1d59dd75bee0",
+        "name": "Sticky Note 4aa2fe25",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          272,
+          0
+        ],
+        "parameters": {
+          "content": "## 13:00 Midday check-in prompt\nAsks for current work plus a screenshot, then records this messages `message_id`\nas `midday_msg_id` on todays row of the **Tito Daily Prompt IDs** data table.\n\n**Tunable:** cron in the trigger, chat ID in **Config**, prompt wording here.",
+          "color": 4
+        }
+      }
+    ],
+    "nodeGroups": [],
+    "activeVersion": null,
+    "meta": {
+      "aiBuilderAssisted": true,
+      "builderVariant": "mcp"
+    }
+  },
+  "triggerInfo": "This workflow has the following trigger(s):\n\n\nSchedule trigger(s):\n\n\n\t\t\t\t<trigger 1>\n\t\t\t\t\t - Node name: Weekdays 13:00 Lagos\n\t\t\t\t</trigger 1>\n\nScheduled workflows do not take inputs. To execute a specific schedule trigger, pass triggerNodeName only: { triggerNodeName: \"<node name>\" }."
+}
