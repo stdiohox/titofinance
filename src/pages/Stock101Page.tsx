@@ -8,6 +8,7 @@ import { useReveal } from '../components/landing/useReveal'
 import { WorldMap } from '@/components/ui/WorldMap'
 import { ClassAnnouncement } from '@/components/ClassAnnouncement'
 import PhoneField from '@/components/PhoneField'
+import StockKnowledgeField from '@/components/StockKnowledgeField'
 import LandingFaq from '@/components/landing/LandingFaq'
 import { FaInstagram, FaYoutube, FaXTwitter, FaFacebook, FaTiktok, FaWhatsapp } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
@@ -265,6 +266,9 @@ function RegisterForm() {
       phone: formData.get('phone') as string,
       location: formData.get('location') as string,
       howHeard: formData.get('howHeard') as string,
+      // Same key and same three values the Close Community form has always
+      // sent, so one column holds one scale across every form.
+      experienceLevel: formData.get('experienceLevel') as string,
       // Same key and same target column as the Beginner's Portfolio form
       // (leads.learning_goal). One question asked on two forms, not two
       // columns for one question - the ingest mapping already exists, so
@@ -336,6 +340,12 @@ function RegisterForm() {
           {['Nigeria', 'United States', 'United Kingdom', 'Canada', 'Other'].map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
       </div>
+      {/* Grouped with the other selects and ahead of the free-text box, the
+          same placement the Beginner's Portfolio and Close Community forms
+          use. Shared component, so the three forms cannot drift apart on the
+          wording or on the values they store. */}
+      <StockKnowledgeField labelStyle={formLabel} inputStyle={inputStyle} onFocus={focus} onBlur={blur} />
+
       <div style={{ marginBottom: '1.25rem' }}>
         <label htmlFor="howHeard" style={formLabel}>How did you hear about us?</label>
         <select id="howHeard" name="howHeard" required defaultValue="" style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focus} onBlur={blur}>

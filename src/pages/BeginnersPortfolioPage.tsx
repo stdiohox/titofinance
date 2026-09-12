@@ -6,6 +6,7 @@ import { FaWhatsapp } from 'react-icons/fa6'
 import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
 import PhoneField from '@/components/PhoneField'
+import StockKnowledgeField from '@/components/StockKnowledgeField'
 import { ClassAnnouncement } from '@/components/ClassAnnouncement'
 import {
   WHATSAPP_DIRECT,
@@ -269,6 +270,11 @@ function ApplyForm() {
       phone: data.get('phone') as string,
       location: data.get('location') as string,
       howHeard: data.get('howHeard') as string,
+      // Same key, same column and same three values as the Close Community
+      // form has always sent. One question across the three forms, not three
+      // columns - the ingest mapping already exists, so this needed no change
+      // on the script side.
+      experienceLevel: data.get('experienceLevel') as string,
       learningGoal: data.get('learningGoal') as string,
       // Sent even though the current ingest script does not read it. The
       // automated messaging work cannot legally send anything without a
@@ -335,6 +341,12 @@ function ApplyForm() {
             ))}
           </select>
         </div>
+
+        {/* Sits with the other selects and before the free-text box, so the
+            visitor has already placed themselves on the scale by the time they
+            are asked what they want out of it. Same component, same key and
+            same stored values as the Stock 101 and Close Community forms. */}
+        <StockKnowledgeField labelStyle={formLabel} inputStyle={inputStyle} onFocus={focus} onBlur={blur} />
 
         <div style={{ marginBottom: '1.25rem' }}>
           <label htmlFor="howHeard" style={formLabel}>How did you hear about us?</label>

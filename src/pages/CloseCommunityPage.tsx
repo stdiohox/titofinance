@@ -16,6 +16,7 @@ import '../components/landing/landing.css'
 import { useReveal } from '../components/landing/useReveal'
 import { WHATSAPP_DIRECT, WHATSAPP_ENTRY_GROUP, submitLead } from '@/lib/forms'
 import PhoneField from '@/components/PhoneField'
+import StockKnowledgeField from '@/components/StockKnowledgeField'
 
 // ── Design tokens ──────────────────────────────────────────────
 // Identical to Stock101Page and BeginnersPortfolioPage. The premium weight of
@@ -346,15 +347,11 @@ function AccessForm() {
           </select>
         </div>
 
-        <div style={{ marginBottom: '1.25rem' }}>
-          <label htmlFor="experienceLevel" style={formLabel}>Investing experience</label>
-          <select id="experienceLevel" name="experienceLevel" required defaultValue="" style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focus} onBlur={blur}>
-            <option value="" disabled>Select…</option>
-            {['Beginner', 'Intermediate', 'Advanced'].map((o) => (
-              <option key={o} value={o}>{o}</option>
-            ))}
-          </select>
-        </div>
+        {/* Was a bare "Investing experience" / Beginner-Intermediate-Advanced
+            dropdown. Same field, same stored values, asked in words someone
+            who has never bought a share can answer without guessing which
+            rung they are on. */}
+        <StockKnowledgeField labelStyle={formLabel} inputStyle={inputStyle} onFocus={focus} onBlur={blur} />
 
         {/*
           The visitor's own investable capital, not a price. Nothing on this
