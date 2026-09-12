@@ -168,7 +168,7 @@ export default function DarkQuoteSection() {
           onMouseEnter={e => (e.currentTarget.style.background = 'white')}
           onMouseLeave={e => (e.currentTarget.style.background = '#F8F5EE')}
         >
-          Book a Free Strategy Call
+          Book a Call
           <span style={{
             background: '#2D5A27',
             borderRadius: '9999px',

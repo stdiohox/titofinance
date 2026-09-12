@@ -290,7 +290,7 @@ export default function RetirementPage() {
         >
           {/* Eyebrow */}
           <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: '#C9A84C', textTransform: 'uppercase', marginBottom: '24px' }}>
-            Free Strategy Session · Retirement Planning
+            Book a Call · Retirement Planning
           </p>
 
           {/* H1 */}
@@ -341,7 +341,7 @@ export default function RetirementPage() {
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
-            Book My Free Strategy Session →
+            Book a Call →
           </a>
 
           {/* Trust bar */}
@@ -974,7 +974,7 @@ export default function RetirementPage() {
                   lineHeight: 1.15,
                 }}
               >
-                Your Retirement Strategy Session Is Free. Your Future Depends on What You Do With It.
+                Your Retirement Call Is Free. Your Future Depends on What You Do With It.
               </h2>
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7 }}>
                 Fill in your details and Tito's team will reach out to schedule your session.
@@ -1017,7 +1017,7 @@ export default function RetirementPage() {
             >
               <LandingForm
                 webhookUrl="https://n8n.srv1759554.hstgr.cloud/webhook/retirement-intake"
-                submitLabel="Book My Free Strategy Session →"
+                submitLabel="Book a Call →"
                 fields={[
                   { name: 'fullName', label: 'Full Name', type: 'text' },
                   { name: 'email', label: 'Email Address', type: 'email' },
@@ -1198,7 +1198,7 @@ export default function RetirementPage() {
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
-                  Still have questions? Book a free session →
+                  Still have questions? Book a call →
                 </a>
               </div>
             </div>
@@ -1238,7 +1238,7 @@ export default function RetirementPage() {
                 textDecoration: 'none',
               }}
             >
-              Book My Free Strategy Session →
+              Book a Call →
             </a>
             <a
               href="https://wa.me/2349064491583"

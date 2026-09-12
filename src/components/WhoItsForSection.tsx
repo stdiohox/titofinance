@@ -31,7 +31,7 @@ export default function WhoItsForSection() {
             onMouseEnter={e => (e.currentTarget.style.background = '#1A3A16')}
             onMouseLeave={e => (e.currentTarget.style.background = '#2D5A27')}
           >
-            Book a Free Strategy Call
+            Book a Call
             <span style={{ background: 'white', borderRadius: '9999px', padding: '0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D0D0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>

@@ -51,7 +51,7 @@ export default function ServicesSection() {
             onMouseEnter={e => (e.currentTarget.style.background = '#1A3A16')}
             onMouseLeave={e => (e.currentTarget.style.background = '#2D5A27')}
           >
-            Book a Free Strategy Call
+            Book a Call
             <span style={{
               background: 'white',
               borderRadius: '9999px',

@@ -36,7 +36,7 @@ export default function FinalCTA() {
             onMouseEnter={e => (e.currentTarget.style.background = '#1A3A16')}
             onMouseLeave={e => (e.currentTarget.style.background = '#2D5A27')}
           >
-            Book Your Free Strategy Call
+            Book a Call
             <span style={{ background: 'white', borderRadius: '9999px', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D0D0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>

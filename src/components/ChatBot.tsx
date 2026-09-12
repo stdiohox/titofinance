@@ -35,7 +35,7 @@ const RESPONSES: Record<string, Omit<Message, 'role'>> = {
     text: 'GDR stands for Growth · Dividend · Retirement — three purpose-built portfolios with one job each. Growth chases long-term capital appreciation. Dividend generates steady passive income. Retirement preserves capital for the future. Together they form Tito\'s complete wealth system.',
   },
   'Book a Call': {
-    text: 'Great! Click below to reach Tito directly on WhatsApp and book your free strategy call. 👇',
+    text: 'Great! Click below to reach Tito directly on WhatsApp and book your call. 👇',
     action: { label: 'Chat on WhatsApp →', href: WHATSAPP },
   },
   'Join Free Group': {
