@@ -674,7 +674,7 @@ export default function BeginnersPortfolioPage() {
           </a>
           </div>
 
-          {/* Portrait. Same asset as the "Personal Financial Management 101"
+          {/* Portrait. Same asset as the "Stock 101"
               card on the homepage (ServicesSection card 01), and the same
               treatment it already carries elsewhere:
 

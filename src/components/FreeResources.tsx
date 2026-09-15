@@ -113,7 +113,7 @@ export default function FreeResources() {
             </a>
           </div>
 
-          {/* Card 3 — Finance 101 Monthly */}
+          {/* Card 3 — Stock 101 Monthly */}
           <div
             data-card
             className="bg-[#F8F5EE] rounded-2xl p-8 flex flex-col gap-4"
@@ -121,10 +121,10 @@ export default function FreeResources() {
           >
             <Users size={28} color="#2D5A27" />
             <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.5rem', color: '#0D0D0D', fontWeight: 500 }}>
-              Personal Finance 101
+              New to stocks? Start here.
             </h3>
             <p className="flex-1" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#6B6B6B', lineHeight: 1.65 }}>
-              Join the free monthly session. Every month, Titobi covers a new core topic — live, interactive, and completely free.
+              Join our Stock 101 session for a simple, beginner-friendly breakdown of how the stock market works, how to understand stocks, and what you need to know before you start investing.
             </p>
             <button
               className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 mt-auto self-start"

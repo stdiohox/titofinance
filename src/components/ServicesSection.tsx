@@ -119,10 +119,10 @@ export default function ServicesSection() {
               </div>
               <div>
                 <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.75rem', fontWeight: 500, letterSpacing: '-0.02em', color: 'white', lineHeight: 1.15, marginBottom: '0.6rem' }}>
-                  Personal Financial Management 101
+                  Stock 101
                 </h3>
                 <p style={{ fontFamily: 'DM Sans, sans-serif', color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem', maxWidth: '320px', lineHeight: 1.6 }}>
-                  A free monthly session covering the fundamentals of money management — budgeting, saving, and building healthy financial habits from the ground up.
+                  A beginner-friendly class designed to help you understand the stock market, how stocks work, and what you need to know before you start investing.
                 </p>
                 <a
                   href="https://wa.me/2349064491583"
@@ -141,7 +141,7 @@ export default function ServicesSection() {
                     marginTop: '1rem'
                   }}
                 >
-                  Chat on WhatsApp →
+                  Join Stock 101 →
                 </a>
               </div>
             </div>
