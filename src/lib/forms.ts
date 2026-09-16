@@ -12,25 +12,21 @@
 export const INGEST_ENDPOINT =
   'https://script.google.com/macros/s/AKfycbxS_n6QvCVS_BkgGTuQCAphOIpEV89gU4YO7RtDhdwEGf0v8ipOC7xVMpaMOHNu8EvgVg/exec'
 
-/** Tito's direct line, for the fallback when a submission fails. */
-export const WHATSAPP_DIRECT = 'https://wa.me/2349064491583'
-
 /**
- * The entry group for the two forms in this file's orbit, offered after a
- * successful submission.
- *
- * EVERY WHATSAPP GROUP LINK IN THE SITE NOW POINTS HERE. The earlier split -
- * one invite for the forms, an older one kept on purpose in ChatBot.tsx - is
- * gone; both were replaced with this single invite. Two other literals still
- * spell it out rather than importing this constant: Stock101Page.tsx (twice)
- * and ChatBot.tsx. If the invite rotates again, grep for chat.whatsapp.com
- * rather than trusting this constant to be the only copy.
- *
- * Named ENTRY rather than the plain WHATSAPP_GROUP it replaced, from when the
- * link was specific to Beginner's Portfolio and Close Community. That is no
- * longer the distinction it draws.
+ * EVERY WHATSAPP LINK IN THE SITE - personal and group alike - NOW POINTS AT
+ * THIS ONE GROUP INVITE. The former direct line (wa.me/2349064491583) is gone;
+ * the two names below are kept so callers did not have to change, but they
+ * are the same URL. Many components still spell the literal out rather than
+ * importing it, so if the invite rotates again, grep for chat.whatsapp.com
+ * rather than trusting these constants to be the only copies.
  */
-export const WHATSAPP_ENTRY_GROUP = 'https://chat.whatsapp.com/F46uXpOk0hVLLxaD5RAdVc'
+const WHATSAPP_GROUP_INVITE = 'https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4'
+
+/** Offered as the fallback when a submission fails. */
+export const WHATSAPP_DIRECT = WHATSAPP_GROUP_INVITE
+
+/** Offered after a successful submission. */
+export const WHATSAPP_ENTRY_GROUP = WHATSAPP_GROUP_INVITE
 
 export type FormType = 'beginner_portfolio' | 'closed_group'
 

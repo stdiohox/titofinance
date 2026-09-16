@@ -135,7 +135,7 @@ export default function GDRSection() {
 
           <br />
           <a
-            href="https://wa.me/2349064491583"
+            href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4"
             target="_blank"
             rel="noopener noreferrer"
             style={{

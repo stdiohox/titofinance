@@ -32,7 +32,7 @@ const eyebrow: CSSProperties = {
   marginBottom: '1rem',
 }
 
-const WHATSAPP = 'https://wa.me/2349064491583'
+const WHATSAPP = 'https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4'
 
 // ── Data (all existing copy preserved) ─────────────────────────
 const modules = [
@@ -66,7 +66,7 @@ const footerSocials: { label: string; href: string; Icon: IconType }[] = [
   { label: 'Twitter', href: 'https://x.com/titofinance?s=21', Icon: FaXTwitter },
   { label: 'Facebook', href: 'https://www.facebook.com/Titobifinance', Icon: FaFacebook },
   { label: 'TikTok', href: 'https://www.tiktok.com/@titofinance', Icon: FaTiktok },
-  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/F46uXpOk0hVLLxaD5RAdVc', Icon: FaWhatsapp },
+  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4', Icon: FaWhatsapp },
 ]
 
 const footerNavigate = [
@@ -78,7 +78,7 @@ const footerNavigate = [
 ]
 
 const footerConnect: { label: string; href: string; external?: boolean }[] = [
-  { label: 'Book a Call', href: 'https://wa.me/2349064491583', external: true },
+  { label: 'Book a Call', href: 'https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4', external: true },
   { label: 'Retirement Planning', href: '/retirement' },
   { label: 'Main Site', href: '/' },
   { label: 'Instagram', href: 'https://www.instagram.com/teetobee', external: true },
@@ -535,7 +535,7 @@ function RegisterForm() {
           >
             {/* Primary CTA — Join WhatsApp Group */}
             <a
-              href="https://chat.whatsapp.com/F46uXpOk0hVLLxaD5RAdVc"
+              href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -1397,18 +1397,7 @@ export default function Stock101Page() {
                     }}
                   />
                   <button
-                    onClick={() => {
-                      const input = document.querySelector('.tf-footer-subscribe input') as HTMLInputElement
-                      const email = input?.value?.trim()
-                      if (email) {
-                        window.open(
-                          `https://wa.me/2349064491583?text=Hi%20Tito%2C%20I%27d%20like%20to%20stay%20updated.%20My%20email%3A%20${encodeURIComponent(email)}`,
-                          '_blank'
-                        )
-                      } else {
-                        window.open('https://wa.me/2349064491583', '_blank')
-                      }
-                    }}
+                    onClick={() => window.open(WHATSAPP, '_blank')}
                     style={{
                       padding: '11px 20px',
                       background: '#1A3A16',
