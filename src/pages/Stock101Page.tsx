@@ -32,7 +32,7 @@ const eyebrow: CSSProperties = {
   marginBottom: '1rem',
 }
 
-const WHATSAPP = 'https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4'
+const WHATSAPP = 'https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4'
 
 // ── Data (all existing copy preserved) ─────────────────────────
 const modules = [
@@ -66,7 +66,7 @@ const footerSocials: { label: string; href: string; Icon: IconType }[] = [
   { label: 'Twitter', href: 'https://x.com/titofinance?s=21', Icon: FaXTwitter },
   { label: 'Facebook', href: 'https://www.facebook.com/Titobifinance', Icon: FaFacebook },
   { label: 'TikTok', href: 'https://www.tiktok.com/@titofinance', Icon: FaTiktok },
-  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4', Icon: FaWhatsapp },
+  { label: 'WhatsApp', href: 'https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4', Icon: FaWhatsapp },
 ]
 
 const footerNavigate = [
@@ -78,7 +78,7 @@ const footerNavigate = [
 ]
 
 const footerConnect: { label: string; href: string; external?: boolean }[] = [
-  { label: 'Book a Call', href: 'https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4', external: true },
+  { label: 'Book a Call', href: 'https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4', external: true },
   { label: 'Retirement Planning', href: '/retirement' },
   { label: 'Main Site', href: '/' },
   { label: 'Instagram', href: 'https://www.instagram.com/teetobee', external: true },
@@ -535,7 +535,7 @@ function RegisterForm() {
           >
             {/* Primary CTA — Join WhatsApp Group */}
             <a
-              href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4"
+              href="https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4"
               target="_blank"
               rel="noopener noreferrer"
               style={{

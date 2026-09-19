@@ -32,7 +32,7 @@ export default function ServicesSection() {
           </div>
           <a
             data-reveal
-            href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4"
+            href="https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 shrink-0"
@@ -125,7 +125,7 @@ export default function ServicesSection() {
                   A beginner-friendly class designed to help you understand the stock market, how stocks work, and what you need to know before you start investing.
                 </p>
                 <a
-                  href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4"
+                  href="https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -264,7 +264,7 @@ export default function ServicesSection() {
                 Ongoing one-on-one guidance tailored to your financial journey. Strategy sessions, goal tracking, and direct accountability.
               </p>
             </div>
-            <a href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href="https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#C9A84C',
@@ -307,7 +307,7 @@ export default function ServicesSection() {
                 A focused 30-minute session to tackle one specific financial question or decision. Fast, direct, actionable.
               </p>
             </div>
-            <a href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href="https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#2D5A27',
@@ -352,7 +352,7 @@ export default function ServicesSection() {
                 Long-term wealth structuring designed for the life you want after work.
                 We build positions today that compound into lasting freedom.
               </p>
-              <a href="https://chat.whatsapp.com/CdzA2Uy9cXTCZh9vJ0OKYb?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer" style={{
+              <a href="https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer" style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '11px',
                 color: '#C9A84C',
