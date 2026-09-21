@@ -24,8 +24,8 @@ const QUICK_REPLIES = [
   'Who is Titobi?',
 ]
 
-const WHATSAPP = 'https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4'
-const GROUP = 'https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4'
+const WHATSAPP = 'https://chat.whatsapp.com/GqAp7dMusRoDhUPEFU6QKL?s=cl&p=i&mlu=4&ilr=4'
+const GROUP = 'https://chat.whatsapp.com/GqAp7dMusRoDhUPEFU6QKL?s=cl&p=i&mlu=4&ilr=4'
 
 const RESPONSES: Record<string, Omit<Message, 'role'>> = {
   'Our Services': {

@@ -23,7 +23,7 @@ export default function WhoItsForSection() {
           </p>
           <a
             data-reveal
-            href="https://chat.whatsapp.com/H4LmozUbBb179RXJM5jrsV?s=cl&p=i&mlu=4&ilr=4"
+            href="https://chat.whatsapp.com/GqAp7dMusRoDhUPEFU6QKL?s=cl&p=i&mlu=4&ilr=4"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"
