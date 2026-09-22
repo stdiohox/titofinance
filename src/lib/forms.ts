@@ -20,7 +20,8 @@ export const INGEST_ENDPOINT =
  * importing it, so if the invite rotates again, grep for chat.whatsapp.com
  * rather than trusting these constants to be the only copies.
  */
-const WHATSAPP_GROUP_INVITE = 'https://chat.whatsapp.com/Injfr54fvz5GYDnz4fnuLf?s=cl&p=i&mlu=4&ilr=4'
+export const WHATSAPP_GROUP_INVITE =
+  'https://chat.whatsapp.com/Injfr54fvz5GYDnz4fnuLf?s=cl&p=i&mlu=4&ilr=4'
 
 /** Offered as the fallback when a submission fails. */
 export const WHATSAPP_DIRECT = WHATSAPP_GROUP_INVITE
