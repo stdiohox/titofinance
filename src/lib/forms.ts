@@ -29,6 +29,14 @@ export const WHATSAPP_DIRECT = WHATSAPP_GROUP_INVITE
 /** Offered after a successful submission. */
 export const WHATSAPP_ENTRY_GROUP = WHATSAPP_GROUP_INVITE
 
+/**
+ * The retirement funnel has its own group, separate from the site-wide invite
+ * above. Every WhatsApp link on RetirementPage - and the prompt shown after the
+ * retirement intake form is submitted - points here.
+ */
+export const RETIREMENT_GROUP_INVITE =
+  'https://chat.whatsapp.com/FBbpXrTqZMdE1hzgocOKfp?s=cl&p=i&mlu=4&ilr=4'
+
 export type FormType = 'beginner_portfolio' | 'closed_group'
 
 export interface SubmitResult {

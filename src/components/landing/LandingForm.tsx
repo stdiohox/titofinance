@@ -13,6 +13,11 @@ interface LandingFormProps {
   fields: FormField[]
   submitLabel: string
   webhookUrl: string
+  /**
+   * WhatsApp group the visitor is prompted to join once the form is submitted.
+   * Omit it and the success panel is just the confirmation message.
+   */
+  groupInviteUrl?: string
 }
 
 const labelStyle: React.CSSProperties = {
@@ -70,7 +75,7 @@ const selectStyle: React.CSSProperties = {
   backgroundPosition: 'right 16px center',
 }
 
-export default function LandingForm({ fields, submitLabel }: LandingFormProps) {
+export default function LandingForm({ fields, submitLabel, groupInviteUrl }: LandingFormProps) {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
@@ -218,7 +223,7 @@ export default function LandingForm({ fields, submitLabel }: LandingFormProps) {
       {submitted && (
         <div style={{
           marginTop: '16px',
-          padding: '16px',
+          padding: '20px',
           background: 'rgba(37,211,102,0.15)',
           borderRadius: '12px',
           border: '1px solid rgba(37,211,102,0.35)',
@@ -228,6 +233,46 @@ export default function LandingForm({ fields, submitLabel }: LandingFormProps) {
           textAlign: 'center',
         }}>
           ✓ Received! Tito's team will reach out on WhatsApp to schedule your session.
+
+          {groupInviteUrl && (
+            <>
+              <p style={{ marginTop: '12px', color: 'rgba(255,255,255,0.75)' }}>
+                One last step — join the WhatsApp group so you get the session
+                details and reminders.
+              </p>
+              <a
+                href={groupInviteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  marginTop: '14px',
+                  padding: '14px 28px',
+                  borderRadius: '999px',
+                  background: '#25D366',
+                  color: '#0B2E13',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 20px rgba(37,211,102,0.35)',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-1px)'
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(37,211,102,0.45)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(37,211,102,0.35)'
+                }}
+              >
+                Join the WhatsApp Group →
+              </a>
+            </>
+          )}
         </div>
       )}
 
