@@ -291,7 +291,7 @@ export default function RetirementPage() {
         >
           {/* Eyebrow */}
           <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: '#C9A84C', textTransform: 'uppercase', marginBottom: '24px' }}>
-            Book a Call · Retirement Planning
+            Join the Community · Retirement Planning
           </p>
 
           {/* H1 */}
@@ -342,7 +342,7 @@ export default function RetirementPage() {
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
-            Book a Call →
+            Join the Community →
           </a>
 
           {/* Trust bar */}
@@ -1018,7 +1018,7 @@ export default function RetirementPage() {
             >
               <LandingForm
                 webhookUrl="https://n8n.srv1759554.hstgr.cloud/webhook/retirement-intake"
-                submitLabel="Book a Call →"
+                submitLabel="Join the Community →"
                 groupInviteUrl={RETIREMENT_GROUP_INVITE}
                 fields={[
                   { name: 'fullName', label: 'Full Name', type: 'text' },
@@ -1048,7 +1048,7 @@ export default function RetirementPage() {
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.5)', textAlign: 'center', marginTop: '1.5rem' }}>
                 Prefer WhatsApp?{' '}
                 <a href="https://chat.whatsapp.com/FBbpXrTqZMdE1hzgocOKfp?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer" style={{ color: GOLD, textDecoration: 'none' }}>
-                  Chat with Tito directly →
+                  Join the community on WhatsApp →
                 </a>
               </p>
             </motion.div>
@@ -1200,7 +1200,7 @@ export default function RetirementPage() {
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
-                  Still have questions? Book a call →
+                  Still have questions? Join the community →
                 </a>
               </div>
             </div>
@@ -1240,7 +1240,7 @@ export default function RetirementPage() {
                 textDecoration: 'none',
               }}
             >
-              Book a Call →
+              Join the Community →
             </a>
             <a
               href="https://chat.whatsapp.com/FBbpXrTqZMdE1hzgocOKfp?s=cl&p=i&mlu=4&ilr=4"
@@ -1249,7 +1249,7 @@ export default function RetirementPage() {
               className="hover-underline"
               style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}
             >
-              Message Tito on WhatsApp →
+              Join on WhatsApp →
             </a>
           </div>
         </div>
@@ -1429,7 +1429,7 @@ export default function RetirementPage() {
                 {[
                   { label: 'Tito Finance Home', href: '/' },
                   { label: 'Stock 101', href: '/stock-101' },
-                  { label: 'Book a Call', href: 'https://chat.whatsapp.com/FBbpXrTqZMdE1hzgocOKfp?s=cl&p=i&mlu=4&ilr=4' },
+                  { label: 'Join the Community', href: 'https://chat.whatsapp.com/FBbpXrTqZMdE1hzgocOKfp?s=cl&p=i&mlu=4&ilr=4' },
                   { label: 'Free Resources', href: '/#services' },
                   { label: 'The GDR Method', href: '/#gdr' },
                 ].map((link) => (

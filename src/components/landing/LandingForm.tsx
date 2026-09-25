@@ -237,8 +237,8 @@ export default function LandingForm({ fields, submitLabel, groupInviteUrl }: Lan
           {groupInviteUrl && (
             <>
               <p style={{ marginTop: '12px', color: 'rgba(255,255,255,0.75)' }}>
-                One last step — join the WhatsApp group so you get the session
-                details and reminders.
+                One last step — join the community on WhatsApp so you get the
+                session details and reminders.
               </p>
               <a
                 href={groupInviteUrl}
@@ -269,7 +269,7 @@ export default function LandingForm({ fields, submitLabel, groupInviteUrl }: Lan
                   e.currentTarget.style.boxShadow = '0 4px 20px rgba(37,211,102,0.35)'
                 }}
               >
-                Join the WhatsApp Group →
+                Join the Community →
               </a>
             </>
           )}
