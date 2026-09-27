@@ -21,7 +21,7 @@ export const INGEST_ENDPOINT =
  * rather than trusting these constants to be the only copies.
  */
 export const WHATSAPP_GROUP_INVITE =
-  'https://chat.whatsapp.com/Injfr54fvz5GYDnz4fnuLf?s=cl&p=i&mlu=4&ilr=4'
+  'https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t'
 
 /** Offered as the fallback when a submission fails. */
 export const WHATSAPP_DIRECT = WHATSAPP_GROUP_INVITE
