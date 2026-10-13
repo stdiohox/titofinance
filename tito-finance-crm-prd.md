@@ -712,7 +712,7 @@ Column widths are fixed, not content-derived, so the columns do not jump between
 |  < Leads                                                          |
 +-------------------------------------------------------------------+
 |  Adaeze Okonkwo                    [Stage: Contacted v]           |
-|  adaeze.o@gmail.com · 08067132772                                 |
+|  adaeze.o@gmail.com · 08000000000                                 |
 |  [ WhatsApp ]  [ Email ]                                          |
 +---------------------------------------+---------------------------+
 |  TIMELINE                             |  DETAILS                  |
@@ -894,7 +894,7 @@ The `whatsapp_opened` activity therefore records exactly one fact: a rep clicked
 
 **Getting real WhatsApp logging** requires the WhatsApp Cloud API: a Meta Business account, business verification (typically 1 to 3 weeks, and it can be rejected), a registered phone number that then **cannot be used in the normal WhatsApp app**, and pre-approved message templates for any conversation the business initiates. That last constraint is usually the deal-breaker for a coaching business whose whole approach is unscripted personal conversation, and it is why the deep link is the right answer, not just the cheap one.
 
-`08067132772` is the number used across the public site. Confirm whether that is Titobi's personal WhatsApp before anyone considers the Cloud API, because registering it would take it out of normal use.
+The public site only links to the WhatsApp group invite. Tito's personal number is `08067132772`; registering it for the Cloud API would take it out of normal WhatsApp use.
 
 ### 7.5 Chatbot: currently captures nothing
 
