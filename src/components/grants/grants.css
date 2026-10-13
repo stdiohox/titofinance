@@ -1,0 +1,48 @@
+/* /grants page. Brand tokens are scoped here so the page reads them by name. */
+.gp {
+  --forest: #1A3A16;
+  --gold: #C9A84C;
+  --ivory: #F8F5EE;
+  --ink: #0D0B08;
+  --stone: #57544E;     /* 7:1 on ivory; for metadata */
+  --rule: rgba(26, 58, 22, 0.14);
+  --tint: rgba(26, 58, 22, 0.05);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  overflow-x: clip;
+}
+.gp-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+.gp-mono { font-family: 'DM Mono', ui-monospace, monospace; }
+.gp-num { font-variant-numeric: lining-nums tabular-nums; }
+.gp h1, .gp h2, .gp h3 { text-wrap: balance; }
+.gp p, .gp dd, .gp li { text-wrap: pretty; }
+
+/* Horizontal chip rail on phones: scrolls inside itself, never the page */
+.gp-rail { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.gp-rail::-webkit-scrollbar { display: none; }
+
+.gp-press { transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease, border-color 200ms ease; }
+.gp-press:active { transform: scale(0.97); }
+
+/* Keyboard focus and anchor jumps clear the sticky filter bar, which wraps
+   to two or three rows below 1536px. */
+html:has(.gp) { scroll-padding-top: 9rem; }
+
+/* Long rows below the fold skip layout until they're near the viewport. */
+.gp-row { content-visibility: auto; contain-intrinsic-size: auto 620px; }
+
+/* Calendar bars rise from the baseline, one day after another. Bars are
+   never hidden: they start at 15% height, so a frozen frame still reads. */
+@keyframes gp-bar-rise { from { transform: scaleY(0.15); } to { transform: scaleY(1); } }
+.gp-bar {
+  transform-origin: bottom;
+  animation: gp-bar-rise 700ms var(--ease-out) both;
+  animation-delay: calc(250ms + var(--i) * 18ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gp-press, .gp-press:active { transition: none; transform: none; }
+  .gp-bar { animation: none; }
+}
