@@ -11,6 +11,7 @@ import CredentialMarquee from './components/CredentialMarquee'
 import FreeResources from './components/FreeResources'
 import TestimonialsSection from './components/TestimonialsSection'
 import WhoItsForSection from './components/WhoItsForSection'
+import GrantsTeaser from './components/GrantsTeaser'
 import FinalCTA from './components/FinalCTA'
 import Footer from './components/Footer'
 import { ClassAnnouncement } from './components/ClassAnnouncement'
@@ -33,6 +34,7 @@ export default function App() {
       <FreeResources />
       <WhoItsForSection />
       <TestimonialsSection />
+      <GrantsTeaser />
       <FinalCTA />
       <section style={{ background: '#F8F5EE', padding: '80px 24px' }}>
         <div style={{ maxWidth: '480px', margin: '0 auto' }}>

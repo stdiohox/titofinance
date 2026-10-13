@@ -160,6 +160,7 @@ export default function Footer() {
               { label: 'Approach', href: '#gdr' },
               { label: 'Stock 101', href: '/stock-101' },
               { label: 'Retirement Planning', href: '/retirement' },
+              { label: 'Grants', href: '/grants' },
               { label: 'Book a Call', href: 'https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t', external: true },
             ].map(({ label, href, external }) => (
               <a

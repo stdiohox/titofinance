@@ -45,6 +45,7 @@ export default function Navbar() {
             { label: 'Results', href: '#who' },
             { label: 'Stock 101', href: '/stock-101' },
             { label: 'Retirement', href: '/retirement' },
+            { label: 'Grants', href: '/grants' },
           ].map(({ label, href }) => (
             <a
               key={label}
@@ -148,6 +149,7 @@ export default function Navbar() {
           { label: 'Results', href: '#who' },
           { label: 'Stock 101', href: '/stock-101' },
           { label: 'Retirement', href: '/retirement' },
+          { label: 'Grants', href: '/grants' },
         ].map(({ label, href }) => (
           <a
             key={label}
