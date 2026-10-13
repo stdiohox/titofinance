@@ -1408,7 +1408,7 @@ Six items. Each blocks something specific.
 |---|---|---|---|
 | 1 | Who controls DNS for the sending domain, and can they add records this week? | All of Phase 2 email | Resolve on day 1 |
 | 2 | Which address does the CRM send from? | Email templates, Resend setup | `titobi@titofinance.com`, monitored, with `Reply-To` the same. Never `noreply@`. |
-| 3 | Is `08067132772` Titobi's personal WhatsApp? | Any future Cloud API decision | If yes, the Cloud API is off the table without a second number |
+| 3 | Is `08067132772` Titobi's personal WhatsApp? | Any future Cloud API decision | **Answered:** Yes — 08067132772 is Titobi's personal WhatsApp (confirmed Oct 13, 2026). So the Cloud API is off the table without a second number. |
 | 4 | CRM subdomain | Vercel project setup | `crm.titofinance.com` |
 | 5 | Can we see the existing Google Sheet in Week 1? | Import estimate accuracy (§11.1 risk 3) | Yes, before Phase 3 planning |
 | 6 | Is the n8n instance at `n8n.srv1759554.hstgr.cloud` in use for anything else? | Whether to remove the dead reference or wire it up | It currently receives nothing (§7.1 Defect 1) |
