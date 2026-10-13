@@ -151,7 +151,7 @@ export const GRANT_CATEGORIES: GrantCategory[] = [
       },
       {
         n: 10,
-        name: "TONY ELUMELU? No - L'OREAL-UNESCO FOR WOMEN IN SCIENCE NIGERIA",
+        name: "L'OREAL-UNESCO FOR WOMEN IN SCIENCE NIGERIA",
         deadline: 'Oct 17, 2026',
         link: 'https://www.forwomeninscience.com',
         what: 'Research grant for female scientists',
