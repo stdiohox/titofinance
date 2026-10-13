@@ -197,7 +197,7 @@ Every send writes an `email_logs` row and an activity entry. Delivery status upd
 #### P0-8. WhatsApp quick-link
 One click opens `https://wa.me/<e164>?text=<prefilled>` in a new tab.
 
-Requires normalized phone numbers. Nigerian users type `08184750870`, `+234 818 475 0870`, and `234-818-475-0870`. All three must become `2348184750870`. Normalization runs at ingestion and stores to `phone_e164`, leaving `phone_raw` untouched for audit.
+Requires normalized phone numbers. Nigerian users type `08067132772`, `+234 806 713 2772`, and `234-806-713-2772`. All three must become `2348067132772`. Normalization runs at ingestion and stores to `phone_e164`, leaving `phone_raw` untouched for audit.
 
 Default prefilled text is a short greeting including the lead's first name and the program they enquired about. Rep can edit before sending, because it opens in WhatsApp, not in the CRM.
 
@@ -712,7 +712,7 @@ Column widths are fixed, not content-derived, so the columns do not jump between
 |  < Leads                                                          |
 +-------------------------------------------------------------------+
 |  Adaeze Okonkwo                    [Stage: Contacted v]           |
-|  adaeze.o@gmail.com · +234 818 475 0870                           |
+|  adaeze.o@gmail.com · 08067132772                                 |
 |  [ WhatsApp ]  [ Email ]                                          |
 +---------------------------------------+---------------------------+
 |  TIMELINE                             |  DETAILS                  |
@@ -894,7 +894,7 @@ The `whatsapp_opened` activity therefore records exactly one fact: a rep clicked
 
 **Getting real WhatsApp logging** requires the WhatsApp Cloud API: a Meta Business account, business verification (typically 1 to 3 weeks, and it can be rejected), a registered phone number that then **cannot be used in the normal WhatsApp app**, and pre-approved message templates for any conversation the business initiates. That last constraint is usually the deal-breaker for a coaching business whose whole approach is unscripted personal conversation, and it is why the deep link is the right answer, not just the cheap one.
 
-`+2348184750870` is the number used across the public site. Confirm whether that is Titobi's personal WhatsApp before anyone considers the Cloud API, because registering it would take it out of normal use.
+`08067132772` is the number used across the public site. Confirm whether that is Titobi's personal WhatsApp before anyone considers the Cloud API, because registering it would take it out of normal use.
 
 ### 7.5 Chatbot: currently captures nothing
 
@@ -1408,7 +1408,7 @@ Six items. Each blocks something specific.
 |---|---|---|---|
 | 1 | Who controls DNS for the sending domain, and can they add records this week? | All of Phase 2 email | Resolve on day 1 |
 | 2 | Which address does the CRM send from? | Email templates, Resend setup | `titobi@titofinance.com`, monitored, with `Reply-To` the same. Never `noreply@`. |
-| 3 | Is `+2348184750870` Titobi's personal WhatsApp? | Any future Cloud API decision | If yes, the Cloud API is off the table without a second number |
+| 3 | Is `08067132772` Titobi's personal WhatsApp? | Any future Cloud API decision | If yes, the Cloud API is off the table without a second number |
 | 4 | CRM subdomain | Vercel project setup | `crm.titofinance.com` |
 | 5 | Can we see the existing Google Sheet in Week 1? | Import estimate accuracy (§11.1 risk 3) | Yes, before Phase 3 planning |
 | 6 | Is the n8n instance at `n8n.srv1759554.hstgr.cloud` in use for anything else? | Whether to remove the dead reference or wire it up | It currently receives nothing (§7.1 Defect 1) |

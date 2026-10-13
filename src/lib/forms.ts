@@ -14,7 +14,8 @@ export const INGEST_ENDPOINT =
 
 /**
  * EVERY WHATSAPP LINK IN THE SITE - personal and group alike - NOW POINTS AT
- * THIS ONE GROUP INVITE. The former direct line (wa.me/2349064491583) is gone;
+ * THIS ONE GROUP INVITE. The site has no direct line to Tito any more (his
+ * WhatsApp, if one is ever wanted, is 08067132772: wa.me/2348067132772);
  * the two names below are kept so callers did not have to change, but they
  * are the same URL. Many components still spell the literal out rather than
  * importing it, so if the invite rotates again, grep for chat.whatsapp.com
