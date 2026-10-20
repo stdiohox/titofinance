@@ -13,13 +13,19 @@ export const INGEST_ENDPOINT =
   'https://script.google.com/macros/s/AKfycbxS_n6QvCVS_BkgGTuQCAphOIpEV89gU4YO7RtDhdwEGf0v8ipOC7xVMpaMOHNu8EvgVg/exec'
 
 /**
- * EVERY WHATSAPP LINK IN THE SITE - personal and group alike - NOW POINTS AT
- * THIS ONE GROUP INVITE. The site has no direct line to Tito any more (his
- * WhatsApp, if one is ever wanted, is 08067132772: wa.me/2348067132772);
- * the two names below are kept so callers did not have to change, but they
- * are the same URL. Many components still spell the literal out rather than
- * importing it, so if the invite rotates again, grep for chat.whatsapp.com
- * rather than trusting these constants to be the only copies.
+ * Tito's personal WhatsApp (08067132772). Every 1-on-1 CTA points here:
+ * "Book a Call", the Mentorship and Quick Fire One-on-One cards, and the
+ * chatbot's direct-message buttons. wa.me needs the 234 country code.
+ */
+export const TITO_PERSONAL_WHATSAPP = 'https://wa.me/2348067132772'
+
+/**
+ * Every other WhatsApp link in the site (community, Stock 101, form
+ * follow-ups) points at this one group invite; the two names below are kept
+ * so callers did not have to change, but they are the same URL. Many
+ * components still spell the literal out rather than importing it, so if the
+ * invite rotates again, grep for chat.whatsapp.com rather than trusting these
+ * constants to be the only copies.
  */
 export const WHATSAPP_GROUP_INVITE =
   'https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t'

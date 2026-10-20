@@ -1,4 +1,5 @@
 import { Wallet, Sprout, Network, Compass, Zap, Sunrise } from 'lucide-react'
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
 
 export default function ServicesSection() {
   return (
@@ -32,7 +33,7 @@ export default function ServicesSection() {
           </div>
           <a
             data-reveal
-            href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t"
+            href={TITO_PERSONAL_WHATSAPP}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full transition-colors duration-200 shrink-0"
@@ -264,7 +265,7 @@ export default function ServicesSection() {
                 Ongoing one-on-one guidance tailored to your financial journey. Strategy sessions, goal tracking, and direct accountability.
               </p>
             </div>
-            <a href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href={TITO_PERSONAL_WHATSAPP} target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#C9A84C',
@@ -307,7 +308,7 @@ export default function ServicesSection() {
                 A focused 30-minute session to tackle one specific financial question or decision. Fast, direct, actionable.
               </p>
             </div>
-            <a href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t" target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href={TITO_PERSONAL_WHATSAPP} target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#2D5A27',
@@ -352,7 +353,7 @@ export default function ServicesSection() {
                 Long-term wealth structuring designed for the life you want after work.
                 We build positions today that compound into lasting freedom.
               </p>
-              <a href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t" target="_blank" rel="noopener noreferrer" style={{
+              <a href="/retirement" style={{
                 fontFamily: 'DM Mono, monospace',
                 fontSize: '11px',
                 color: '#C9A84C',
@@ -364,7 +365,7 @@ export default function ServicesSection() {
                 gap: '0.4rem',
                 marginTop: '1rem'
               }}>
-                Chat on WhatsApp →
+                Get Started →
               </a>
             </div>
           </div>

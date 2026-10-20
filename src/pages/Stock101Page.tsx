@@ -12,6 +12,7 @@ import StockKnowledgeField from '@/components/StockKnowledgeField'
 import LandingFaq from '@/components/landing/LandingFaq'
 import { FaInstagram, FaYoutube, FaXTwitter, FaFacebook, FaTiktok, FaWhatsapp } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
 
 // ── Design tokens ──────────────────────────────────────────────
 const BG_PRIMARY = '#F8F5EE'
@@ -78,7 +79,7 @@ const footerNavigate = [
 ]
 
 const footerConnect: { label: string; href: string; external?: boolean }[] = [
-  { label: 'Book a Call', href: 'https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t', external: true },
+  { label: 'Book a Call', href: TITO_PERSONAL_WHATSAPP, external: true },
   { label: 'Retirement Planning', href: '/retirement' },
   { label: 'Main Site', href: '/' },
   { label: 'Instagram', href: 'https://www.instagram.com/teetobee', external: true },

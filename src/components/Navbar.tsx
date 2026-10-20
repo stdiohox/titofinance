@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -69,7 +70,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {/* CTA — hidden on mobile; the hamburger overlay carries the booking CTA there */}
           <a
-            href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t"
+            href={TITO_PERSONAL_WHATSAPP}
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:inline-flex items-center gap-3 rounded-full transition-colors duration-200 md:mr-6"
@@ -169,7 +170,7 @@ export default function Navbar() {
         ))}
 
         <a
-          href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t"
+          href={TITO_PERSONAL_WHATSAPP}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setMenuOpen(false)}

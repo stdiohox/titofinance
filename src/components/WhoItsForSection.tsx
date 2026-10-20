@@ -1,3 +1,5 @@
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
+
 const qualifiers = [
   "You don't know where your money goes each month",
   "You want to start building a real investment portfolio",
@@ -23,7 +25,7 @@ export default function WhoItsForSection() {
           </p>
           <a
             data-reveal
-            href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t"
+            href={TITO_PERSONAL_WHATSAPP}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"

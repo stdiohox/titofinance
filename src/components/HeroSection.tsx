@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react'
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
 
 export default function HeroSection() {
   return (
@@ -79,7 +80,7 @@ export default function HeroSection() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-4 mt-auto md:mt-0">
               <a
-                href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t"
+                href={TITO_PERSONAL_WHATSAPP}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden md:inline-flex items-center gap-3 rounded-full transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"

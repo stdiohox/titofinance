@@ -1,3 +1,5 @@
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
+
 export default function DarkQuoteSection() {
   return (
     <section
@@ -149,7 +151,7 @@ export default function DarkQuoteSection() {
 
         <a
           data-reveal
-          href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t"
+          href={TITO_PERSONAL_WHATSAPP}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"

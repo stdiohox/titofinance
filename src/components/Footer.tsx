@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
 
 // Kit (ConvertKit) form — numeric ID extracted from the tito-finance.kit.com
 // embed (uid 07bef1d1ba)
@@ -161,7 +162,7 @@ export default function Footer() {
               { label: 'Stock 101', href: '/stock-101' },
               { label: 'Retirement Planning', href: '/retirement' },
               { label: 'Grants', href: '/grants' },
-              { label: 'Book a Call', href: 'https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t', external: true },
+              { label: 'Book a Call', href: TITO_PERSONAL_WHATSAPP, external: true },
             ].map(({ label, href, external }) => (
               <a
                 key={label}

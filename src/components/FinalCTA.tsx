@@ -1,3 +1,5 @@
+import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
+
 export default function FinalCTA() {
   return (
     <section id="final-cta" className="relative overflow-hidden" style={{ padding: 'clamp(5rem, 10vw, 9rem) 1.5rem' }}>
@@ -28,7 +30,7 @@ export default function FinalCTA() {
           </p>
           <a
             data-reveal
-            href="https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t"
+            href={TITO_PERSONAL_WHATSAPP}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full transition-colors duration-200"

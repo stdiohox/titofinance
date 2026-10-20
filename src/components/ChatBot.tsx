@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { MessageCircle, X } from 'lucide-react'
+import { TITO_PERSONAL_WHATSAPP, WHATSAPP_GROUP_INVITE } from '@/lib/forms'
 
 interface ChatBotProps {
   embedded?: boolean
@@ -24,8 +25,8 @@ const QUICK_REPLIES = [
   'Who is Titobi?',
 ]
 
-const WHATSAPP = 'https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t'
-const GROUP = 'https://chat.whatsapp.com/ExWenty0nsYHGFK4UZbi2t?mode=gi_t'
+const WHATSAPP = TITO_PERSONAL_WHATSAPP
+const GROUP = WHATSAPP_GROUP_INVITE
 
 const RESPONSES: Record<string, Omit<Message, 'role'>> = {
   'Our Services': {
