@@ -8,6 +8,8 @@ import RetirementPage from './pages/RetirementPage.tsx'
 import BeginnersPortfolioPage from './pages/BeginnersPortfolioPage.tsx'
 import CloseCommunityPage from './pages/CloseCommunityPage.tsx'
 import GrantsPage from './pages/GrantsPage.tsx'
+import MentorshipPage from './pages/MentorshipPage.tsx'
+import QuickFirePage from './pages/QuickFirePage.tsx'
 
 const RouteTracker = () => {
   const location = useLocation()
@@ -75,6 +77,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/beginners-portfolio" element={<BeginnersPortfolioPage />} />
         <Route path="/close-community" element={<CloseCommunityPage />} />
         <Route path="/grants" element={<GrantsPage />} />
+        <Route path="/mentorship" element={<MentorshipPage />} />
+        <Route path="/quick-fire" element={<QuickFirePage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

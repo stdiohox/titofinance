@@ -265,7 +265,7 @@ export default function ServicesSection() {
                 Ongoing one-on-one guidance tailored to your financial journey. Strategy sessions, goal tracking, and direct accountability.
               </p>
             </div>
-            <a href={TITO_PERSONAL_WHATSAPP} target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href="/mentorship" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#C9A84C',
@@ -277,7 +277,7 @@ export default function ServicesSection() {
               gap: '0.4rem',
               paddingTop: '1rem'
             }}>
-              Book a Call →
+              Get Started →
             </a>
           </div>
 
@@ -308,7 +308,7 @@ export default function ServicesSection() {
                 A focused 30-minute session to tackle one specific financial question or decision. Fast, direct, actionable.
               </p>
             </div>
-            <a href={TITO_PERSONAL_WHATSAPP} target="_blank" rel="noopener noreferrer" className="mt-auto" style={{
+            <a href="/quick-fire" className="mt-auto" style={{
               fontFamily: 'DM Mono, monospace',
               fontSize: '11px',
               color: '#2D5A27',
@@ -320,7 +320,7 @@ export default function ServicesSection() {
               gap: '0.4rem',
               paddingTop: '1rem'
             }}>
-              Book a Call →
+              Get Started →
             </a>
           </div>
 
