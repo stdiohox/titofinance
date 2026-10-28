@@ -136,34 +136,30 @@ export default function TestimonialsSection() {
         zIndex: 0
       }} />
       <div style={{ position: 'relative', zIndex: 1 }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-
-        <div style={{
-          width: '100%',
-          height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(45,90,39,0.2), transparent)',
-          marginBottom: '80px'
-        }} />
+      {/* Same 88rem container and header scale as the other sections. At
+          1200px with a second hairline and 80px under it, this section's left
+          edge sat ~100px in from everything above it, under a dead band. */}
+      <div className="max-w-[88rem] mx-auto">
 
         <p data-reveal style={{
           fontFamily: 'DM Mono, monospace',
-          fontSize: '12px',
-          fontWeight: 700,
-          letterSpacing: '0.15em',
+          fontSize: '11px',
+          letterSpacing: '0.2em',
           color: '#C9A84C',
           textTransform: 'uppercase',
-          marginBottom: '12px'
+          marginBottom: '0.75rem'
         }}>
           What People Are Saying
         </p>
 
         <h2 data-reveal style={{
           fontFamily: 'Cormorant Garamond, serif',
-          fontSize: 'clamp(36px, 4vw, 48px)',
+          fontSize: 'clamp(2.2rem, 4vw, 4.5rem)',
           fontWeight: 500,
+          letterSpacing: '-0.03em',
           color: '#1A3A16',
           marginBottom: '12px',
-          lineHeight: 1.1
+          lineHeight: 1.05
         }}>
           Real People. Real Results.
         </h2>

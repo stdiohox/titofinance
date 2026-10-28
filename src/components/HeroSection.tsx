@@ -2,12 +2,15 @@ import { ArrowRight } from 'lucide-react'
 import { TITO_PERSONAL_WHATSAPP } from '@/lib/forms'
 
 export default function HeroSection() {
+  // No h-screen wrapper: the card sets its own height, and a 100vh box around
+  // a (100vh - 88px) card left a dead strip of ivory under the hero.
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
-      <div className="flex-1 px-6 pt-5 pb-6">
+    <div className="overflow-hidden">
+      <div className="px-6 pt-5 pb-6">
         <div
-          className="relative w-full rounded-2xl overflow-hidden"
-          style={{ height: 'calc(100vh - 88px)' }}
+          // svh where supported: on phones 100vh is the viewport with the URL
+          // bar hidden, so the card's foot (and now its copy) sat under the bar.
+          className="relative w-full rounded-2xl overflow-hidden h-[calc(100vh-88px)] supports-[height:100svh]:h-[calc(100svh-88px)]"
         >
           {/* Background image */}
           <picture>
@@ -36,9 +39,18 @@ export default function HeroSection() {
               background: 'linear-gradient(105deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.1) 100%)'
             }}
           />
+          {/* Below md the copy runs full width along the foot of the card,
+              where the diagonal overlay has thinned out on the right */}
+          <div
+            className="absolute inset-0 md:hidden"
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0) 75%)' }}
+          />
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col h-full p-10 md:p-14 pt-28 md:pt-32">
+          {/* Below md the copy sits at the foot of the card, over the dark
+              shirt, and leaves his face clear at the top. Top-aligned, it left
+              an empty band between the subtext and the bottom-pinned CTA. */}
+          <div className="relative z-10 flex flex-col justify-end md:justify-start h-full p-8 pb-10 md:p-14 md:pt-32">
 
             {/* Eyebrow */}
             <p style={{
@@ -78,7 +90,7 @@ export default function HeroSection() {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mt-auto md:mt-0">
+            <div className="flex flex-wrap gap-4">
               <a
                 href={TITO_PERSONAL_WHATSAPP}
                 target="_blank"

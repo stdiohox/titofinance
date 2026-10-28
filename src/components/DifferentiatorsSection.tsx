@@ -19,10 +19,14 @@ export default function DifferentiatorsSection() {
 
   return (
     <section id="differentiators" style={{ background: '#F8F5EE', padding: 'clamp(4rem, 8vw, 7rem) 1.5rem' }}>
-      <div className="max-w-[88rem] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-start">
+      {/* Headline across the top, then photo and points side by side at lg.
+          As three columns, the headline column ran empty for ~400px under
+          three short lines while the points and photo carried on beside it. */}
+      <div className="max-w-[88rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-x-16 lg:gap-y-14">
 
-        {/* Col 1 — Headline */}
-        <div>
+        {/* Headline — no forced breaks: one line at lg, wraps a word per line
+            on phones */}
+        <div className="lg:col-span-12">
           <h2 style={{
             fontFamily: 'Cormorant Garamond, serif',
             fontSize: 'clamp(2.8rem, 4.5vw, 5.5rem)',
@@ -31,12 +35,12 @@ export default function DifferentiatorsSection() {
             color: '#0D0D0D',
             lineHeight: 1.0
           }}>
-            Intelligence.<br />Experience.<br />Integrity.
+            Intelligence. Experience. Integrity.
           </h2>
         </div>
 
-        {/* Col 2 — Points */}
-        <div className="flex flex-col">
+        {/* Points */}
+        <div className="flex flex-col lg:col-span-7 lg:col-start-6 lg:row-start-2">
           {points.map((point) => (
             <div
               key={point.number}
@@ -69,9 +73,10 @@ export default function DifferentiatorsSection() {
               </h3>
               <p style={{
                 fontFamily: 'DM Sans, sans-serif',
-                fontSize: '0.9rem',
+                fontSize: '0.95rem',
                 color: '#6B6B6B',
-                lineHeight: 1.7
+                lineHeight: 1.7,
+                maxWidth: '40rem'
               }}>
                 {point.body}
               </p>
@@ -80,18 +85,19 @@ export default function DifferentiatorsSection() {
           <div style={{ borderTop: '1px solid rgba(45,90,39,0.15)' }} />
         </div>
 
-        {/* Col 3 — Authority photo */}
+        {/* Authority photo — left of the points at lg (Story above has its
+            media on the right, so the page alternates), and stretched to the
+            points' height so neither column ends early. 3:4 when stacked. */}
         <div
           data-reveal
-          className="relative rounded-2xl overflow-hidden lg:sticky lg:top-8"
-          style={{ aspectRatio: '3/4' }}
+          className="relative rounded-2xl overflow-hidden aspect-[3/4] sm:aspect-[16/10] lg:aspect-auto lg:col-span-5 lg:col-start-1 lg:row-start-2 lg:min-h-[420px]"
         >
           <img
             src="/images/titobi-authority.jpg"
             srcSet="/images/titobi-authority-xs.webp 640w, /images/titobi-authority-sm.webp 1024w, /images/titobi-authority-md.webp 1920w, /images/titobi-authority.webp 2560w"
-            sizes="(max-width: 1024px) 0vw, 33vw"
+            sizes="(max-width: 1024px) 100vw, 40vw"
             alt="Titobi Oreolorun"
-            className="w-full h-full object-cover object-top"
+            className="absolute inset-0 w-full h-full object-cover object-top"
             loading="lazy"
             draggable={false}
           />

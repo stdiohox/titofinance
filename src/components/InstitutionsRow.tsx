@@ -30,10 +30,17 @@ export default function InstitutionsRow() {
         }}>
           Trained and credentialed<br />by world-class institutions.
         </p>
-        <div className="md:col-span-3 overflow-hidden">
+        <div className="md:col-span-3 overflow-hidden inst-mask">
           <div className="inst-track">
+            {/* The second copy only exists to make the loop seamless, so
+                screen readers skip it and reduced motion hides it */}
             {all.map(({ Icon, label }, i) => (
-              <span key={i} className="flex items-center shrink-0">
+              <span
+                key={i}
+                className="flex items-center shrink-0"
+                aria-hidden={i >= institutions.length || undefined}
+                data-dup={i >= institutions.length ? '' : undefined}
+              >
                 <span
                   className="flex items-center whitespace-nowrap"
                   style={{
