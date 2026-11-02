@@ -3,7 +3,7 @@ import { motion, MotionConfig } from 'framer-motion'
 import { FaInstagram, FaTiktok, FaXTwitter, FaYoutube } from 'react-icons/fa6'
 import type { IconType } from 'react-icons'
 import '../components/grants/grants.css'
-import { GRANTS_INTRO, GRANTS_DISCLAIMER, GRANT_CATEGORIES, GRANTS_CLOSING, GRANT_COUNT, type Grant } from '../lib/grants'
+import { GRANTS_INTRO, GRANTS_DISCLAIMER, GRANT_CATEGORIES, GRANTS_CLOSING, GRANT_COUNT, deadlineText, type Grant } from '../lib/grants'
 import { parseDeadline, statusOf, statusLabel, lagosToday, type Deadline, type GrantStatus } from '../lib/grantStatus'
 import DeadlineCalendar from '../components/grants/DeadlineCalendar'
 import GrantsToolbar, { HIDE_CLOSED_ID, type SortMode, type CategoryOption } from '../components/grants/GrantsToolbar'
@@ -12,11 +12,8 @@ import GrantRow from '../components/grants/GrantRow'
 // Short chip labels for the filter bar. The full category titles from
 // grants.ts are still the section headings.
 const CATEGORY_SHORT: Partial<Record<string, string>> = {
-  'category-a': 'Students',
-  'category-b': 'Lecturers',
-  'category-c': 'Women',
-  'category-d': 'NGOs & CSOs',
-  'category-e': 'Founders',
+  'category-a': 'Nigeria',
+  'category-b': 'Diaspora & global',
 }
 
 const SOCIAL_ICONS: Partial<Record<string, { Icon: IconType; name: string }>> = {
@@ -40,7 +37,7 @@ type Entry = {
 
 export default function GrantsPage() {
   useEffect(() => {
-    document.title = 'Opportunity Grants — October 2026 — Tito Finance'
+    document.title = 'Opportunity Grants — November 2026 — Tito Finance'
   }, [])
 
   // Re-read the clock each minute so a tab left open past midnight in Lagos
@@ -60,7 +57,7 @@ export default function GrantsPage() {
     () =>
       GRANT_CATEGORIES.flatMap((cat) =>
         cat.grants.map((grant) => {
-          const deadline = parseDeadline(grant.deadline)
+          const deadline = parseDeadline(deadlineText(grant))
           return {
             grant,
             categoryId: cat.id,
@@ -74,9 +71,12 @@ export default function GrantsPage() {
     [now],
   )
 
-  const openCount = entries.filter((e) => e.status !== 'closed').length
+  // Most of the list has no closing date, so the headline counts deadlines,
+  // not grants: an undated grant isn't "still open", it's just undated.
+  const datedCount = entries.filter((e) => e.deadline).length
+  const aheadCount = entries.filter((e) => e.deadline && e.status !== 'closed').length
   const soonCount = entries.filter((e) => e.status === 'soon').length
-  const closedCount = GRANT_COUNT - openCount
+  const closedCount = entries.filter((e) => e.status === 'closed').length
 
   const options: CategoryOption[] = GRANT_CATEGORIES.map((c) => ({
     id: c.id,
@@ -87,7 +87,7 @@ export default function GrantsPage() {
 
   const visible = entries.filter((e) => (category === 'all' || e.categoryId === category) && !(hideClosed && e.status === 'closed'))
   const byDeadline = [...visible].sort(
-    (a, b) => Number(a.status === 'closed') - Number(b.status === 'closed') || (a.deadline?.closesAt ?? 0) - (b.deadline?.closesAt ?? 0) || a.grant.n - b.grant.n,
+    (a, b) => Number(a.status === 'closed') - Number(b.status === 'closed') || (a.deadline?.closesAt ?? Infinity) - (b.deadline?.closesAt ?? Infinity) || a.grant.n - b.grant.n,
   )
 
   // Filter changes land the reader at the top of the results, but only once
@@ -136,7 +136,7 @@ export default function GrantsPage() {
               <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-8 lg:gap-16 items-end">
                 <div>
                   <h1 className="gp-serif italic font-normal text-[clamp(2.6rem,6.4vw,5.25rem)] leading-[1.02] tracking-[-0.02em] pb-1">
-                    Opportunity Grants — October 2026
+                    Opportunity Grants — November 2026
                   </h1>
                   <div className="mt-6 max-w-[58ch] space-y-1">
                     {GRANTS_INTRO.map((line) => (
@@ -153,9 +153,9 @@ export default function GrantsPage() {
                   transition={{ duration: 0.7, delay: 0.1, ease }}
                   className="lg:pb-2 border-t border-[rgba(248,245,238,0.18)] pt-5 lg:border-t-0 lg:pt-0"
                 >
-                  {openCount > 0 ? (
+                  {aheadCount > 0 ? (
                     <p className="gp-serif text-[1.65rem] md:text-[2rem] leading-[1.2]">
-                      <span className="gp-num font-semibold text-[var(--gold)]">{openCount}</span> of {GRANT_COUNT} still open today.{' '}
+                      <span className="gp-num font-semibold text-[var(--gold)]">{aheadCount}</span> of {datedCount} deadlines still ahead.{' '}
                       {soonCount > 0 && (
                         <>
                           <span className="gp-num font-semibold text-[var(--gold)]">{soonCount}</span> close within a week.
@@ -163,7 +163,7 @@ export default function GrantsPage() {
                       )}
                     </p>
                   ) : (
-                    <p className="gp-serif text-[1.65rem] md:text-[2rem] leading-[1.2]">Every grant on this list has now closed.</p>
+                    <p className="gp-serif text-[1.65rem] md:text-[2rem] leading-[1.2]">Every deadline on this list has now passed.</p>
                   )}
                   <a
                     href="#grants-list"
@@ -261,7 +261,7 @@ export default function GrantsPage() {
                   GRANT_CATEGORIES.map((cat) => {
                     const rows = visible.filter((e) => e.categoryId === cat.id)
                     if (rows.length === 0) return null
-                    const open = rows.filter((e) => e.status !== 'closed').length
+                    const closed = rows.filter((e) => e.status === 'closed').length
                     return (
                       <section key={cat.id} id={cat.id} aria-labelledby={`${cat.id}-title`} className="pt-14 md:pt-20">
                         <div className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 md:gap-x-10 items-start pb-8 md:pb-10">
@@ -274,7 +274,8 @@ export default function GrantsPage() {
                             </h2>
                             {cat.subtitle && <p className="mt-2 text-[15px] text-[var(--stone)]">{cat.subtitle}</p>}
                             <p className="mt-3 gp-num text-[13px] text-[var(--stone)]">
-                              {rows.length} {rows.length === 1 ? 'grant' : 'grants'}, {open} open
+                              {rows.length} {rows.length === 1 ? 'grant' : 'grants'}
+                              {closed > 0 && `, ${closed} closed`}
                             </p>
                           </div>
                         </div>

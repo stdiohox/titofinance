@@ -1,18 +1,14 @@
-// Opportunity Grants — October 2026. Copy is verbatim from Tito's list; do not
-// rewrite, reorder or summarise. `link` is kept as written (some carry notes
-// like "- SRH department"); the page makes each URL inside it clickable.
+// Opportunity Grants — November 2026. Copy is verbatim from Tito's list; do not
+// rewrite, reorder or summarise. Each grant keeps the lines under its name as
+// written, label and text, in order ("Who", "Amount", "Deadline", "Check Nov",
+// ...). The page makes every URL and email inside them clickable.
+
+export type GrantField = [label: string, text: string]
 
 export type Grant = {
   n: number
   name: string
-  deadline: string
-  link: string
-  email?: string
-  what: string
-  who: string
-  funding: string
-  why: string
-  how?: string
+  fields: GrantField[]
 }
 
 export type GrantCategory = {
@@ -22,15 +18,23 @@ export type GrantCategory = {
   grants: Grant[]
 }
 
+// Only these lines are closing dates. "Date", "Event", "Starts" and the like
+// are event days, not deadlines, so they never mark a grant closed.
+const DEADLINE_LABELS = new Set(['Deadline', 'Closes'])
+
+export function deadlineText(grant: Grant): string | null {
+  return grant.fields.find(([label]) => DEADLINE_LABELS.has(label))?.[1] ?? null
+}
+
 export const GRANTS_INTRO = [
-  'HERE’S THE 30 GRANTS LIST (+ 10 MORE!)',
-  'THAT ARE NIGERIAN-ELIGIBLE WITH LINKS AND ALL CLOSE BETWEEN OCTOBER 5TH - OCTOBER 30TH, 2026',
+  'HERE’S THE 30 OPPORTUNITIES FUNDING LIST (+ 10 MORE!)',
+  'THAT ARE NIGERIAN-ELIGIBLE WITH LINKS AND ALL CLOSE IN NOVEMBER, 2026',
 ]
 
 export const GRANTS_DISCLAIMER = {
   title: 'IMPORTANT DISCLAIMER',
   lead: [
-    'This grant list was compiled by Tito Finance for informational purposes only, using information from official websites and public announcements available as of October 2026.',
+    'This grant list was compiled by Tito Finance for informational purposes only, using information from official websites and public announcements available as of November 2026.',
     'While we have made every effort to ensure accuracy, grant deadlines, requirements, and funding amounts are subject to change by the organizers without notice.',
   ],
   adviseTitle: 'We strongly advise you to:',
@@ -49,438 +53,375 @@ export const GRANTS_DISCLAIMER = {
 export const GRANT_CATEGORIES: GrantCategory[] = [
   {
     id: 'category-a',
-    title: 'CATEGORY A: FOR STUDENTS - UNDERGRAD, MASTERS, PhD, HND',
-    subtitle: 'Final year project, thesis, internship, student ventures',
+    title: 'PART A: NIGERIA',
     grants: [
       {
         n: 1,
-        name: 'GROOMING CENTRE UNIVERSITY GRANT SCHEME - ₦20M',
-        deadline: 'Oct 23, 2026',
-        link: 'https://groominggrant.org',
-        what: 'Research grant for evidence-based projects on financial inclusion, microfinance, rural development, MSMEs, tech dev, women empowerment',
-        who: 'Final year undergrad/HND + postgrad in ANY private/public tertiary institution in NIGERIA. No age/gender/religion barrier',
-        funding: '₦100k per undergrad x100 students, ₦200k per postgrad x50 students. Total pot ₦20M. 2 tranches',
-        why: 'Best for final year project funding. Must submit 10-20 page concept + supervisor signed recommendation',
-        how: 'Apply on portal, upload passport photo, profile, concept in Times New Roman 12, 1.5 spacing',
+        name: 'Orange Corners Nigeria Cohort 16',
+        fields: [
+          ['About', '6-month incubation for 18-35yr Lagos founders. Training, coaching, mentorship, prototype funding for sustainable businesses.'],
+          ['Amount', 'Up to €30,000'],
+          ['Deadline', 'Nov 30, 2026'],
+          ['Link', 'soar.fatefoundation.org/auth/login'],
+        ],
       },
       {
         n: 2,
-        name: 'PRECISION AGRICULTURE INCUBATION PROGRAM 2026',
-        deadline: 'Oct 5, 2026',
-        link: 'https://gabata.com.ng',
-        what: 'Training in drone tech, GIS, remote sensing, smart agric',
-        who: 'Nigerian youth, students, NYSC, young farmers interested in agritech. No degree barrier',
-        funding: 'Partial/full merit funding + agri-innovators community access',
-        why: 'Learn precision farming + get funded to continue',
+        name: 'TRISEG SME Programme',
+        fields: [
+          ['About', 'Trade for Resilient, Inclusive & Sustainable Growth. For processed food SMEs to become export-ready for Canada market, buyer linkages, finance access.'],
+          ['Deadline', 'Nov 30, 2026'],
+          ['Link', 'https://ee-eu.kobotoolbox.org/single/1qdcnMDz'],
+        ],
       },
       {
         n: 3,
-        name: 'NATIONAL AI INNOVATION CHALLENGE - BUILD WITH N-ATLAS',
-        deadline: 'Oct 12, 2026, 11:59PM WAT',
-        link: 'https://ncair.nitda.gov.ng/naic/',
-        what: "Build working tools/apps integrated with Nigeria's sovereign LLM N-ATLAS (Yoruba, Hausa, Igbo)",
-        who: 'Nigerian university/research teams (2-5 members + faculty supervisor), registered startups, hubs, independent developers. Must be a Nigerian citizen/entity. Diaspora allowed if 50% in Nigeria',
-        funding: 'N-ATLAS API credits, compute credits, mentorship, NCAIR lab partnership, FG recognition, investor showcase at Digital Nigeria Nov 8-10',
-        why: 'Student devs who can build. Must submit working artefact + 3-5 min demo video + real user testing evidence',
+        name: 'Open Arts Fund - Up to ₦500k unrestricted',
+        fields: [
+          ['Who', 'Artists/creatives based in Nigeria whose project helps Northern Nigeria creative scene'],
+          ['Deadline', 'Nov 10'],
+          ['Apply', 'Email PDF to info@openartsworld.org subject "Open Arts Fund"'],
+        ],
       },
       {
         n: 4,
-        name: 'FEDERAL GOVT N2.5BN STUDENT VENTURE CAPITAL GRANT - MOONSHOT 2',
-        deadline: 'Oct 15, 2026',
-        link: 'https://moonshot.gov.ng',
-        what: 'Equity-free VC for student-built STEM products',
-        who: 'Students currently enrolled in Nigerian tertiary institutions with STEM business idea at MVP/prototype stage. Team allowed',
-        funding: 'Up to ₦50M per venture, 50 ventures selected from ₦2.5bn pot',
-        why: 'You have a hardware/software prototype and need capital',
+        name: 'Open Arts Community Fund - Up to ₦500k + event at Open Arts Space',
+        fields: [
+          ['Who', 'Only Open Arts Community members with membership code'],
+          ['Deadline', 'Nov 10'],
+          ['Apply', 'info@openartsworld.org subject "Open Arts Community Fund"'],
+        ],
       },
       {
         n: 5,
-        name: 'NITDA-TECH REVOLUTION AFRICA BUILDERS FESTIVAL',
-        deadline: 'Oct 5, 2026',
-        link: 'https://builderfest.techrevolution.africa',
-        what: 'Festival to match startups with FG agencies for pilots/contracts',
-        who: 'Nigerian-registered startups at MVP+ stage, with live users and CAC certificate. Students with registered business eligible',
-        funding: 'Part of ₦3bn pipeline of contracts, pilots, investor matching',
-        why: 'Get FG as your first customer',
+        name: 'EWA Deal Room Grant Pool - Lagos',
+        fields: [
+          ['Who', 'African creative businesses seeking investment, part of Entertainment Week Africa'],
+          ['Date', 'Nov 17-22'],
+          ['Link', 'https://ewa.africa'],
+        ],
       },
       {
         n: 6,
-        name: 'IFRA-NIGERIA FIELDWORK RESEARCH GRANTS 2027',
-        deadline: 'Oct 30, 2026',
-        link: 'https://www.ifra-nigeria.org/research-grants',
-        what: 'Small grant for fieldwork in Nigeria on humanities/social science',
-        who: 'Masters 2nd year, PhD candidates, postdocs. No nationality requirement but research MUST be on Nigeria/West Africa',
-        funding: 'Up to €1,000 for travel/living during fieldwork',
-        why: 'You need money to go to field for thesis',
+        name: 'Orange Corners Nigeria Incubation - €30k value + incubation',
+        fields: [
+          ['Who', 'Nigerian entrepreneurs 18-35 with validated business idea'],
+          ['Deadline', 'Nov 30'],
+          ['Link', 'https://orangecorners.com/nigeria'],
+        ],
       },
       {
         n: 7,
-        name: 'AGNES INTRA-AFRICA MOBILITY GRANT',
-        deadline: 'Oct 16, 2026',
-        link: 'https://www.agnes-h.org',
-        what: 'Travel grant to go learn technique in another African lab',
-        who: 'African PhD students & postdocs under 40, Nigeria included. Must have invitation from host lab in another African country',
-        funding: '€3,000 travel + living + visa',
-        why: "Your lab in Nigeria doesn't have equipment, need to go to SA/Kenya lab",
+        name: 'Swarovski Foundation Creatives for Our Future - €20,000',
+        fields: [
+          ['Who', 'Creatives 21-30 by Nov 9, fashion/design/art/architecture/tech, project linked to SDGs'],
+          ['Deadline', 'Nov 9, 11:59pm GMT'],
+          ['Link', 'https://www.swarovskifoundation.com/creatives-for-our-future'],
+        ],
       },
       {
         n: 8,
-        name: 'AfDB INTERNSHIP SESSION 1 2027',
-        deadline: 'Oct 12, 2026',
-        link: 'https://www.afdb.org/en/jobs',
-        what: '3-6 months internship at African Development Bank HQ or country offices',
-        who: 'African nationals, Nigeria inclusive, Masters students or recent Masters grad under 30, able to work in English or French',
-        funding: 'Monthly stipend + travel support',
-        why: 'Career path into development bank',
+        name: 'WIMBIZ Impact Investment - Up to ₦6m',
+        fields: [
+          ['Who', 'Women-owned businesses in Nigeria'],
+          ['Event', 'Nov 5-6 conference'],
+          ['Link', 'https://wimbiz.org'],
+        ],
+      },
+      {
+        n: 9,
+        name: 'Anzisha Venture Building Fellowship - Share of $40k + coaching',
+        fields: [
+          ['Who', 'African founders 15-22 already running a real business'],
+          ['Deadline', 'Nov 10'],
+          ['Link', 'https://anzisha.org'],
+        ],
+      },
+      {
+        n: 10,
+        name: 'ARTCATION ₦2m Creative Grant',
+        fields: [
+          ['Who', 'Nigerian visual artists, designers, interdisciplinary creatives'],
+          ['Period', 'Q1 shortlist in Nov'],
+          ['Link', 'https://artcation.com.ng'],
+        ],
+      },
+      {
+        n: 11,
+        name: 'Creative Economy Development Fund (CEDF) Phase 2',
+        fields: [
+          ['Who', 'Nigerian creative MSMEs - film, music, fashion, publishing, gaming'],
+          ['Type', 'Debt/equity/grant up to $100k'],
+          ['Link', 'https://cedf.gov.ng'],
+        ],
+      },
+      {
+        n: 12,
+        name: 'LSETF MSME Fund - ₦250k to ₦5m',
+        fields: [
+          ['Who', 'Lagos-based business owners with LASRRA + CAC'],
+          ['Window', 'Opens Nov'],
+          ['Link', 'https://lsetf.ng'],
+        ],
+      },
+      {
+        n: 13,
+        name: 'FATE Foundation AEP - Training + grant pipeline',
+        fields: [
+          ['Who', 'Aspiring Nigerian entrepreneurs with business less than 2 years'],
+          ['Cohort', 'Nov'],
+          ['Link', 'https://fatefoundation.org'],
+        ],
+      },
+      {
+        n: 14,
+        name: 'Tony Elumelu Foundation Alumni Top-up - $5k',
+        fields: [
+          ['Who', 'Existing TEF alumni only'],
+          ['Check', 'https://tefconnect.com in Nov'],
+        ],
+      },
+      {
+        n: 15,
+        name: 'Sterling Bank / SMEDAN Matching Fund',
+        fields: [
+          ['Who', 'SMEDAN-registered Nigerian MSMEs'],
+          ['', 'Apply via Sterling OneBank app'],
+        ],
+      },
+      {
+        n: 16,
+        name: 'Prince Casper Foundation Impact Grants - ₦500k/200k/100k',
+        fields: [
+          ['Who', 'Educators & education-focused creative entrepreneurs in rural/underserved Nigerian schools'],
+          ['Deadline', 'Nov 6, 11:59pm WAT'],
+        ],
+      },
+      {
+        n: 17,
+        name: 'SMEDAN MSME Conference Marketplace - 30 Free Booths',
+        fields: [
+          ['Who', 'Nigerian businesses 2+ years, CAC registered, for exhibition Nov 8-10'],
+          ['Link', 'https://conference.smedan.gov.ng/marketplace'],
+        ],
+      },
+      {
+        n: 18,
+        name: 'NIMASA BEAP - Blue Economy Accelerator',
+        fields: [
+          ['Who', 'Nigerian businesses in maritime, logistics, media, tourism'],
+          ['Link', 'https://nimasa.gov.ng'],
+        ],
+      },
+      {
+        n: 19,
+        name: 'British Council UK-Nigeria Creative Fund',
+        fields: [
+          ['Who', 'Nigerian creative businesses collaborating with UK creatives'],
+          ['Link', 'https://www.britishcouncil.org.ng'],
+        ],
+      },
+      {
+        n: 20,
+        name: 'Africa Business Heroes - $100k to $300k',
+        fields: [
+          ['Who', 'African entrepreneurs with operating business + revenue'],
+          ['Announcement', 'Nov'],
+          ['Link', 'https://africabusinessheroes.org'],
+        ],
+      },
+      {
+        n: 21,
+        name: 'GoGettaz Agripreneur Prize - $50k total + mentorship',
+        fields: [
+          ['Who', 'Youth 18-35 in agribusiness including creative food/baking'],
+          ['Link', 'https://gogettaz.africa'],
+        ],
+      },
+      {
+        n: 22,
+        name: 'CcHUB Growth Capital',
+        fields: [
+          ['Who', 'Early-stage Lagos tech & creative startups'],
+          ['Link', 'https://cchub.africa'],
+        ],
+      },
+      {
+        n: 23,
+        name: 'Afreximbank CANEX Creatives Prize',
+        fields: [
+          ['Who', 'African creatives in fashion, film, music, craft'],
+          ['Link', 'https://canex.africa'],
+        ],
+      },
+      {
+        n: 24,
+        name: 'Heirs Insurance Innovation Challenge',
+        fields: [['Who', 'Nigerian SMEs with insurance/protection ideas']],
+      },
+      {
+        n: 25,
+        name: 'Google for Startups Africa - $100k credits + non-dilutive',
+        fields: [
+          ['Who', 'African tech startups Seed to Series A'],
+          ['Link', 'https://campus.google.com'],
+        ],
+      },
+      {
+        n: 26,
+        name: 'Meta Small Business Grants',
+        fields: [
+          ['Who', 'Nigerian small businesses running ads on Facebook/Instagram'],
+          ['Link', 'https://www.facebook.com/business/small-business/grants'],
+        ],
+      },
+      {
+        n: 27,
+        name: 'YouWin Connect Naija',
+        fields: [
+          ['Who', 'Nigerian youth 18-40 with business plan'],
+          ['Link', 'https://youwin.org.ng'],
+        ],
+      },
+      {
+        n: 28,
+        name: 'Bank of Industry Creative Industry Fund',
+        fields: [
+          ['Who', 'Nigerian creatives in film, fashion, music production'],
+          ['Link', 'https://www.boi.ng'],
+        ],
+      },
+      {
+        n: 29,
+        name: 'Nigerian First Fair - Ecobank Centre',
+        fields: [
+          ['Who', 'Made-in-Nigeria product businesses'],
+          ['Register', 'https://conference.smedan.gov.ng'],
+        ],
+      },
+      {
+        n: 30,
+        name: 'SMEDAN Portal - Get ID',
+        fields: [
+          ['Who', 'EVERY Nigerian business owner who wants any FG grant'],
+          ['Link', 'https://portal.smedan.gov.ng/signup'],
+        ],
       },
     ],
   },
   {
     id: 'category-b',
-    title: 'CATEGORY B: FOR LECTURERS & ACADEMIC RESEARCHERS',
-    grants: [
-      {
-        n: 9,
-        name: 'FG TETFUND N10BN NATIONAL RESEARCH FUND',
-        deadline: 'Oct 15, 2026',
-        link: 'https://nrf.tetfund.gov.ng',
-        what: 'Biggest FG research fund across 30 priority areas - Humanities, Sciences, Engineering, Blue Economy, Energy, Entrepreneurship',
-        who: 'Lecturers in PUBLIC tertiary institutions in NIGERIA only. Must be Principal Investigator based in public uni/poly/college. Team can be multidisciplinary',
-        funding: 'Part of N10bn pot, millions per project. 2025 cycle awarded N6.09bn to 174 projects',
-        why: 'If you are a lecturer in a public institution, this is your main fund. Apply with concept note first, then invited for proposal defense',
-      },
-      {
-        n: 10,
-        name: "L'OREAL-UNESCO FOR WOMEN IN SCIENCE NIGERIA",
-        deadline: 'Oct 17, 2026',
-        link: 'https://www.forwomeninscience.com',
-        what: 'Research grant for female scientists',
-        who: 'Nigerian female PhD students & postdocs under 40 in Life Sciences, Physical Sciences, Engineering, Math, Computer Science. Must be in Nigerian institution lab',
-        funding: '€10,000 research grant',
-        why: 'Female researcher needing lab money',
-      },
-      {
-        n: 11,
-        name: 'AWARD FELLOWSHIP - AFRICAN WOMEN IN AGRICULTURAL R&D',
-        deadline: 'Oct 8, 2026',
-        link: 'https://awardfellowships.org',
-        what: 'Fellowship for women in agric research',
-        who: 'Female agricultural researchers in Nigeria, early-mid career',
-        funding: 'Training, mentorship, research funding',
-        why: 'Women in agric science',
-      },
-      {
-        n: 12,
-        name: 'IFAD FOOD SYSTEMS TRANSFORMATION IN CENTRAL SAHEL',
-        deadline: 'Oct 16, 2026, 23:59 GMT',
-        link: 'https://www.ifad.org/en/grants',
-        what: 'Innovative scalable solutions in livestock, cassava, rice value chains',
-        who: 'Organizations, government agencies, private sector, research institutions, consortia with regional relevance to Burkina, Mali, Niger + cross-border Nigeria impact',
-        funding: 'Part of $2M US grant pot',
-        why: 'Research org with Sahel food systems project',
-      },
-      {
-        n: 13,
-        name: 'GLOBAL EbA FUND - ECOSYSTEM BASED ADAPTATION',
-        deadline: 'Oct 26, 2026',
-        link: 'https://globalebafund.org/how-to-apply/',
-        what: 'Climate adaptation using nature-based solutions',
-        who: 'NGOs, CBOs, universities, research institutions in ODA countries - Nigeria eligible. Both local and international orgs',
-        funding: 'Up to $250,000 per project',
-        why: 'Research + implementation on climate resilience',
-      },
-    ],
-  },
-  {
-    id: 'category-c',
-    title: 'CATEGORY C: FOR WOMEN, FEMINISTS, GIRLS-LED ORGS',
-    grants: [
-      {
-        n: 14,
-        name: 'ACTIONAID NIGERIA - STRATEGIC INNOVATION FUND',
-        deadline: 'Oct 12, 2026, 12 midnight',
-        link: 'https://feministhub.org',
-        email: 'RWVL.SIFGrant@actionaid.org',
-        what: "Flexible funding for feminist movement building, advocacy, women's rights",
-        who: 'Women-led, women-focused orgs, networks, young feminists, WHRDs in NIGERIA only. Special focus on: disabled women, conflict-affected, returnees, inmates, GBV survivors, out-of-school girls, elderly women, women in politics. Only 1 application per org',
-        funding: 'Up to ₦20M per org, 5 ideas funded, project duration 6 months - 1 year',
-        why: 'Pure feminist funding. Strict: AI use to write application = automatic disqualification. Must use official template + budget template',
-      },
-      {
-        n: 15,
-        name: 'WOMEN WHO CODE - TECHNOVATION FALL GRANT',
-        deadline: 'Oct 19, 2026',
-        link: 'https://technovation.org',
-        what: 'Support girls to learn coding and build mobile apps for community problems',
-        who: 'Girls 10-18, female mentors, schools, NGOs running girls in STEM programs in Nigeria',
-        funding: 'Laptops + $2k seed + 12 weeks mentorship curriculum',
-        why: 'NGO running girls-in-tech club',
-      },
-      {
-        n: 16,
-        name: 'BOI GLOW - GUARANTEED LOANS FOR WOMEN',
-        deadline: 'Oct 30, 2026 rolling',
-        link: 'https://www.boi.ng/grow-loans/',
-        what: 'BOI low-interest intervention fund for women entrepreneurs',
-        who: 'Women-owned nano/micro/small businesses in NIGERIA with CAC registration, 2+ years in business. Need 1 guarantor',
-        funding: 'Up to ₦10M loan at single-digit interest + business advisory',
-        why: 'Woman trader needing expansion capital',
-      },
-      {
-        n: 17,
-        name: 'BRITISH COUNCIL - CREATIVE ECONOMY GRANTS NIGERIA',
-        deadline: 'Oct 25, 2026',
-        link: 'https://www.britishcouncil.org.ng',
-        what: 'Funding for creative sectors - music, film, fashion, creative tech, cultural heritage',
-        who: 'Creative hubs, collectives, entrepreneurs 18-35 in Nigeria, at least 1 year registered',
-        funding: '£5k - £15k grant',
-        why: 'Female creatives especially encouraged',
-      },
-      {
-        n: 18,
-        name: 'TONY ELUMELU FOUNDATION WE4A TOP-UP',
-        deadline: 'Oct 30, 2026',
-        link: 'https://tefconnect.net',
-        what: 'Follow-on grant for TEF alumni women entrepreneurs',
-        who: 'Women who previously completed TEF program, business still active in Nigeria, need expansion',
-        funding: '$5k additional grant + mentoring + market access',
-        why: 'You did TEF before',
-      },
-      {
-        n: 19,
-        name: 'MASTERCARD FOUNDATION FUND FOR RURAL PROSPERITY',
-        deadline: 'Oct 28, 2026',
-        link: 'https://mastercardfdn.org/frp',
-        what: 'Scaling financial products for rural poor, especially women',
-        who: 'Financial institutions, fintechs, SACCOs serving rural Nigeria with pro-poor product',
-        funding: '$500k - $1M grant',
-        why: 'Fintech serving rural women',
-      },
-      {
-        n: 20,
-        name: 'BOI RAPID - RURAL AREA PROGRAMME FOR INVESTMENT & DEVELOPMENT',
-        deadline: 'Oct 30, 2026',
-        link: 'https://www.boi.ng/rapid/',
-        what: 'Support rural enterprises to create jobs',
-        who: 'Entrepreneurs located in economically disadvantaged rural LGAs in Nigeria. Business must be rural-based',
-        funding: 'Loan + training + BDS',
-        why: 'Rural woman entrepreneur',
-      },
-    ],
-  },
-  {
-    id: 'category-d',
-    title: 'CATEGORY D: FOR NGOs, CSOs, YOUTH-LED & COMMUNITY ORGS',
-    grants: [
-      {
-        n: 21,
-        name: 'GFF x CIVIC VOICES GRANTS',
-        deadline: 'Oct 7, 2026',
-        link: 'https://www.globalfinancingfacility.org - apply via https://lnkd.in/ez_aFwBD',
-        what: 'Storytelling & advocacy for health financing, SRHR, health budget tracking',
-        who: 'African CSOs & Youth-led orgs, Nigeria INCLUDED, 2+ years registered, working on health advocacy',
-        funding: '$5k - $25k from $3.35M total envelope',
-        why: 'Small health NGO needing advocacy funding',
-      },
-      {
-        n: 22,
-        name: 'ActHIVate FUND 2027-2028',
-        deadline: 'Oct 13, 2026',
-        link: 'https://www.rfhp.org/activhate-fund',
-        what: 'HIV response funding for community-led advocacy and service delivery',
-        who: 'Nigeria listed as eligible - MUST be MSM-led or Trans-led organization, community-based',
-        funding: '€30k-€80k per year, multi-year possible',
-        why: 'Key population-led CSO',
-      },
-      {
-        n: 23,
-        name: 'COMMONWEALTH FOUNDATION GRANTS 2026-27',
-        deadline: 'Oct 26, 2026',
-        link: 'https://commonwealthfoundation.com/grants/',
-        what: 'Projects on inclusive governance, freedom of expression, climate justice, participatory democracy',
-        who: 'CSOs registered in Commonwealth countries - Nigeria core. Annual income under £3M, 3+ years experience',
-        funding: '£15k - £30k per year for up to 2 years = max £60k',
-        why: 'Governance/advocacy CSO',
-      },
-      {
-        n: 24,
-        name: 'ACT FOUNDATION GRANT CYCLE 2027',
-        deadline: 'Oct 30, 2026',
-        link: 'https://actrustfoundation.org',
-        what: 'Four pillars - Health, Entrepreneurship, Leadership, Environment',
-        who: 'Registered African NGOs non-profit 2+ years, Nigeria is priority country',
-        funding: 'Project-based, can be multi-year, average ₦15-₦30M',
-        why: 'Established NGO with track record',
-      },
-      {
-        n: 25,
-        name: 'SPARK - WHO GUIDANCE INNOVATION GRANTS',
-        deadline: 'Oct 18, 2026',
-        link: 'https://www.who.int - SRH department',
-        what: 'Innovative use of WHO guidance for Sexual Reproductive Maternal Newborn Child Adolescent Health + Rights',
-        who: 'Orgs, research institutions, innovators in Nigeria innovatively applying WHO tools',
-        funding: 'Grant + WHO technical support + publication',
-        why: 'SRHR NGO using WHO guidelines',
-      },
-      {
-        n: 26,
-        name: 'FORD FOUNDATION - CIVIC ENGAGEMENT & GOVERNANCE',
-        deadline: 'Oct 29, 2026',
-        link: 'https://www.fordfoundation.org/work/our-grants/',
-        what: 'Strengthening democracy, civic space, accountability',
-        who: 'Nigerian CSOs in West Africa program, especially those working on elections, transparency, civic participation',
-        funding: '$100k - $200k',
-        why: 'Governance CSO',
-      },
-      {
-        n: 27,
-        name: 'WORLD BANK YOUTH INNOVATION CHALLENGE - NIGERIA',
-        deadline: 'Oct 11, 2026',
-        link: 'https://www.worldbank.org - youth program page',
-        what: 'Youth-led solutions for financial inclusion, digital ID, access to credit',
-        who: 'Youth-led orgs 18-35, Nigeria, with registered entity',
-        funding: '$10k - $20k seed',
-        why: 'Fintech inclusion idea',
-      },
-      {
-        n: 28,
-        name: 'USAID YOUTH-POWERED ECOSYSTEM FOR URBAN ADOLESCENT HEALTH',
-        deadline: 'Oct 22, 2026',
-        link: 'https://www.grants.gov + https://www.usaid.gov/nigeria',
-        what: 'Improving health outcomes for urban adolescents in slums',
-        who: 'Nigerian youth NGOs, community orgs working in urban health',
-        funding: '$50k - $100k',
-        why: 'Urban slum health CSO',
-      },
-      {
-        n: 29,
-        name: 'CITI FOUNDATION GLOBAL INNOVATION CHALLENGE',
-        deadline: 'Oct 6, 2026',
-        link: 'https://www.citigroup.com/global/foundation - LOI portal',
-        what: 'Youth employability for AI future - workforce development programs',
-        who: 'NGOs globally, Nigeria NGOs eligible, 3+ years, annual budget $500k+',
-        funding: '$500k grants to 50 orgs globally',
-        why: 'Large NGO doing youth job training',
-      },
-      {
-        n: 30,
-        name: 'ONE ACRE FUND - SMALLHOLDER RESILIENCE FUND',
-        deadline: 'Oct 24, 2026',
-        link: 'https://oneacrefund.org',
-        what: 'Farm inputs, training, market linkages for smallholder farmers',
-        who: 'Farmer cooperatives, community groups in Nigeria farming communities, 20+ members',
-        funding: 'Farm inputs worth ₦3M + extension services',
-        why: 'Farming cooperative leader',
-      },
-    ],
-  },
-  {
-    id: 'category-e',
-    title: 'CATEGORY E: FOR FOUNDERS, STARTUPS, AGRIPRENEURS & MSMEs',
+    title: 'PART B: DIASPORA / GLOBAL FOR NIGERIANS ABROAD',
     grants: [
       {
         n: 31,
-        name: 'JOBTECH ALLIANCE MOMBASA CALL FOR FOUNDERS',
-        deadline: 'Oct 23, 2026',
-        link: 'https://www.jobtechalliance.com/opportunities',
-        what: 'Pre-accelerator for platforms that help people find jobs - exactly remote gigs platform',
-        who: 'Founders building job-matching, skilling-to-job platforms - Africa-wide, Nigeria eligible. Early stage, 1+ cofounder',
-        funding: '$20k grant + 12 weeks coaching + investor demo day + relocation to Mombasa for final',
-        why: 'You building remote gigs platform',
+        name: 'Harambeans Africa Jobs Fund Prize - $20k + path to $100k pilot',
+        fields: [
+          ['Who', 'Born in Africa OR of African descent, building export/manufacturing in Africa'],
+          ['Winner announced', 'Nov 12 London'],
+          ['Link', 'https://harambeans.com'],
+        ],
       },
       {
         n: 32,
-        name: 'D-PRIZE GLOBAL COMPETITION - Early Deadline',
-        deadline: 'Oct 25, 2026',
-        link: 'https://d-prize.org → https://d-prize.org/submit',
-        what: 'Start new org to distribute proven poverty solution - health, education, agriculture, water, road safety',
-        who: 'Any Nigerian 18+ with idea, no company needed, solo founder allowed, org must be <18 months old and raised <$30k',
-        funding: 'Up to $20,000 convertible grant to launch 3-month pilot',
-        why: 'First-time founder with no idea what to build - pick from their list of proven interventions',
+        name: 'Somalia Business Plan Competition - $20k',
+        fields: [
+          ['Who', 'African diaspora willing to build in Somalia/Horn, export-focused founders'],
+          ['Deadline', 'Nov 6'],
+        ],
       },
       {
         n: 33,
-        name: 'HARAMBEANS AFRICA JOBS FUND PRIZE',
-        deadline: 'Oct 14, 2026',
-        link: 'https://harambeans.com',
-        what: 'Prize for businesses creating jobs in manufacturing, agro-processing, industrial products, export',
-        who: 'African entrepreneurs 18+, Nigeria inclusive, business 1+ year with revenue, focused on job creation',
-        funding: '$20k grant + admission into Harambeans Alliance + potential $1M follow-on investment',
-        why: 'Manufacturer or agro-processor ready to export',
+        name: 'Commonwealth Startup Fellowship - £2,000 + Accra bootcamp + London capstone',
+        fields: [
+          ['Who', 'Citizens of 44 Commonwealth countries including Nigeria, graduate-level, startup with 12 months+ paying customers'],
+          ['Starts', 'Nov 16'],
+          ['Link', 'https://comsec.apply.capp.co'],
+        ],
       },
       {
         n: 34,
-        name: 'COMCASHEW e-MOVE FUNDING FOR YOUNG AGRIPRENEURS',
-        deadline: 'Oct 30, 2026',
-        link: 'https://www.comcashew.org - GIZ e-MOVE portal',
-        what: 'GIZ funding for cashew value chain - production, processing, marketing, logistics',
-        who: 'Youth 18-35 in cashew producing countries - Nigeria is 1 African producer. Must be in cashew business',
-        funding: 'Grant + training + Business Development Services (BDS) + market linkage',
-        why: 'You are in cashew business',
+        name: 'UK Government Start Up Loans - £500 to £25k + mentoring',
+        fields: [
+          ['Who', 'UK residents including ethnic minority founders'],
+          ['Link', 'https://www.startuploans.co.uk'],
+        ],
       },
       {
         n: 35,
-        name: 'LEVENTIS FOUNDATION - AGRIBUSINESS ACCESS TO CAPITAL',
-        deadline: 'Oct 21, 2026',
-        link: 'https://leventisfoundation.org.ng',
-        what: 'Seed capital + mentoring for agribusiness expansion',
-        who: 'ONLY ex-trainees of Leventis Foundation Agricultural Training Schools in Nigeria. Must have certificate',
-        funding: 'Seed capital loan/grant + business expansion financing',
-        why: 'If you trained with Leventis before',
+        name: 'Erase Indifference Challenge - €20k main + seven €10k',
+        fields: [
+          ['Who', 'NGOs, startups, companies globally tackling indifference'],
+          ['Closes', 'Dec 4, shortlist in Nov'],
+        ],
       },
       {
         n: 36,
-        name: 'BATN FOUNDATION FARMERS FOR THE FUTURE (F4F) GRANT 2026',
-        deadline: 'Oct 10, 2026',
-        link: 'https://batnfoundation.org',
-        what: 'Agripreneur grant for youth in agriculture value chain',
-        who: 'Young Nigerians 18-35, graduates with agric business idea or existing farm, NYSC allowed',
-        funding: 'Up to ₦10M + training + mentorship',
-        why: 'Graduate farmer needing scale-up capital',
+        name: 'Mandela Washington Fellowship',
+        fields: [
+          ['Who', 'Young African leaders 25-35'],
+          ['Check Nov', 'https://yali.state.gov'],
+        ],
       },
       {
         n: 37,
-        name: 'GOSIMA INNOVATION FUND + ACCELERATOR',
-        deadline: 'Oct 20, 2026',
-        link: 'https://gosima.africa',
-        what: '4-week accelerator for scalable solutions in fintech, healthtech, edtech, agritech',
-        who: 'Founders 18-35, Nigeria, early stage, with MVP, team of 2+',
-        funding: 'Up to ₦5M equity-free + accelerator + investor access',
-        why: 'Early tech founder with MVP',
+        name: 'Canada Black Entrepreneurship Program Training',
+        fields: [['Who', 'Black entrepreneurs in Canada']],
       },
       {
         n: 38,
-        name: 'SHIFT - SCALING HOMEGROWN INNOVATIONS (ILORIN INNOVATION HUB)',
-        deadline: 'Oct 10, 2026',
-        link: 'https://ilorininnovationhub.com',
-        what: 'Deeptech - CleanTech, HealthTech, EdTech, AIoT',
-        who: 'Entrepreneurs/startups operating in North Central & South West Nigeria - Kwara, Kogi, Niger, Oyo, Lagos, etc. Need CAC',
-        funding: 'Up to ₦5M equity-free grant',
-        why: 'If your startup is based in those zones',
+        name: 'Visa Foundation Business Grant - Up to $250k',
+        fields: [['Who', 'Nonprofits that support small businesses']],
       },
       {
         n: 39,
-        name: 'ENTREPRENEURS INVESTMENT PROGRAM (EIP) - GLOBAL ENTREPRENEURSHIP FESTIVAL',
-        deadline: 'Oct 6, 2026',
-        link: 'https://gef.global',
-        what: 'Seed investment + coaching + pitch at Global Entrepreneurship Festival',
-        who: 'Global founders, Nigeria eligible, scalable startup, 6 months+ traction',
-        funding: '$35k seed investment',
-        why: 'Need pre-seed and global stage',
+        name: 'Adobe Creative Residency Community Fund - $10k',
+        fields: [
+          ['Who', 'Global creatives including African diaspora'],
+          ['Link', 'https://adobe.com/creative-residency'],
+        ],
       },
       {
         n: 40,
-        name: 'NYIF - NIGERIA YOUTH INVESTMENT FUND NEXT BATCH',
-        deadline: 'Oct 30, 2026',
-        link: 'https://nyif.nmfb.com.ng + NIRSAL Microfinance Bank portal',
-        what: 'FG fund for youth businesses',
-        who: 'Nigerian youth 18-35 with business idea or existing business, CAC certificate, 2 guarantors, NIN',
-        funding: 'Up to ₦3M loan at 5% interest, moratorium inclusive',
-        why: 'Youth MSME needing low-interest FG loan',
+        name: 'YouTube Black Voices Fund UK/US',
+        fields: [
+          ['Who', 'Black creators in US/UK including Nigerian diaspora'],
+          ['Link', 'https://www.youtube.com/blackvoices'],
+        ],
+      },
+      {
+        n: 41,
+        name: 'Canva x AfriLabs Diaspora Creative Grants',
+        fields: [['Who', 'African creatives & diaspora using design for social impact']],
+      },
+      {
+        n: 42,
+        name: 'GlobalGiving Accelerator + $5k matching',
+        fields: [
+          ['Who', 'Nonprofits globally including diaspora-led African NGOs'],
+          ['Link', 'https://www.globalgiving.org/accelerator'],
+        ],
+      },
+      {
+        n: 43,
+        name: 'World Bank Youth Innovation Fund - 10k-50k',
+        fields: [
+          ['Who', 'Youth 18-35 globally with Africa-focused solutions'],
+          ['Link', 'https://www.worldbank.org'],
+        ],
+      },
+      {
+        n: 44,
+        name: 'Black Entrepreneurship Program Canada',
+        fields: [
+          ['Who', 'Black-led nonprofits delivering training/mentorship to Black entrepreneurs'],
+          ['Link', 'https://ised-isde.canada.ca'],
+        ],
       },
     ],
   },
 ]
+
 
 export const GRANTS_CLOSING = {
   title: 'LOVED THIS LIST?',

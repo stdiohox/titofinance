@@ -7,34 +7,36 @@ type Props = {
   today: { day: number; month: number; year: number }
 }
 
-const MONTH = 9 // October
+const MONTH = 10 // November
+const MONTH_NAME = 'November'
 const YEAR = 2026
-const DAYS = 31
-const LABELLED_DAYS = new Set([1, 5, 10, 15, 20, 25, 31])
+const DAYS = 30
+const LABELLED_DAYS = new Set([1, 5, 10, 15, 20, 25, 30])
 const PASSED = 'rgba(248,245,238,0.5)'
 const columns: CSSProperties = { gridTemplateColumns: `repeat(${DAYS}, minmax(0, 1fr))`, columnGap: 'clamp(2px, 0.5vw, 6px)' }
 
-// October 2026 as a strip of 31 days, bar height = deadlines that day.
+// November 2026 as a strip of 30 days, bar height = deadlines that day.
+// Deadlines outside the month (Dec 4) stay off the strip.
 export default function DeadlineCalendar({ deadlines, today }: Props) {
-  const october = deadlines.filter((d) => d.month === MONTH && d.year === YEAR)
+  const inMonth = deadlines.filter((d) => d.month === MONTH && d.year === YEAR)
   const counts = Array.from({ length: DAYS }, () => 0)
-  for (const d of october) counts[d.day - 1] += 1
+  for (const d of inMonth) counts[d.day - 1] += 1
   const max = Math.max(...counts)
   if (max === 0) return null
 
-  // Which days count as passed: all of them once October 2026 is over.
+  // Which days count as passed: all of them once the month is over.
   const todayIndex =
     today.year === YEAR && today.month === MONTH ? today.day : today.year > YEAR || (today.year === YEAR && today.month > MONTH) ? DAYS + 1 : 0
   const passed = counts.reduce((n, c, i) => (i + 1 < todayIndex ? n + c : n), 0)
-  const ahead = october.length - passed
+  const ahead = inMonth.length - passed
   const busiest = counts.indexOf(max) + 1
 
-  const summary = `Deadline calendar for October 2026. ${passed} deadlines have passed and ${ahead} are still ahead. The busiest day is October ${busiest}, with ${max} deadlines.`
+  const summary = `Deadline calendar for ${MONTH_NAME} ${YEAR}. ${passed} deadlines have passed and ${ahead} are still ahead. The busiest day is ${MONTH_NAME} ${busiest}, with ${max} deadlines.`
 
   return (
     <figure className="w-full">
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 mb-5">
-        <span className="gp-serif italic text-[1.6rem] leading-tight text-[var(--ivory)]">Deadlines across October</span>
+        <span className="gp-serif italic text-[1.6rem] leading-tight text-[var(--ivory)]">Deadlines across {MONTH_NAME}</span>
         <span className="flex items-center gap-4 text-[13px] text-[rgba(248,245,238,0.8)]">
           <span className="inline-flex items-center gap-2">
             <span aria-hidden="true" className="inline-block w-2.5 h-2.5 rounded-[2px] bg-[var(--gold)]" />

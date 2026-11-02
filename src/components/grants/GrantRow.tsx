@@ -17,15 +17,24 @@ export function ExternalLink({ href, children }: { href: string; children: React
   )
 }
 
-// Renders a "Link" line exactly as written, with every URL in it clickable.
-function Linkified({ text }: { text: string }) {
+// Renders a line exactly as written, with every URL and email in it clickable.
+// A "Link" written without https:// ("soar.fatefoundation.org/auth/login") is
+// still a link.
+function Linkified({ label, text }: { label: string; text: string }) {
+  if (label === 'Link' && /^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(text)) {
+    return <ExternalLink href={`https://${text}`}>{text}</ExternalLink>
+  }
   return (
     <>
-      {text.split(/(https?:\/\/\S+)/).map((part, i) =>
+      {text.split(/(https?:\/\/\S+|[\w.+-]+@[\w-]+(?:\.[\w-]+)+)/).map((part, i) =>
         /^https?:\/\//.test(part) ? (
           <ExternalLink key={i} href={part}>
             {part}
           </ExternalLink>
+        ) : part.includes('@') && /^[\w.+-]+@/.test(part) ? (
+          <a key={i} href={`mailto:${part}`} className={linkClass}>
+            {part}
+          </a>
         ) : (
           part
         ),
@@ -33,6 +42,12 @@ function Linkified({ text }: { text: string }) {
     </>
   )
 }
+
+// Which of Tito's lines go where. Who/About are the body, Amount/Type sit in
+// the highlighted box, and everything else (deadlines, dates, links, how to
+// apply) is the line of details under them, in list order.
+const BODY_LABELS = new Set(['About', 'Who'])
+const MONEY_LABELS = new Set(['Amount', 'Type'])
 
 const chipStyles: Record<GrantStatus, string> = {
   soon: 'bg-[var(--gold)] text-[var(--ink)]',
@@ -61,6 +76,9 @@ const fieldText = 'text-[15px] leading-[1.65] text-[var(--ink)]'
 function GrantRow({ grant, deadline, status, statusText, categoryTag }: Props) {
   const closed = status === 'closed'
   const titleId = `grant-${grant.n}`
+  const body = grant.fields.filter(([label]) => BODY_LABELS.has(label))
+  const money = grant.fields.filter(([label]) => MONEY_LABELS.has(label))
+  const details = grant.fields.filter(([label]) => !BODY_LABELS.has(label) && !MONEY_LABELS.has(label))
 
   return (
     <article aria-labelledby={titleId} className="gp-row grid grid-cols-1 md:grid-cols-[8.5rem_minmax(0,1fr)] gap-4 md:gap-10 py-9 md:py-12 border-t border-[var(--rule)]">
@@ -88,49 +106,35 @@ function GrantRow({ grant, deadline, status, statusText, categoryTag }: Props) {
           {grant.name}
         </h3>
 
-        <dl className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5 max-w-[880px]">
-          <div>
-            <dt className={fieldLabel}>What</dt>
-            <dd className={fieldText}>{grant.what}</dd>
-          </div>
-          <div>
-            <dt className={fieldLabel}>Who</dt>
-            <dd className={fieldText}>{grant.who}</dd>
-          </div>
-          <div className="md:col-span-2 rounded-xl bg-[var(--tint)] px-4 py-3.5">
-            <dt className={fieldLabel}>Funding</dt>
-            <dd className="text-[17px] leading-[1.55] font-medium text-[var(--ink)]">{grant.funding}</dd>
-          </div>
-          <div className={grant.how ? '' : 'md:col-span-2'}>
-            <dt className={fieldLabel}>Why apply</dt>
-            <dd className={fieldText}>{grant.why}</dd>
-          </div>
-          {grant.how && (
-            <div>
-              <dt className={fieldLabel}>How</dt>
-              <dd className={fieldText}>{grant.how}</dd>
-            </div>
-          )}
-        </dl>
+        {(body.length > 0 || money.length > 0) && (
+          <dl className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5 max-w-[880px]">
+            {body.map(([label, text]) => (
+              <div key={label} className={body.length === 1 ? 'md:col-span-2' : ''}>
+                <dt className={fieldLabel}>{label}</dt>
+                <dd className={fieldText}>{text}</dd>
+              </div>
+            ))}
+            {money.map(([label, text]) => (
+              <div key={label} className="md:col-span-2 rounded-xl bg-[var(--tint)] px-4 py-3.5">
+                <dt className={fieldLabel}>{label}</dt>
+                <dd className="text-[17px] leading-[1.55] font-medium text-[var(--ink)]">{text}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
 
-        <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-2 text-[14px] leading-[1.6] max-w-[880px]">
-          <p>
-            <span className="text-[var(--stone)]">Deadline: </span>
-            <span className="font-medium text-[var(--ink)]">{grant.deadline}</span>
-          </p>
-          <p className="min-w-0" style={{ overflowWrap: 'anywhere' }}>
-            <span className="text-[var(--stone)]">Link: </span>
-            <Linkified text={grant.link} />
-          </p>
-          {grant.email && (
-            <p className="min-w-0" style={{ overflowWrap: 'anywhere' }}>
-              <span className="text-[var(--stone)]">Email: </span>
-              <a href={`mailto:${grant.email}`} className={linkClass}>
-                {grant.email}
-              </a>
-            </p>
-          )}
-        </div>
+        {details.length > 0 && (
+          <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-2 text-[14px] leading-[1.6] max-w-[880px]">
+            {details.map(([label, text]) => (
+              <p key={label + text} className="min-w-0" style={{ overflowWrap: 'anywhere' }}>
+                {label && <span className="text-[var(--stone)]">{label}: </span>}
+                <span className="font-medium text-[var(--ink)]">
+                  <Linkified label={label} text={text} />
+                </span>
+              </p>
+            ))}
+          </div>
+        )}
       </div>
     </article>
   )

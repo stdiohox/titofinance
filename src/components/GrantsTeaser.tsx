@@ -9,10 +9,10 @@ export default function GrantsTeaser() {
       <div className="max-w-[88rem] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-center">
         <div className="md:col-span-7" style={{ maxWidth: '640px' }}>
           <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic', fontSize: 'clamp(2.25rem, 4.5vw, 4rem)', fontWeight: 400, letterSpacing: '-0.03em', color: '#F8F5EE', lineHeight: 1.05, marginBottom: '1rem' }}>
-            Opportunity Grants — October 2026
+            Opportunity Grants — November 2026
           </h2>
           <p data-reveal style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', color: 'rgba(248,245,238,0.75)', lineHeight: 1.7, marginBottom: '2rem' }}>
-            {GRANT_COUNT} Nigerian-eligible grants, with links, all closing between October 5th and October 30th, 2026.
+            {GRANT_COUNT} Nigerian-eligible funding opportunities for November 2026, with links, in Nigeria and for Nigerians abroad.
           </p>
           <a
             data-reveal

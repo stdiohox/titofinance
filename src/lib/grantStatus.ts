@@ -1,13 +1,15 @@
-// Deadline maths for the /grants page. Reads the verbatim `deadline` strings
-// in grants.ts ("Oct 23, 2026", "Oct 12, 2026, 11:59PM WAT", "Oct 30, 2026
-// rolling") without changing them. Every grant here closes in October 2026.
+// Deadline maths for the /grants page. Reads the verbatim deadline lines in
+// grants.ts ("Nov 30, 2026", "Nov 10", "Nov 6, 11:59pm WAT", "Dec 4, shortlist
+// in Nov") without changing them. A date with no year is read as LIST_YEAR.
+const LIST_YEAR = 2026
 
 const MONTHS: Record<string, number> = {
   Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
 }
 
-// A deadline is treated as the end of that day in Lagos (WAT, UTC+1), the
-// latest reading of any of the listed times, so nothing shows "Closed" early.
+// A deadline is treated as the end of that day in Lagos (WAT, UTC+1). The one
+// GMT time on the list (11:59pm GMT) is an hour later than that, close enough
+// for a status chip.
 const WAT_OFFSET_HOURS = 1
 export const CLOSING_SOON_DAYS = 7
 
@@ -22,12 +24,12 @@ export type Deadline = {
   closesAt: number
 }
 
-export function parseDeadline(text: string): Deadline | null {
-  const m = text.match(/([A-Z][a-z]{2})\s+(\d{1,2}),\s*(\d{4})/)
+export function parseDeadline(text: string | null): Deadline | null {
+  const m = text?.match(/([A-Z][a-z]{2})\s+(\d{1,2})\b(?:,\s*(\d{4})\b)?/)
   if (!m || !(m[1] in MONTHS)) return null
   const month = MONTHS[m[1]]
   const day = Number(m[2])
-  const year = Number(m[3])
+  const year = m[3] ? Number(m[3]) : LIST_YEAR
   // Reject impossible dates ("Oct 45", "Feb 31") instead of rolling them over.
   const check = new Date(Date.UTC(year, month, day))
   if (check.getUTCMonth() !== month || check.getUTCDate() !== day) return null
@@ -54,7 +56,7 @@ export function statusOf(d: Deadline | null, now: number): GrantStatus {
 }
 
 export function statusLabel(d: Deadline | null, now: number): string {
-  if (!d) return 'Open'
+  if (!d) return 'No deadline listed'
   if (now > d.closesAt) return 'Closed'
   const left = daysLeft(d, now)
   if (left <= 0) return 'Closes today'
