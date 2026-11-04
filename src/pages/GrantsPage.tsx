@@ -14,6 +14,7 @@ import GrantRow from '../components/grants/GrantRow'
 const CATEGORY_SHORT: Partial<Record<string, string>> = {
   'category-a': 'Nigeria',
   'category-b': 'Diaspora & global',
+  'category-c': 'Scholarships',
 }
 
 const SOCIAL_ICONS: Partial<Record<string, { Icon: IconType; name: string }>> = {
@@ -57,14 +58,15 @@ export default function GrantsPage() {
     () =>
       GRANT_CATEGORIES.flatMap((cat) =>
         cat.grants.map((grant) => {
-          const deadline = parseDeadline(deadlineText(grant))
+          const text = deadlineText(grant)
+          const deadline = parseDeadline(text)
           return {
             grant,
             categoryId: cat.id,
             letter: cat.id.slice(-1).toUpperCase(),
             deadline,
             status: statusOf(deadline, now),
-            statusText: statusLabel(deadline, now),
+            statusText: text && !deadline ? 'No exact date' : statusLabel(deadline, now),
           }
         }),
       ),
@@ -274,7 +276,7 @@ export default function GrantsPage() {
                             </h2>
                             {cat.subtitle && <p className="mt-2 text-[15px] text-[var(--stone)]">{cat.subtitle}</p>}
                             <p className="mt-3 gp-num text-[13px] text-[var(--stone)]">
-                              {rows.length} {rows.length === 1 ? 'grant' : 'grants'}
+                              {rows.length} {cat.unit ?? 'grant'}{rows.length === 1 ? '' : 's'}
                               {closed > 0 && `, ${closed} closed`}
                             </p>
                           </div>

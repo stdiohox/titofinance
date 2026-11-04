@@ -12,7 +12,7 @@ export default function GrantsTeaser() {
             Opportunity Grants — November 2026
           </h2>
           <p data-reveal style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', color: 'rgba(248,245,238,0.75)', lineHeight: 1.7, marginBottom: '2rem' }}>
-            {GRANT_COUNT} Nigerian-eligible funding opportunities for November 2026, with links, in Nigeria and for Nigerians abroad.
+            {GRANT_COUNT} Nigerian-eligible grants and scholarships, in Nigeria and for Nigerians abroad.
           </p>
           <a
             data-reveal
@@ -20,7 +20,7 @@ export default function GrantsTeaser() {
             className="inline-flex items-center gap-3 rounded-full transition-[filter] duration-200 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F8F5EE]"
             style={{ background: '#C9A84C', color: '#0D0B08', fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', fontWeight: 500, paddingLeft: '2rem', paddingRight: '0.5rem', paddingTop: '0.625rem', paddingBottom: '0.625rem', textDecoration: 'none' }}
           >
-            View all {GRANT_COUNT} grants
+            View all {GRANT_COUNT} opportunities
             <span style={{ background: '#0D0B08', borderRadius: '9999px', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
@@ -37,7 +37,7 @@ export default function GrantsTeaser() {
             {GRANT_COUNT}
           </span>
           <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '11px', letterSpacing: '0.18em', color: 'rgba(248,245,238,0.6)', textTransform: 'uppercase', lineHeight: 1.8, paddingBottom: '0.25rem' }}>
-            Grants<br />Nigerian-eligible<br />Links included
+            Opportunities<br />Nigerian-eligible
           </span>
         </div>
       </div>

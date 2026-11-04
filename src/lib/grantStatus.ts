@@ -1,6 +1,8 @@
 // Deadline maths for the /grants page. Reads the verbatim deadline lines in
 // grants.ts ("Nov 30, 2026", "Nov 10", "Nov 6, 11:59pm WAT", "Dec 4, shortlist
-// in Nov") without changing them. A date with no year is read as LIST_YEAR.
+// in Nov", "12 Nov 2026") without changing them. A date with no year is read as
+// LIST_YEAR. A line with no exact day ("Dec/Jan", "Feb 2027", "Rolling") has no
+// deadline to count down to.
 const LIST_YEAR = 2026
 
 const MONTHS: Record<string, number> = {
@@ -25,11 +27,15 @@ export type Deadline = {
 }
 
 export function parseDeadline(text: string | null): Deadline | null {
-  const m = text?.match(/([A-Z][a-z]{2})\s+(\d{1,2})\b(?:,\s*(\d{4})\b)?/)
-  if (!m || !(m[1] in MONTHS)) return null
-  const month = MONTHS[m[1]]
-  const day = Number(m[2])
-  const year = m[3] ? Number(m[3]) : LIST_YEAR
+  // Day-first dates take the last one on the line: "8 Dec 2026 or 6 Jan 2027 by
+  // course" isn't closed until the later route is.
+  const dayFirst = [...(text ?? '').matchAll(/\b(\d{1,2})\s+([A-Z][a-z]{2})\s+(\d{4})\b/g)].at(-1)
+  const monthFirst = text?.match(/([A-Z][a-z]{2})\s+(\d{1,2})\b(?:,\s*(\d{4})\b)?/)
+  const parts = dayFirst ? { month: dayFirst[2], day: dayFirst[1], year: dayFirst[3] } : monthFirst && { month: monthFirst[1], day: monthFirst[2], year: monthFirst[3] }
+  if (!parts || !(parts.month in MONTHS)) return null
+  const month = MONTHS[parts.month]
+  const day = Number(parts.day)
+  const year = parts.year ? Number(parts.year) : LIST_YEAR
   // Reject impossible dates ("Oct 45", "Feb 31") instead of rolling them over.
   const check = new Date(Date.UTC(year, month, day))
   if (check.getUTCMonth() !== month || check.getUTCDate() !== day) return null

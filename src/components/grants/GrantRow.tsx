@@ -43,10 +43,10 @@ function Linkified({ label, text }: { label: string; text: string }) {
   )
 }
 
-// Which of Tito's lines go where. Who/About are the body, Amount/Type sit in
+// Which of Tito's lines go where. Who/About/For are the body, Amount/Type sit in
 // the highlighted box, and everything else (deadlines, dates, links, how to
 // apply) is the line of details under them, in list order.
-const BODY_LABELS = new Set(['About', 'Who'])
+const BODY_LABELS = new Set(['About', 'Who', 'For'])
 const MONEY_LABELS = new Set(['Amount', 'Type'])
 
 const chipStyles: Record<GrantStatus, string> = {
@@ -100,7 +100,7 @@ function GrantRow({ grant, deadline, status, statusText, categoryTag }: Props) {
       </div>
 
       <div className="min-w-0">
-        <p className="gp-mono gp-num text-[12px] tracking-[0.06em] text-[var(--stone)] mb-2">No. {String(grant.n).padStart(2, '0')}</p>
+        <p className="gp-mono gp-num text-[12px] tracking-[0.06em] text-[var(--stone)] mb-2">No. {String(grant.listNo ?? grant.n).padStart(2, '0')}</p>
         {categoryTag && <p className="text-[12px] leading-[1.5] font-medium tracking-[0.02em] text-[var(--stone)] mb-2 max-w-[60ch]">{categoryTag}</p>}
         <h3 id={titleId} className="gp-serif font-semibold text-[1.55rem] md:text-[1.9rem] leading-[1.12] text-[var(--ink)] max-w-[34ch]" style={{ overflowWrap: 'anywhere' }}>
           {grant.name}

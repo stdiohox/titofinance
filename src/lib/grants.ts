@@ -6,7 +6,10 @@
 export type GrantField = [label: string, text: string]
 
 export type Grant = {
+  /** Unique across the whole page */
   n: number
+  /** Number shown on the row, when the list numbers from 1 again */
+  listNo?: number
   name: string
   fields: GrantField[]
 }
@@ -15,6 +18,8 @@ export type GrantCategory = {
   id: string
   title: string
   subtitle?: string
+  /** What the count under the title calls its rows. Defaults to "grant". */
+  unit?: string
   grants: Grant[]
 }
 
@@ -34,7 +39,7 @@ export const GRANTS_INTRO = [
 export const GRANTS_DISCLAIMER = {
   title: 'IMPORTANT DISCLAIMER',
   lead: [
-    'This grant list was compiled by Tito Finance for informational purposes only, using information from official websites and public announcements available as of November 2026.',
+    'This grant and scholarship list was compiled by Tito Finance for informational purposes only, using information from official websites and public announcements available as of November 2026.',
     'While we have made every effort to ensure accuracy, grant deadlines, requirements, and funding amounts are subject to change by the organizers without notice.',
   ],
   adviseTitle: 'We strongly advise you to:',
@@ -416,6 +421,668 @@ export const GRANT_CATEGORIES: GrantCategory[] = [
         fields: [
           ['Who', 'Black-led nonprofits delivering training/mentorship to Black entrepreneurs'],
           ['Link', 'https://ised-isde.canada.ca'],
+        ],
+      },
+    ],
+  },
+  {
+    id: 'category-c',
+    title: 'PART C: 60 SCHOLARSHIPS FOR UNDER 45',
+    subtitle: 'HERE’S THE 60 SCHOLARSHIP OPPORTUNITIES THAT ARE NIGERIAN-ELIGIBLE',
+    unit: 'scholarship',
+    grants: [
+      {
+        n: 101,
+        listNo: 1,
+        name: 'DAAD In-Country / In-Region Scholarship 2027',
+        fields: [
+          ['For', 'Masters students from Sub-Saharan Africa studying in 8 African countries'],
+          ['Deadline', '12 Nov 2026'],
+          ['Age', 'No strict limit, need Bachelor + 2 years experience'],
+          ['Link', 'https://www.daad.org.za/en/study-research-in-south-africa/daad-in-region-scholarships/'],
+        ],
+      },
+      {
+        n: 102,
+        listNo: 2,
+        name: 'ALCHE Mastercard Foundation Scholars - Mauritius',
+        fields: [
+          ['For', 'Undergraduate Africans who need financial aid'],
+          ['Deadline', '14 Nov 2026'],
+          ['Age', '26 & below encouraged'],
+          ['Link', 'https://alcheducation.com/apply-now/'],
+        ],
+      },
+      {
+        n: 103,
+        listNo: 3,
+        name: 'UBC International Scholars Program - Canada',
+        fields: [
+          ['For', 'First-degree Undergraduate, entry Sept 2027'],
+          ['Deadline', '15 Nov 2026'],
+          ['Age', 'Must be secondary school leaver'],
+          ['Link', 'https://undergraduatescholarships.ubc.ca/prog/2027_international_scholars_program_application/'],
+        ],
+      },
+      {
+        n: 104,
+        listNo: 4,
+        name: 'DAAD EPOS Göttingen - Development Economics',
+        fields: [
+          ['For', 'Masters for working professionals from developing countries'],
+          ['Deadline', '15 Nov 2026'],
+          ['Age', '36 max typical'],
+          ['Link', 'https://www.uni-goettingen.de/en/572462.html'],
+        ],
+      },
+      {
+        n: 105,
+        listNo: 5,
+        name: 'University of Edinburgh Mastercard Foundation Scholarship',
+        fields: [
+          ['For', 'Masters - African citizens'],
+          ['Deadline', '19 Nov 2026'],
+          ['Age', '35 or younger'],
+          ['Link', 'https://edinburgh-global.ed.ac.uk/mastercard-foundation-scholars-program/apply-for-a-scholarship/how-to-apply'],
+        ],
+      },
+      {
+        n: 106,
+        listNo: 6,
+        name: 'Mastercard Foundation at ALU - Rwanda',
+        fields: [
+          ['For', 'Undergraduate in Kigali, Rwanda'],
+          ['Deadline', '30 Nov 2026'],
+          ['Age', '18-30 typical'],
+          ['Link', 'https://www.alueducation.com/mastercard-foundation-scholars-program-at-alu/'],
+        ],
+      },
+      {
+        n: 107,
+        listNo: 7,
+        name: 'ETH Zurich Excellence Scholarship ESOP - Switzerland',
+        fields: [
+          ['For', 'Masters - Fully funded, tuition + CHF 13,500/semester'],
+          ['Deadline', '30 Nov 2026'],
+          ['Age', 'No age limit'],
+          ['Link', 'https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html'],
+        ],
+      },
+      {
+        n: 108,
+        listNo: 8,
+        name: 'Yenching Academy - Peking University, China',
+        fields: [
+          ['For', 'Masters - Any nationality, fully funded'],
+          ['Deadline', '30 Nov 2026'],
+          ['Age', 'Under 28'],
+          ['Link', 'https://yenchingacademy.pku.edu.cn/ADMISSIONS.htm'],
+        ],
+      },
+      {
+        n: 109,
+        listNo: 9,
+        name: 'Germany-CGIAR++ PhD Scholarship Hub',
+        fields: [
+          ['For', 'PhD - Agriculture/Climate at German universities'],
+          ['Deadline', '30 Nov 2026'],
+          ['Age', 'Under 40, €1,800/month'],
+          ['Link', 'https://hub.landscapealliance.org/phd-research-scholarship'],
+        ],
+      },
+      {
+        n: 110,
+        listNo: 10,
+        name: 'NNPC/SNEPCo National University Scholarship',
+        fields: [
+          ['For', 'Nigerian 2nd year students in public universities'],
+          ['Deadline', '30 Nov 2026'],
+          ['Age', 'Undergraduate, CGPA 3.5/5 required'],
+          ['Link', 'https://candidate.scholastica.ng/schemes/NNPCLTDSNEPCo25'],
+        ],
+      },
+      {
+        n: 111,
+        listNo: 11,
+        name: 'NDDC Postgraduate Scholarship',
+        fields: [
+          ['For', 'Niger Delta indigenes - Postgraduate'],
+          ['Deadline', '8 Nov 2026'],
+          ['Age', 'Not older than 40 years'],
+        ],
+      },
+      {
+        n: 112,
+        listNo: 12,
+        name: 'AUC Mastercard Foundation Graduate Fellowship - Egypt',
+        fields: [
+          ['For', 'African citizens living in Africa - Masters/PhD'],
+          ['Deadline', '2 Nov 2026'],
+          ['Age', '35 or younger'],
+          ['Link', 'https://www.aucegypt.edu/admissions/fellowships/mastercard-foundation-scholars-program'],
+        ],
+      },
+      {
+        n: 113,
+        listNo: 13,
+        name: 'Commonwealth Shared Scholarship - UK',
+        fields: [
+          ['For', 'Masters for Commonwealth citizens - low/middle income'],
+          ['Deadline', '8 Dec 2026'],
+          ['Age', 'No age limit, need 2:1 degree - Under 45 can apply'],
+          ['Link', 'https://cscuk.fcdo.gov.uk/scholarships/commonwealth-shared-scholarships-applications/'],
+        ],
+      },
+      {
+        n: 114,
+        listNo: 14,
+        name: 'ADB-Japan Scholarship - Hawaii, USA',
+        fields: [
+          ['For', 'Masters in Development fields - Asian Development Bank member countries including Nigeria'],
+          ['Deadline', '1 Dec 2026'],
+          ['Age', 'No strict age, need Bachelor + work exp'],
+          ['Link', 'https://www.adb.org/work-with-us/careers/japan-scholarship-program'],
+        ],
+      },
+      {
+        n: 115,
+        listNo: 15,
+        name: 'Erasmus Mundus MAPP - Europe',
+        fields: [
+          ['For', 'Masters in Public Policy - All nationalities'],
+          ['Deadline', '1 Dec 2026'],
+          ['Age', 'No age limit'],
+          ['Link', 'https://www.mundusmapp.org/admissions-calendar/'],
+        ],
+      },
+      {
+        n: 116,
+        listNo: 16,
+        name: 'TU Delft Excellence Scholarship - Netherlands',
+        fields: [
+          ['For', 'Masters - 2 year MSc, any country'],
+          ['Deadline', '1 Dec 2026'],
+          ['Age', 'No age limit, need high CGPA'],
+          ['Link', 'https://www.tudelft.nl/en/education/study-programme-orientation/practical-matters/scholarships'],
+        ],
+      },
+      {
+        n: 117,
+        listNo: 17,
+        name: 'Jim Leech Mastercard Fellowship - Canada (Virtual)',
+        fields: [
+          ['For', 'Entrepreneurship fellowship, 8 months virtual'],
+          ['Deadline', '1 Dec 2026'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://www.queensu.ca/innovationcentre/jim-leech-mastercard-foundation-fellowship'],
+        ],
+      },
+      {
+        n: 118,
+        listNo: 18,
+        name: 'Sciences Po Mastercard Foundation - France',
+        fields: [
+          ['For', '2-year Masters in Paris - African citizens'],
+          ['Deadline', '14 Dec 2026'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://www.sciencespo.fr/students/en/fees-funding/bursaries-financial-aid/mastercard-foundation-scholarships/graduate-study/'],
+        ],
+      },
+      {
+        n: 119,
+        listNo: 19,
+        name: 'NOHA Erasmus Mundus - Humanitarian Action - Europe',
+        fields: [
+          ['For', 'Masters across European universities'],
+          ['Deadline', '15 Dec 2026'],
+          ['Age', 'No age limit'],
+          ['Link', 'https://apply.nohanet.org/'],
+        ],
+      },
+      {
+        n: 120,
+        listNo: 20,
+        name: 'Carnegie Mellon Africa - Rwanda',
+        fields: [
+          ['For', 'Masters in IT/Engineering - Africans'],
+          ['Deadline', '15 Dec 2026 - Early Admission'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://www.africa.engineering.cmu.edu/admissions/how-to-apply/index.html'],
+        ],
+      },
+      {
+        n: 121,
+        listNo: 21,
+        name: 'Gates Cambridge Scholarship - UK',
+        fields: [
+          ['For', 'Masters & PhD at Cambridge - Any country outside UK'],
+          ['Deadline', '8 Dec 2026 or 6 Jan 2027 by course'],
+          ['Age', 'No age limit'],
+          ['Link', 'https://www.gatescambridge.org/apply/timeline/'],
+        ],
+      },
+      {
+        n: 122,
+        listNo: 22,
+        name: 'France Excellence Eiffel Scholarship - France',
+        fields: [
+          ['For', 'Masters & PhD - French university nominates you'],
+          ['Deadline', '6 Jan 2027'],
+          ['Age', 'Masters under 27, PhD under 32'],
+          ['Link', 'https://www.campusfrance.org/en/france-excellence-eiffel-scholarship-program'],
+        ],
+      },
+      {
+        n: 123,
+        listNo: 23,
+        name: 'Oxford-Weidenfeld & Hoffmann - UK',
+        fields: [
+          ['For', 'Masters at Oxford - 100% fees + £21,805 living'],
+          ['Deadline', '6 Jan 2027'],
+          ['Age', 'Under 35, leadership potential'],
+          ['Link', 'https://www.ox.ac.uk/admissions/graduate/fees-and-funding/fees-funding-and-scholarship-search/weidenfeld-hoffmann-scholarships-and-leadership-programme'],
+        ],
+      },
+      {
+        n: 124,
+        listNo: 24,
+        name: 'Swedish Institute Global Professionals - Sweden',
+        fields: [
+          ['For', 'Masters in Sweden - Africans eligible, 3000hrs work exp'],
+          ['Deadline', '15 Jan 2027'],
+          ['Age', 'No age limit, mid-career'],
+          ['Link', 'https://si.se/en/apply/scholarships/swedish-institute-scholarships-for-global-professionals/'],
+        ],
+      },
+      {
+        n: 125,
+        listNo: 25,
+        name: 'ENS Scholarship - France',
+        fields: [
+          ['For', 'Masters/Diploma - All countries - €1000/month + room'],
+          ['Deadline', '15 Dec 2026'],
+          ['Age', 'Under 26 for Masters'],
+          ['Link', 'https://www.ens.psl.eu/en/une-formation-d-exception/admissions/international/international-selection'],
+        ],
+      },
+      {
+        n: 126,
+        listNo: 26,
+        name: 'MBZUAI Scholarship - UAE',
+        fields: [
+          ['For', 'Masters & PhD in AI - Abu Dhabi - Fully funded PhD'],
+          ['Deadline', '15 Dec 2026'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://mbzuai.ac.ae/admissions/graduate-masters-admissions'],
+        ],
+      },
+      {
+        n: 127,
+        listNo: 27,
+        name: 'Berlin School of Economics PhD - Germany',
+        fields: [
+          ['For', 'PhD Economics - Fully funded'],
+          ['Deadline', '15 Jan 2027'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://berlinschoolofeconomics.de/phd-programm/application'],
+        ],
+      },
+      {
+        n: 128,
+        listNo: 28,
+        name: 'Clarendon Scholarship - Oxford - UK',
+        fields: [
+          ['For', 'Masters & DPhil - All nationalities'],
+          ['Deadline', 'Dec 2026 / Jan 2027 by course'],
+          ['Age', 'No limit'],
+          ['Link', 'https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/applicants'],
+        ],
+      },
+      {
+        n: 129,
+        listNo: 29,
+        name: 'Ashesi University Mastercard - Ghana',
+        fields: [
+          ['For', 'Undergraduate - Africans needing aid'],
+          ['Deadline', 'December 2026 (Round 4)'],
+          ['Age', '18-25'],
+          ['Link', 'https://ashesi.edu.gh/how-to-apply/'],
+        ],
+      },
+      {
+        n: 130,
+        listNo: 30,
+        name: 'Erasmus Mundus EMMIR - Migration & Intercultural Relations',
+        fields: [
+          ['For', 'Masters - EU + non-EU'],
+          ['Deadline', '20 Dec 2026'],
+          ['Age', 'No limit'],
+          ['Link', 'https://www.emmir.org/applications'],
+        ],
+      },
+      {
+        n: 131,
+        listNo: 31,
+        name: 'Erasmus Mundus Green Energy Market & Finance',
+        fields: [
+          ['For', 'Masters - Finance/Energy'],
+          ['Deadline', '7 Jan 2027'],
+          ['Age', 'No limit'],
+          ['Link', 'https://site.unibo.it/grenfin-emjm/en'],
+        ],
+      },
+      {
+        n: 132,
+        listNo: 32,
+        name: 'Erasmus Mundus Euroculture',
+        fields: [
+          ['For', 'Masters - European Studies'],
+          ['Deadline', '15 Jan 2027'],
+          ['Age', 'No limit'],
+          ['Link', 'https://euroculture.wsmip.uj.edu.pl/admissions'],
+        ],
+      },
+      {
+        n: 133,
+        listNo: 33,
+        name: 'CEU Yehuda Elkana Fellowship - Vienna',
+        fields: [
+          ['For', 'PhD - Fully funded'],
+          ['Deadline', '15 Jan 2027'],
+          ['Age', 'Under 40'],
+          ['Link', 'https://elkana.ceu.edu/call-applications-yehuda-elkana-fellowship'],
+        ],
+      },
+      {
+        n: 134,
+        listNo: 34,
+        name: 'LJMU Vice-Chancellor PhD - Liverpool',
+        fields: [
+          ['For', 'PhD - UK & International'],
+          ['Deadline', '29 Jan 2027'],
+          ['Age', 'Under 45'],
+          ['Link', 'https://www.ljmu.ac.uk/research/phd-studentship-application'],
+        ],
+      },
+      {
+        n: 135,
+        listNo: 35,
+        name: 'African Union Youth Fellowship',
+        fields: [
+          ['For', 'Fellowship for young Africans in AU'],
+          ['Deadline', '31 Dec 2026'],
+          ['Age', '18-35'],
+        ],
+      },
+      {
+        n: 136,
+        listNo: 36,
+        name: 'Tony Elumelu Foundation Entrepreneurship',
+        fields: [
+          ['For', 'African Entrepreneurs'],
+          ['Deadline', 'Dec/Jan'],
+          ['Age', '18-45'],
+          ['Link', 'https://www.tonyelumelufoundation.org/tef-entrepreneurship-programme/faqs'],
+        ],
+      },
+      {
+        n: 137,
+        listNo: 37,
+        name: 'Mastercard Foundation UCT - South Africa',
+        fields: [
+          ['For', 'Postgrad'],
+          ['Deadline', 'Dec 2026'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://uct.ac.za/mastercardfdn/apply-mastercard-foundation-scholars-program'],
+        ],
+      },
+      {
+        n: 138,
+        listNo: 38,
+        name: 'Mastercard Foundation Cambridge - UK',
+        fields: [
+          ['For', 'Masters'],
+          ['Deadline', 'Dec/Jan'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://www.mastercardfoundation.fund.cam.ac.uk/faq'],
+        ],
+      },
+      {
+        n: 139,
+        listNo: 39,
+        name: 'Mastercard Foundation UC Berkeley - USA',
+        fields: [
+          ['For', 'Masters'],
+          ['Deadline', 'Dec 2026'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://mcfscholarsprogram.berkeley.edu/apply-be-mastercard-foundation-scholar-uc-berkeley'],
+        ],
+      },
+      {
+        n: 140,
+        listNo: 40,
+        name: 'Australia Awards Africa',
+        fields: [
+          ['For', 'Masters - Mid-career'],
+          ['Deadline', 'Feb 2027'],
+          ['Age', 'Under 45'],
+          ['Link', 'https://australiaawardsafrica.org/awards/apply/'],
+        ],
+      },
+      {
+        n: 141,
+        listNo: 41,
+        name: 'Türkiye Bursları',
+        fields: [
+          ['For', 'BSc/MSc/PhD - All levels'],
+          ['Deadline', 'Feb 2027'],
+          ['Age', 'BSc <21, MSc <30, PhD <35'],
+          ['Link', 'https://turkiyeburslari.gov.tr/scholarshipsprograms'],
+        ],
+      },
+      {
+        n: 142,
+        listNo: 42,
+        name: 'ICCR India Scholarship',
+        fields: [
+          ['For', 'BSc/MSc/PhD'],
+          ['Deadline', 'Feb-Apr 2027'],
+          ['Age', 'Under 40'],
+          ['Link', 'https://a2ascholarships.iccr.gov.in/home/getAllSchemeList'],
+        ],
+      },
+      {
+        n: 143,
+        listNo: 43,
+        name: 'Romanian Govt Scholarship',
+        fields: [
+          ['For', 'BSc/MSc/PhD'],
+          ['Deadline', 'March 2027'],
+          ['Age', 'BSc <25, MSc <35'],
+          ['Link', 'https://scholarships.studyinromania.gov.ro/'],
+        ],
+      },
+      {
+        n: 144,
+        listNo: 44,
+        name: 'Slovak Govt Scholarship',
+        fields: [
+          ['For', 'BSc/MSc'],
+          ['Deadline', 'Apr-May 2027'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://www.minedu.sk/scholarships-of-the-government-of-the-slovak-republic/'],
+        ],
+      },
+      {
+        n: 145,
+        listNo: 45,
+        name: 'Stipendium Hungaricum - Hungary',
+        fields: [
+          ['For', 'BSc/MSc/PhD'],
+          ['Deadline', 'Jan 2027'],
+          ['Age', 'Under 40'],
+          ['Link', 'https://stipendiumhungaricum.hu/apply/'],
+        ],
+      },
+      {
+        n: 146,
+        listNo: 46,
+        name: 'DAAD Helmut Schmidt Public Policy',
+        fields: [
+          ['For', 'Masters'],
+          ['Deadline', 'July'],
+          ['Age', 'Under 36'],
+          ['Link', 'https://www.daad.de/en/studying-in-germany/scholarships/daad-funding-programmes/helmut-schmidt-programme/'],
+        ],
+      },
+      {
+        n: 147,
+        listNo: 47,
+        name: 'Erasmus Mundus Joint Masters (other courses)',
+        fields: [
+          ['For', 'Masters'],
+          ['Deadline', 'Oct-Jan'],
+          ['Age', 'No limit'],
+          ['Link', 'https://erasmus-plus.ec.europa.eu/opportunities/individuals/students/erasmus-mundus-joint-masters'],
+        ],
+      },
+      {
+        n: 148,
+        listNo: 48,
+        name: 'Chevening - UK (Next cycle prep)',
+        fields: [
+          ['For', 'Masters'],
+          ['Deadline', 'Aug-Oct 2027'],
+          ['Age', 'No limit, 2 yrs exp'],
+          ['Link', 'https://www.chevening.org/scholarships/'],
+        ],
+      },
+      {
+        n: 149,
+        listNo: 49,
+        name: 'Commonwealth Masters - UK',
+        fields: [
+          ['For', 'Masters'],
+          ['Deadline', 'Oct 2027'],
+          ['Age', 'No limit'],
+          ['Link', 'https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/'],
+        ],
+      },
+      {
+        n: 150,
+        listNo: 50,
+        name: 'Rhodes Scholarship West Africa',
+        fields: [
+          ['For', 'Masters'],
+          ['Deadline', 'Aug 2027'],
+          ['Age', '18-24'],
+          ['Link', 'https://www.rhodeshouse.ox.ac.uk/scholarships/applications/west-africa/eligibilitycriteria/'],
+        ],
+      },
+      {
+        n: 151,
+        listNo: 51,
+        name: 'Mandela Washington Fellowship - USA',
+        fields: [
+          ['For', 'Young Leaders'],
+          ['Deadline', 'Sept'],
+          ['Age', '25-35'],
+          ['Link', 'https://www.mandelawashingtonfellowship.org/'],
+        ],
+      },
+      {
+        n: 152,
+        listNo: 52,
+        name: 'Acumen Fellowship',
+        fields: [
+          ['For', 'Social Entrepreneurs'],
+          ['Deadline', 'Dec'],
+          ['Age', 'Under 40'],
+          ['Link', 'https://fellowship.acumenacademy.org/west-africa'],
+        ],
+      },
+      {
+        n: 153,
+        listNo: 53,
+        name: 'Anzisha Prize - Africa',
+        fields: [
+          ['For', 'Young Entrepreneurs'],
+          ['Deadline', 'Dec'],
+          ['Age', '15-22'],
+          ['Link', 'https://anzisha.org/anzisha-prize/apply/'],
+        ],
+      },
+      {
+        n: 154,
+        listNo: 54,
+        name: 'LEAP Africa Fellowship',
+        fields: [
+          ['For', 'Youth Leadership'],
+          ['Deadline', 'Dec'],
+          ['Age', '18-35'],
+          ['Link', 'https://leapafrica.org/sip/'],
+        ],
+      },
+      {
+        n: 155,
+        listNo: 55,
+        name: 'Carrington Youth Fellowship - Nigeria',
+        fields: [
+          ['For', 'Young Professionals Lagos'],
+          ['Deadline', 'Dec'],
+          ['Age', '18-35'],
+        ],
+      },
+      {
+        n: 156,
+        listNo: 56,
+        name: 'YALI Regional Leadership - Africa',
+        fields: [
+          ['For', 'Young Leaders'],
+          ['Deadline', 'Dec/Jan'],
+          ['Age', '18-35'],
+        ],
+      },
+      {
+        n: 157,
+        listNo: 57,
+        name: 'Obama Foundation Scholars - USA',
+        fields: [
+          ['For', 'Emerging Leaders'],
+          ['Deadline', 'Dec'],
+          ['Age', '25-40'],
+        ],
+      },
+      {
+        n: 158,
+        listNo: 58,
+        name: 'Atlantic Fellows LSE - UK',
+        fields: [
+          ['For', 'Social Equity'],
+          ['Deadline', '11 Jan 2027'],
+          ['Age', 'Under 45'],
+          ['Link', 'https://www.lse.ac.uk/study-at-lse/Graduate/fees-and-funding/residential-atlantic-fellowship'],
+        ],
+      },
+      {
+        n: 159,
+        listNo: 59,
+        name: 'SA-CERN Excellence Bursary - South Africa',
+        fields: [
+          ['For', 'Physics Students'],
+          ['Deadline', 'Rolling'],
+          ['Age', 'Under 35'],
+        ],
+      },
+      {
+        n: 160,
+        listNo: 60,
+        name: 'Mastercard Foundation Associates - Nigeria/Ghana',
+        fields: [
+          ['For', 'Graduates Work Placement'],
+          ['Deadline', 'Rolling'],
+          ['Age', 'Under 35'],
+          ['Link', 'https://mastercardfdn.org/associates-program'],
         ],
       },
     ],

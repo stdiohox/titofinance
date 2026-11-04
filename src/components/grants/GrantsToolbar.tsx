@@ -52,11 +52,11 @@ const GrantsToolbar = forwardRef<HTMLDivElement, Props>(function GrantsToolbar(
           aria-label="Filter by category"
           className="gp-rail flex gap-2 overflow-x-auto md:overflow-visible md:flex-wrap -mx-4 px-4 py-1.5 -my-1.5 md:mx-0 md:px-0 2xl:flex-1 2xl:min-w-0"
         >
-          <Chip selected={active === 'all'} onClick={() => onCategory('all')} label={`All categories, ${total} grants`}>
+          <Chip selected={active === 'all'} onClick={() => onCategory('all')} label={`All categories, ${total} entries`}>
             All <span className="gp-mono gp-num text-[12px] opacity-80">{total}</span>
           </Chip>
           {options.map((o) => (
-            <Chip key={o.id} selected={active === o.id} onClick={() => onCategory(o.id)} label={`Category ${o.letter}, ${o.label}, ${o.count} grants`}>
+            <Chip key={o.id} selected={active === o.id} onClick={() => onCategory(o.id)} label={`Category ${o.letter}, ${o.label}, ${o.count} entries`}>
               <span className="gp-serif text-[17px] leading-none font-semibold">{o.letter}</span>
               {o.label}
               <span className="gp-mono gp-num text-[12px] opacity-80">{o.count}</span>
@@ -108,7 +108,7 @@ const GrantsToolbar = forwardRef<HTMLDivElement, Props>(function GrantsToolbar(
         </div>
       </div>
       <p className="sr-only" aria-live="polite">
-        Showing {shown} of {total} grants, {sort === 'deadline' ? 'soonest deadline first' : 'in list order'}
+        Showing {shown} of {total} entries, {sort === 'deadline' ? 'soonest deadline first' : 'in list order'}
       </p>
     </div>
   )
